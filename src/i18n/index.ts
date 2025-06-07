@@ -16,11 +16,12 @@ const resources = {
       
       // Authentication
       login: "Login",
-      register: "Join Platform",
+      register: "Register",
       logout: "Logout",
       email: "Email",
       password: "Password",
       confirmPassword: "Confirm Password",
+      name: "Name",
       forgotPassword: "Forgot Password?",
       
       // Platform
@@ -32,35 +33,26 @@ const resources = {
       getStarted: "Ask a Question",
       learnMore: "Join as Expert",
       
-      // Posts
-      askQuestion: "Ask Investment Question",
-      postNews: "Share Market News",
-      postArticle: "Post Investment Insight",
-      categories: "Categories",
-      tags: "Tags",
+      // Questions and Posts
+      askQuestion: "Ask Question",
+      postArticle: "Post Article",
+      answer: "Answer",
       answers: "Answers",
+      comment: "Comment",
       comments: "Comments",
+      question: "Question",
+      questions: "Questions",
+      article: "Article",
+      articles: "Articles",
+      vote: "Vote",
       votes: "Votes",
-      views: "Views",
-      
-      // Actions
-      submit: "Submit",
-      cancel: "Cancel",
-      save: "Save",
+      upvote: "Upvote",
+      downvote: "Downvote",
+      share: "Share",
       edit: "Edit",
       delete: "Delete",
-      search: "Search",
-      filter: "Filter",
-      loading: "Loading...",
-      back: "Back",
-      backToPosts: "Back to posts",
-      
-      // Expertise
-      legalExpert: "Legal Expert",
-      investor: "Investor", 
-      startupFounder: "Startup Founder",
-      developer: "Developer",
-      governmentRep: "Government Rep",
+      save: "Save",
+      cancel: "Cancel",
       
       // Categories
       legal: "Legal",
@@ -69,130 +61,114 @@ const resources = {
       marketing: "Marketing",
       operations: "Operations",
       
-      // Access Control
-      upgradeRequired: "Upgrade Required",
-      syrianAccess: "Free access for users in Syria",
-      internationalAccess: "Subscribe to interact",
-      
-      // Dialog and form content
-      editAnswer: "Edit Answer",
-      editComment: "Edit Comment",
-      editPost: "Edit Post",
-      deleteAnswer: "Delete Answer",
-      deleteComment: "Delete Comment",
-      deletePost: "Delete Post",
-      deleteConfirmation: "Are you sure you want to delete this {{item}}? This action cannot be undone.",
-      updating: "Updating...",
-      deleting: "Deleting...",
-      updateAnswer: "Update Answer",
-      updateComment: "Update Comment",
-      updatePost: "Update Post",
-      
-      // Placeholders
+      // Search
+      search: "Search",
       searchPlaceholder: "Search questions and news...",
-      editAnswerPlaceholder: "Edit your answer...",
-      editCommentPlaceholder: "Edit your comment...",
-      questionPlaceholder: "What is your question?",
-      newsPlaceholder: "News title",
-      articlePlaceholder: "Article title",
-      questionContentPlaceholder: "Describe your question in detail...",
-      newsContentPlaceholder: "Write your news article...",
-      articleContentPlaceholder: "Write your article content...",
-      addTagPlaceholder: "Add a tag and press Enter",
+      filterByCategory: "Filter by Category",
       
-      // Success messages
-      answerUpdated: "Answer updated!",
-      answerUpdatedDesc: "Your answer has been updated successfully.",
-      commentUpdated: "Comment updated!",
-      commentUpdatedDesc: "Your comment has been updated successfully.",
-      postUpdated: "Post updated!",
-      postUpdatedDesc: "Your post has been updated successfully.",
-      answerDeleted: "Answer deleted!",
-      answerDeletedDesc: "Your answer has been deleted successfully.",
-      commentDeleted: "Comment deleted!",
-      commentDeletedDesc: "Your comment has been deleted successfully.",
-      postDeleted: "Post deleted!",
-      postDeletedDesc: "Your post has been deleted successfully.",
-      questionPosted: "Question posted!",
-      questionPostedDesc: "Your question has been posted successfully.",
-      newsPosted: "News posted!",
-      newsPostedDesc: "Your news has been posted successfully.",
-      profileUpdated: "Profile updated",
-      profileUpdatedDesc: "Your profile has been updated successfully.",
+      // Posts
+      recentPosts: "Recent Posts",
+      noPostsFound: "No posts available yet.",
+      postedBy: "Posted by",
+      timeAgo: "ago",
+      readMore: "Read more",
       
-      // Error messages
-      failedToUpdate: "Failed to update {{item}}",
-      failedToDelete: "Failed to delete {{item}}",
-      postNotFound: "Post not found",
-      goBackHome: "Go back home",
-      userMustBeLoggedIn: "User must be logged in",
-      missingInformation: "Missing information",
-      fillAllFields: "Please fill in all required fields.",
-      failedToPostQuestion: "Failed to post question",
-      failedToPostNews: "Failed to post news",
-
       // User Profile
-      editProfile: "Edit Profile",
-      accountInformation: "Account Information",
-      accountActions: "Account Actions",
-      accessLevel: "Access Level",
-      accountStatus: "Account Status",
-      signOut: "Sign Out",
-      signOutDesc: "Sign out of your account",
-      viewPublicProfile: "View Public Profile",
-      viewPublicProfileDesc: "See how your profile appears to others",
-      viewProfile: "View Profile",
-      backToHome: "Back to home",
-      verified: "Verified",
-      unverified: "Unverified",
-      joined: "Joined",
-      posts: "posts",
-      questionsLower: "questions",
-      newsLower: "news articles",
-      userNotFound: "User not found",
-      saving: "Saving...",
-      name: "Name",
-      fullName: "Full Name",
-      location: "Location",
-      bio: "Bio",
+      userProfile: "User Profile",
       expertise: "Expertise",
-      selectExpertise: "Select your expertise",
-
-      // Create Post Dialog
+      reputation: "Reputation",
+      joinedDate: "Joined",
+      questionsAsked: "Questions Asked",
+      answersGiven: "Answers Given",
+      articlesPosted: "Articles Posted",
+      
+      // Voting
+      helpful: "Helpful",
+      notHelpful: "Not helpful",
+      
+      // Comments
+      addComment: "Add a comment",
+      writeComment: "Write your comment...",
+      replyToComment: "Reply to comment",
+      
+      // Verification
+      verified: "Verified",
+      expert: "Expert",
+      
+      // Form Labels
       title: "Title",
       content: "Content",
       category: "Category",
-      selectCategory: "Select a category",
-      addTag: "Add",
-      postQuestion: "Post Question",
-      posting: "Posting...",
-
-      // Dashboard/Home
-      welcomeMessage: "Welcome to SyriaTech Rise",
-      recentPosts: "Recent Posts",
-      filterByCategory: "Filter by category",
-      filterByType: "Filter by type",
-      allPosts: "All Posts",
-      allCategories: "All Categories",
-      allTypes: "All Types",
-      noPostsFound: "No posts found",
-      noPostsFoundDesc: "Try adjusting your filters or create the first post!",
-
-      // Post Components
-      postedBy: "Posted by",
-      answeredBy: "Answered by",
-      commentedBy: "Commented by",
-      timeAgo: "{{time}} ago",
-      addAnswer: "Add Answer",
-      addComment: "Add Comment",
-      writeAnswer: "Write your answer...",
-      writeComment: "Write your comment...",
-      postAnswer: "Post Answer",
-      postComment: "Post Comment",
-      showComments: "Show Comments",
-      hideComments: "Hide Comments",
-      sortByVotes: "Sort by votes",
-      sortByDate: "Sort by date",
+      tags: "Tags",
+      submit: "Submit",
+      
+      // Common
+      loading: "Loading...",
+      error: "Error",
+      success: "Success",
+      warning: "Warning",
+      info: "Info",
+      close: "Close",
+      open: "Open",
+      yes: "Yes",
+      no: "No",
+      confirm: "Confirm",
+      
+      // Time
+      justNow: "Just now",
+      minuteAgo: "minute ago",
+      minutesAgo: "minutes ago",
+      hourAgo: "hour ago",
+      hoursAgo: "hours ago",
+      dayAgo: "day ago",
+      daysAgo: "days ago",
+      weekAgo: "week ago",
+      weeksAgo: "weeks ago",
+      monthAgo: "month ago",
+      monthsAgo: "months ago",
+      yearAgo: "year ago",
+      yearsAgo: "years ago",
+      
+      // Placeholder content
+      questionPlaceholder: "What would you like to know about Syrian affairs?",
+      articlePlaceholder: "Share your insights about Syrian developments...",
+      
+      // Expertise areas
+      legalCompliance: "Legal & Compliance",
+      technologyInnovation: "Technology & Innovation",
+      businessEconomy: "Business & Economy",
+      healthcareMedicine: "Healthcare & Medicine",
+      educationResearch: "Education & Research",
+      mediaJournalism: "Media & Journalism",
+      government: "Government & Policy",
+      nonProfit: "Non-Profit & NGO",
+      
+      // Status messages
+      loginRequired: "Please log in to continue",
+      registrationSuccess: "Registration successful! Please log in.",
+      loginSuccess: "Welcome back!",
+      logoutSuccess: "Successfully logged out",
+      postCreated: "Your post has been created successfully",
+      answerSubmitted: "Your answer has been submitted",
+      commentAdded: "Comment added successfully",
+      voteRecorded: "Your vote has been recorded",
+      
+      // Error messages
+      loginError: "Invalid email or password",
+      registrationError: "Registration failed. Please try again.",
+      networkError: "Network error. Please check your connection.",
+      serverError: "Server error. Please try again later.",
+      validationError: "Please check your input and try again",
+      
+      // News categories
+      politics: "Politics",
+      economy: "Economy",
+      society: "Society",
+      culture: "Culture",
+      international: "International",
+      humanitarian: "Humanitarian",
+      reconstruction: "Reconstruction",
+      diaspora: "Diaspora"
     }
   },
   ar: {
@@ -207,11 +183,12 @@ const resources = {
       
       // Authentication
       login: "تسجيل الدخول",
-      register: "انضم للمنصة",
+      register: "إنشاء حساب",
       logout: "تسجيل الخروج",
       email: "البريد الإلكتروني",
       password: "كلمة المرور",
       confirmPassword: "تأكيد كلمة المرور",
+      name: "الاسم",
       forgotPassword: "نسيت كلمة المرور؟",
       
       // Platform
@@ -223,167 +200,142 @@ const resources = {
       getStarted: "اطرح سؤال",
       learnMore: "انضم كخبير",
       
-      // Posts
-      askQuestion: "اطرح سؤال استثماري",
-      postNews: "شارك أخبار السوق",
-      postArticle: "انشر رؤية استثمارية",
-      categories: "الفئات",
-      tags: "العلامات",
-      answers: "الإجابات",
-      comments: "التعليقات",
-      votes: "الأصوات",
-      views: "المشاهدات",
-      
-      // Actions
-      submit: "إرسال",
-      cancel: "إلغاء",
-      save: "حفظ",
+      // Questions and Posts
+      askQuestion: "اطرح سؤال",
+      postArticle: "انشر مقال",
+      answer: "إجابة",
+      answers: "إجابات",
+      comment: "تعليق",
+      comments: "تعليقات",
+      question: "سؤال",
+      questions: "أسئلة",
+      article: "مقال",
+      articles: "مقالات",
+      vote: "تصويت",
+      votes: "تصويتات",
+      upvote: "تصويت إيجابي",
+      downvote: "تصويت سلبي",
+      share: "مشاركة",
       edit: "تعديل",
       delete: "حذف",
-      search: "بحث",
-      filter: "تصفية",
-      loading: "جاري التحميل...",
-      back: "رجوع",
-      backToPosts: "العودة للمنشورات",
-      
-      // Expertise
-      legalExpert: "خبير قانوني",
-      investor: "مستثمر",
-      startupFounder: "مؤسس شركة ناشئة",
-      developer: "مطور",
-      governmentRep: "ممثل حكومي",
+      save: "حفظ",
+      cancel: "إلغاء",
       
       // Categories
       legal: "قانوني",
-      technology: "تكنولوجيا",
+      technology: "تقنية",
       investment: "استثمار",
       marketing: "تسويق",
       operations: "عمليات",
       
-      // Access Control
-      upgradeRequired: "يتطلب ترقية",
-      syrianAccess: "وصول مجاني للمستخدمين في سوريا",
-      internationalAccess: "اشترك للتفاعل",
-      
-      // Dialog and form content
-      editAnswer: "تعديل الإجابة",
-      editComment: "تعديل التعليق",
-      editPost: "تعديل المنشور",
-      deleteAnswer: "حذف الإجابة",
-      deleteComment: "حذف التعليق",
-      deletePost: "حذف المنشور",
-      deleteConfirmation: "هل أنت متأكد من حذف هذا {{item}}؟ لا يمكن التراجع عن هذا الإجراء.",
-      updating: "جاري التحديث...",
-      deleting: "جاري الحذف...",
-      updateAnswer: "تحديث الإجابة",
-      updateComment: "تحديث التعليق",
-      updatePost: "تحديث المنشور",
-      
-      // Placeholders
+      // Search
+      search: "بحث",
       searchPlaceholder: "ابحث في الأسئلة والأخبار...",
-      editAnswerPlaceholder: "عدل إجابتك...",
-      editCommentPlaceholder: "عدل تعليقك...",
-      questionPlaceholder: "ما هو سؤالك؟",
-      newsPlaceholder: "عنوان الخبر",
-      articlePlaceholder: "عنوان المقال",
-      questionContentPlaceholder: "اوصف سؤالك بالتفصيل...",
-      newsContentPlaceholder: "اكتب مقالك الإخباري...",
-      articleContentPlaceholder: "اكتب محتوى مقالك...",
-      addTagPlaceholder: "أضف علامة واضغط Enter",
+      filterByCategory: "تصفية حسب الفئة",
       
-      // Success messages
-      answerUpdated: "تم تحديث الإجابة!",
-      answerUpdatedDesc: "تم تحديث إجابتك بنجاح.",
-      commentUpdated: "تم تحديث التعليق!",
-      commentUpdatedDesc: "تم تحديث تعليقك بنجاح.",
-      postUpdated: "تم تحديث المنشور!",
-      postUpdatedDesc: "تم تحديث منشورك بنجاح.",
-      answerDeleted: "تم حذف الإجابة!",
-      answerDeletedDesc: "تم حذف إجابتك بنجاح.",
-      commentDeleted: "تم حذف التعليق!",
-      commentDeletedDesc: "تم تحديث تعليقك بنجاح.",
-      postDeleted: "تم حذف المنشور!",
-      postDeletedDesc: "تم حذف منشورك بنجاح.",
-      questionPosted: "تم نشر السؤال!",
-      questionPostedDesc: "تم نشر سؤالك بنجاح.",
-      newsPosted: "تم نشر الخبر!",
-      newsPostedDesc: "تم نشر خبرك بنجاح.",
-      profileUpdated: "تم تحديث الملف الشخصي",
-      profileUpdatedDesc: "تم تحديث ملفك الشخصي بنجاح.",
+      // Posts
+      recentPosts: "المنشورات الحديثة",
+      noPostsFound: "لا توجد منشورات متاحة بعد.",
+      postedBy: "نشر بواسطة",
+      timeAgo: "منذ",
+      readMore: "اقرأ المزيد",
       
-      // Error messages
-      failedToUpdate: "فشل في تحديث {{item}}",
-      failedToDelete: "فشل في حذف {{item}}",
-      postNotFound: "المنشور غير موجود",
-      goBackHome: "العودة للرئيسية",
-      userMustBeLoggedIn: "يجب تسجيل الدخول أولاً",
-      missingInformation: "معلومات مفقودة",
-      fillAllFields: "يرجى ملء جميع الحقول المطلوبة.",
-      failedToPostQuestion: "فشل في نشر السؤال",
-      failedToPostNews: "فشل في نشر الخبر",
-
       // User Profile
-      editProfile: "تعديل الملف الشخصي",
-      accountInformation: "معلومات الحساب",
-      accountActions: "إجراءات الحساب",
-      accessLevel: "مستوى الوصول",
-      accountStatus: "حالة الحساب",
-      signOut: "تسجيل الخروج",
-      signOutDesc: "تسجيل الخروج من حسابك",
-      viewPublicProfile: "عرض الملف العام",
-      viewPublicProfileDesc: "شاهد كيف يظهر ملفك للآخرين",
-      viewProfile: "عرض الملف",
-      backToHome: "العودة للرئيسية",
-      verified: "موثق",
-      unverified: "غير موثق",
-      joined: "انضم في",
-      posts: "منشورات",
-      questionsLower: "أسئلة",
-      newsLower: "مقالات إخبارية",
-      userNotFound: "المستخدم غير موجود",
-      saving: "جاري الحفظ...",
-      name: "الاسم",
-      fullName: "الاسم الكامل",
-      location: "الموقع",
-      bio: "النبذة التعريفية",
+      userProfile: "الملف الشخصي للمستخدم",
       expertise: "الخبرة",
-      selectExpertise: "اختر خبرتك",
-
-      // Create Post Dialog
+      reputation: "السمعة",
+      joinedDate: "تاريخ الانضمام",
+      questionsAsked: "الأسئلة المطروحة",
+      answersGiven: "الإجابات المقدمة",
+      articlesPosted: "المقالات المنشورة",
+      
+      // Voting
+      helpful: "مفيد",
+      notHelpful: "غير مفيد",
+      
+      // Comments
+      addComment: "أضف تعليق",
+      writeComment: "اكتب تعليقك...",
+      replyToComment: "رد على التعليق",
+      
+      // Verification
+      verified: "موثق",
+      expert: "خبير",
+      
+      // Form Labels
       title: "العنوان",
       content: "المحتوى",
       category: "الفئة",
-      selectCategory: "اختر فئة",
-      addTag: "إضافة",
-      postQuestion: "نشر السؤال",
-      posting: "جاري النشر...",
-
-      // Dashboard/Home
-      welcomeMessage: "مرحباً بك في سوريا تك رايز",
-      recentPosts: "المنشورات الحديثة",
-      filterByCategory: "تصفية حسب الفئة",
-      filterByType: "تصفية حسب النوع",
-      allPosts: "جميع المنشورات",
-      allCategories: "جميع الفئات",
-      allTypes: "جميع الأنواع",
-      noPostsFound: "لم يتم العثور على منشورات",
-      noPostsFoundDesc: "جرب تعديل المرشحات أو أنشئ أول منشور!",
-
-      // Post Components
-      postedBy: "نشر بواسطة",
-      answeredBy: "أجاب بواسطة",
-      commentedBy: "علق بواسطة",
-      timeAgo: "منذ {{time}}",
-      addAnswer: "إضافة إجابة",
-      addComment: "إضافة تعليق",
-      writeAnswer: "اكتب إجابتك...",
-      writeComment: "اكتب تعليقك...",
-      postAnswer: "نشر الإجابة",
-      postComment: "نشر التعليق",
-      showComments: "عرض التعليقات",
-      hideComments: "إخفاء التعليقات",
-      sortByVotes: "ترتيب حسب الأصوات",
-      sortByDate: "ترتيب حسب التاريخ",
+      tags: "العلامات",
+      submit: "إرسال",
+      
+      // Common
+      loading: "جارٍ التحميل...",
+      error: "خطأ",
+      success: "نجح",
+      warning: "تحذير",
+      info: "معلومات",
+      close: "إغلاق",
+      open: "فتح",
+      yes: "نعم",
+      no: "لا",
+      confirm: "تأكيد",
+      
+      // Time
+      justNow: "الآن",
+      minuteAgo: "منذ دقيقة",
+      minutesAgo: "منذ دقائق",
+      hourAgo: "منذ ساعة",
+      hoursAgo: "منذ ساعات",
+      dayAgo: "منذ يوم",
+      daysAgo: "منذ أيام",
+      weekAgo: "منذ أسبوع",
+      weeksAgo: "منذ أسابيع",
+      monthAgo: "منذ شهر",
+      monthsAgo: "منذ أشهر",
+      yearAgo: "منذ سنة",
+      yearsAgo: "منذ سنوات",
+      
+      // Placeholder content
+      questionPlaceholder: "ما الذي تريد معرفته عن الشؤون السورية؟",
+      articlePlaceholder: "شارك رؤيتك حول التطورات السورية...",
+      
+      // Expertise areas
+      legalCompliance: "قانوني وامتثال",
+      technologyInnovation: "تقنية وابتكار",
+      businessEconomy: "أعمال واقتصاد",
+      healthcareMedicine: "رعاية صحية وطب",
+      educationResearch: "تعليم وبحث",
+      mediaJournalism: "إعلام وصحافة",
+      government: "حكومة وسياسة",
+      nonProfit: "منظمات غير ربحية",
+      
+      // Status messages
+      loginRequired: "يرجى تسجيل الدخول للمتابعة",
+      registrationSuccess: "تم التسجيل بنجاح! يرجى تسجيل الدخول.",
+      loginSuccess: "مرحباً بعودتك!",
+      logoutSuccess: "تم تسجيل الخروج بنجاح",
+      postCreated: "تم إنشاء منشورك بنجاح",
+      answerSubmitted: "تم إرسال إجابتك",
+      commentAdded: "تم إضافة التعليق بنجاح",
+      voteRecorded: "تم تسجيل تصويتك",
+      
+      // Error messages
+      loginError: "بريد إلكتروني أو كلمة مرور غير صحيحة",
+      registrationError: "فشل التسجيل. يرجى المحاولة مرة أخرى.",
+      networkError: "خطأ في الشبكة. يرجى فحص اتصالك.",
+      serverError: "خطأ في الخادم. يرجى المحاولة لاحقاً.",
+      validationError: "يرجى فحص إدخالك والمحاولة مرة أخرى",
+      
+      // News categories
+      politics: "سياسة",
+      economy: "اقتصاد",
+      society: "مجتمع",
+      culture: "ثقافة",
+      international: "دولي",
+      humanitarian: "إنساني",
+      reconstruction: "إعمار",
+      diaspora: "المهجر"
     }
   }
 };
@@ -394,12 +346,13 @@ i18n
   .init({
     resources,
     fallbackLng: 'en',
+    debug: false,
+    interpolation: {
+      escapeValue: false,
+    },
     detection: {
       order: ['localStorage', 'navigator', 'htmlTag'],
       caches: ['localStorage'],
-    },
-    interpolation: {
-      escapeValue: false,
     },
   });
 
