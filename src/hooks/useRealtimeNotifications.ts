@@ -3,17 +3,22 @@ import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useQueryClient } from '@tanstack/react-query';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '@/hooks/use-toast';
 
 export const useRealtimeNotifications = () => {
-  const { user } = useAuth();
+  const { user, session } = useAuth();
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (!user) return;
+    if (!user || !session) {
+      console.log('No user or session, skipping realtime setup');
+      return;
+    }
+
+    console.log('Setting up realtime notifications for user:', user.id);
 
     const channel = supabase
-      .channel('notifications')
+      .channel('notifications-realtime')
       .on(
         'postgres_changes',
         {
@@ -23,24 +28,29 @@ export const useRealtimeNotifications = () => {
           filter: `user_id=eq.${user.id}`,
         },
         (payload) => {
-          console.log('New notification received:', payload);
+          console.log('New notification received via realtime:', payload);
           
           // Invalidate notifications query to refresh the list
           queryClient.invalidateQueries({ queryKey: ['notifications', user.id] });
           
           // Show toast notification
           const notification = payload.new;
-          toast({
-            title: notification.title,
-            description: notification.message,
-            duration: 5000,
-          });
+          if (notification) {
+            toast({
+              title: notification.title || 'New Notification',
+              description: notification.message || 'You have a new notification',
+              duration: 5000,
+            });
+          }
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log('Realtime subscription status:', status);
+      });
 
     return () => {
+      console.log('Cleaning up realtime notifications channel');
       supabase.removeChannel(channel);
     };
-  }, [user, queryClient]);
+  }, [user, session, queryClient]);
 };
