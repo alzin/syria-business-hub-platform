@@ -7,7 +7,6 @@ import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import ProfileForm from '@/components/profile/ProfileForm';
-import AccountInfo from '@/components/profile/AccountInfo';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
@@ -128,9 +127,6 @@ const Profile = () => {
             </ProfileHeader>
           </CardHeader>
         </Card>
-
-        {/* Account Information */}
-        <AccountInfo user={user} />
       </div>
     </div>
   );
