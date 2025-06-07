@@ -1,4 +1,3 @@
-
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -25,8 +24,12 @@ const resources = {
       
       // Platform
       platformName: "Syrian Business Hub",
-      platformTagline: "Empowering Syrian Entrepreneurs Worldwide",
+      platformTagline: "Where Syrian Dreams Take Flight",
       appName: "Syrian Entrepreneurs Hub",
+      welcomeTitle: "Empowering Syrian Entrepreneurs Worldwide",
+      welcomeSubtitle: "Connect, collaborate, and build the future together - from Syria to the world",
+      getStarted: "Start Your Journey",
+      learnMore: "Discover More",
       
       // Posts
       askQuestion: "Ask Question",
@@ -216,8 +219,12 @@ const resources = {
       
       // Platform
       platformName: "مركز الأعمال السوري",
-      platformTagline: "تمكين رواد الأعمال السوريين حول العالم",
+      platformTagline: "حيث تحلق الأحلام السورية",
       appName: "مركز رواد الأعمال السوريين",
+      welcomeTitle: "تمكين رواد الأعمال السوريين حول العالم",
+      welcomeSubtitle: "تواصل وتعاون وابن المستقبل معاً - من سوريا إلى العالم",
+      getStarted: "ابدأ رحلتك",
+      learnMore: "اكتشف المزيد",
       
       // Posts
       askQuestion: "اطرح سؤالاً",

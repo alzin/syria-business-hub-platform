@@ -9,6 +9,7 @@ import LanguageToggle from '@/components/LanguageToggle';
 import LoginDialog from '@/components/auth/LoginDialog';
 import RegisterDialog from '@/components/auth/RegisterDialog';
 import CreatePostDialog from '@/components/CreatePostDialog';
+import Logo from '@/components/Logo';
 import { Search, Plus, User, LogOut, Settings, MessageSquare, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -46,12 +47,13 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
 
   return (
     <>
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <header className="bg-white border-b border-border sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
-              <h1 className="text-xl font-bold text-blue-600">
+            <div className="flex items-center space-x-3 cursor-pointer" onClick={() => navigate('/')}>
+              <Logo className="w-8 h-8" />
+              <h1 className="text-xl font-bold bg-gradient-inspire bg-clip-text text-transparent">
                 {t('appName', 'Syrian Entrepreneurs Hub')}
               </h1>
             </div>
@@ -60,13 +62,13 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
             {onSearch && (
               <div className="flex-1 max-w-lg mx-8">
                 <form onSubmit={handleSearch} className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                   <Input
                     type="text"
                     placeholder={t('searchPlaceholder', 'Search questions and news...')}
                     value={localSearchTerm}
                     onChange={(e) => setLocalSearchTerm(e.target.value)}
-                    className="pl-10 pr-4"
+                    className="pl-10 pr-4 border-border focus:ring-primary"
                   />
                 </form>
               </div>
@@ -82,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
                     variant="default"
                     size="sm"
                     onClick={() => setShowCreateQuestion(true)}
-                    className="flex items-center space-x-1"
+                    className="flex items-center space-x-1 bg-gradient-energy hover:opacity-90"
                   >
                     <MessageSquare className="w-4 h-4" />
                     <span className="hidden sm:inline">{t('askQuestion', 'Ask Question')}</span>
@@ -92,7 +94,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
                     variant="outline"
                     size="sm"
                     onClick={() => setShowCreateArticle(true)}
-                    className="flex items-center space-x-1"
+                    className="flex items-center space-x-1 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                   >
                     <FileText className="w-4 h-4" />
                     <span className="hidden sm:inline">{t('postArticle', 'Post Article')}</span>
