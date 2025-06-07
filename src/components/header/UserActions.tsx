@@ -49,7 +49,7 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
       {/* Create Post Button */}
       <Button
         onClick={onCreateQuestion}
-        className="bg-syrian-green hover:bg-syrian-green/90"
+        className="bg-primary hover:bg-primary/90 text-primary-foreground"
       >
         <Plus className="w-4 h-4 mr-2" />
         Create Post
