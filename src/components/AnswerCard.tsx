@@ -5,10 +5,11 @@ import { useAnswerVerification } from '@/hooks/useAnswerVerification';
 import ExpertiseBadge from '@/components/ExpertiseBadge';
 import VotingButtons from '@/components/VotingButtons';
 import CommentCard from '@/components/CommentCard';
+import CommentForm from '@/components/CommentForm';
+import AuthorInfo from '@/components/AuthorInfo';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, User, MessageSquare, CheckCircle, Shield } from 'lucide-react';
+import { Calendar, MessageSquare, CheckCircle, Shield } from 'lucide-react';
 import { Answer } from '@/types';
 
 interface AnswerCardProps {
@@ -21,7 +22,6 @@ const AnswerCard: React.FC<AnswerCardProps> = ({ answer, postId, comments = [] }
   const { user } = useAuth();
   const { verifyAnswer, unverifyAnswer } = useAnswerVerification();
   const [showCommentForm, setShowCommentForm] = useState(false);
-  const [newComment, setNewComment] = useState('');
 
   const answerComments = comments.filter(comment => comment.answerId === answer.id);
   const isVerifiedExpert = user?.verified && user?.expertise;
@@ -40,22 +40,10 @@ const AnswerCard: React.FC<AnswerCardProps> = ({ answer, postId, comments = [] }
       {/* Answer Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-            {answer.author.avatar ? (
-              <img src={answer.author.avatar} alt={answer.author.name} className="w-10 h-10 rounded-full" />
-            ) : (
-              <User className="w-5 h-5 text-gray-500" />
-            )}
-          </div>
-          <div>
-            <p className="font-medium text-gray-900">{answer.author.name}</p>
-            <div className="flex items-center space-x-2">
-              <ExpertiseBadge expertise={answer.author.expertise} verified={answer.author.verified} size="sm" />
-              <div className="flex items-center space-x-1 text-xs text-gray-500">
-                <Calendar className="w-3 h-3" />
-                <span>{answer.createdAt.toLocaleDateString()}</span>
-              </div>
-            </div>
+          <AuthorInfo author={answer.author} size="default" />
+          <div className="flex items-center space-x-1 text-xs text-gray-500">
+            <Calendar className="w-3 h-3" />
+            <span>{answer.createdAt.toLocaleDateString()}</span>
           </div>
         </div>
 
@@ -130,28 +118,12 @@ const AnswerCard: React.FC<AnswerCardProps> = ({ answer, postId, comments = [] }
       {/* Comment Form */}
       {showCommentForm && user && (
         <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-          <Textarea
-            placeholder="Write a comment..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            rows={2}
-            className="mb-3"
+          <CommentForm
+            postId={postId}
+            answerId={answer.id}
+            onCancel={() => setShowCommentForm(false)}
+            placeholder="Write a comment on this answer..."
           />
-          <div className="flex space-x-2">
-            <Button size="sm" disabled={!newComment.trim()}>
-              Post Comment
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => {
-                setShowCommentForm(false);
-                setNewComment('');
-              }}
-            >
-              Cancel
-            </Button>
-          </div>
         </div>
       )}
     </div>

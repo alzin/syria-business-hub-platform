@@ -2,12 +2,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import ExpertiseBadge from '@/components/ExpertiseBadge';
+import AuthorInfo from '@/components/AuthorInfo';
 import VotingButtons from '@/components/VotingButtons';
+import PostStats from '@/components/PostStats';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { MessageSquare, Calendar, User, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Post } from '@/types';
 
 interface PostCardProps {
@@ -31,6 +32,8 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     if (content.length <= maxLength) return content;
     return content.substring(0, maxLength) + '...';
   };
+
+  const commentsCount = (post.comments?.length || 0);
 
   return (
     <Card className="hover:shadow-md transition-shadow cursor-pointer" onClick={handleViewPost}>
@@ -74,28 +77,20 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
         {/* Author and stats */}
         <div className="flex items-center justify-between pt-4 border-t">
-          <div 
-            className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 rounded-lg p-2 -m-2 transition-colors"
+          <AuthorInfo 
+            author={post.author} 
+            size="sm" 
             onClick={handleViewUser}
-          >
-            <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-              {post.author.avatar ? (
-                <img src={post.author.avatar} alt={post.author.name} className="w-8 h-8 rounded-full" />
-              ) : (
-                <User className="w-4 h-4 text-gray-500" />
-              )}
-            </div>
-            <div>
-              <p className="font-medium text-gray-900 text-sm">{post.author.name}</p>
-              <ExpertiseBadge expertise={post.author.expertise} verified={post.author.verified} size="sm" />
-            </div>
-          </div>
+          />
           
           <div className="flex items-center space-x-4 text-sm">
-            <div className="flex items-center space-x-1 text-gray-500">
-              <Calendar className="w-4 h-4" />
-              <span>{post.createdAt.toLocaleDateString()}</span>
-            </div>
+            <PostStats
+              type={post.type}
+              answersCount={post.answers?.length}
+              commentsCount={commentsCount}
+              votes={post.votes}
+              createdAt={post.createdAt}
+            />
             
             <div onClick={(e) => e.stopPropagation()}>
               <VotingButtons 
@@ -105,13 +100,6 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
                 size="sm"
               />
             </div>
-            
-            {post.type === 'question' && (
-              <div className="flex items-center space-x-1 text-gray-500">
-                <MessageSquare className="w-4 h-4" />
-                <span>{post.answers?.length || 0}</span>
-              </div>
-            )}
           </div>
         </div>
       </CardContent>

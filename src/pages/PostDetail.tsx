@@ -5,16 +5,18 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
-import ExpertiseBadge from '@/components/ExpertiseBadge';
 import AnswerCard from '@/components/AnswerCard';
 import CommentCard from '@/components/CommentCard';
+import CommentForm from '@/components/CommentForm';
 import VotingButtons from '@/components/VotingButtons';
+import AuthorInfo from '@/components/AuthorInfo';
+import PostStats from '@/components/PostStats';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/components/ui/use-toast';
-import { ArrowLeft, MessageSquare, Calendar, User } from 'lucide-react';
+import { ArrowLeft, MessageSquare } from 'lucide-react';
 import { Post, Answer, Comment, User as UserType, ExpertiseType, CategoryType } from '@/types';
 
 const PostDetail = () => {
@@ -24,7 +26,6 @@ const PostDetail = () => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [newAnswer, setNewAnswer] = useState('');
-  const [newComment, setNewComment] = useState('');
   const [showCommentForm, setShowCommentForm] = useState(false);
 
   // Fetch post with answers and comments
@@ -103,19 +104,19 @@ const PostDetail = () => {
           id: comment.id,
           content: comment.content,
           author: {
-            id: comment.profiles.id,
-            email: comment.profiles.email,
-            name: comment.profiles.name,
-            expertise: comment.profiles.expertise as ExpertiseType,
-            location: comment.profiles.location as 'syria' | 'international',
-            accessLevel: comment.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
-            verified: comment.profiles.verified,
-            avatar: comment.profiles.avatar,
-            joinedAt: new Date(comment.profiles.created_at),
+            id: data.profiles.id,
+            email: data.profiles.email,
+            name: data.profiles.name,
+            expertise: data.profiles.expertise as ExpertiseType,
+            location: data.profiles.location as 'syria' | 'international',
+            accessLevel: data.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
+            verified: data.profiles.verified,
+            avatar: data.profiles.avatar,
+            joinedAt: new Date(data.profiles.created_at),
           } as UserType,
           postId: comment.post_id,
           answerId: comment.answer_id,
-          createdAt: new Date(comment.created_at),
+          createdAt: new Date(data.created_at),
         })) as Comment[],
       };
 
@@ -154,54 +155,10 @@ const PostDetail = () => {
     },
   });
 
-  const addCommentMutation = useMutation({
-    mutationFn: async (content: string) => {
-      if (!user || !id) throw new Error('User must be logged in');
-
-      const { error } = await supabase
-        .from('comments')
-        .insert({
-          content,
-          author_id: user.id,
-          post_id: id,
-        });
-
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post', id] });
-      setNewComment('');
-      setShowCommentForm(false);
-      toast({
-        title: "Comment posted!",
-        description: "Your comment has been added successfully.",
-      });
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Failed to post comment",
-        description: error.message,
-        variant: "destructive",
-      });
-    },
-  });
-
   const handleSubmitAnswer = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newAnswer.trim()) return;
     addAnswerMutation.mutate(newAnswer);
-  };
-
-  const handleSubmitComment = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newComment.trim()) return;
-    addCommentMutation.mutate(newComment);
-  };
-
-  const handleViewUser = () => {
-    if (post?.author.id) {
-      navigate(`/user/${post.author.id}`);
-    }
   };
 
   if (isLoading) {
@@ -291,30 +248,16 @@ const PostDetail = () => {
 
             {/* Author info and voting */}
             <div className="flex items-center justify-between pt-4 border-t">
-              <div 
-                className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 rounded-lg p-2 -m-2 transition-colors"
-                onClick={handleViewUser}
-              >
-                <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-                  {post.author.avatar ? (
-                    <img src={post.author.avatar} alt={post.author.name} className="w-10 h-10 rounded-full" />
-                  ) : (
-                    <User className="w-5 h-5 text-gray-500" />
-                  )}
-                </div>
-                <div>
-                  <p className="font-medium text-gray-900">{post.author.name}</p>
-                  <div className="flex items-center space-x-2">
-                    <ExpertiseBadge expertise={post.author.expertise} verified={post.author.verified} size="sm" />
-                  </div>
-                </div>
-              </div>
+              <AuthorInfo author={post.author} />
               
               <div className="flex items-center space-x-4">
-                <div className="flex items-center space-x-1 text-sm text-gray-500">
-                  <Calendar className="w-4 h-4" />
-                  <span>{post.createdAt.toLocaleDateString()}</span>
-                </div>
+                <PostStats
+                  type={post.type}
+                  answersCount={sortedAnswers.length}
+                  commentsCount={postComments.length}
+                  votes={post.votes}
+                  createdAt={post.createdAt}
+                />
                 
                 <VotingButtons 
                   itemId={post.id} 
@@ -359,29 +302,10 @@ const PostDetail = () => {
                   Add a comment
                 </Button>
               ) : (
-                <form onSubmit={handleSubmitComment} className="space-y-4">
-                  <Textarea
-                    placeholder="Write your comment..."
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    rows={3}
-                  />
-                  <div className="flex space-x-2">
-                    <Button type="submit" disabled={addCommentMutation.isPending}>
-                      {addCommentMutation.isPending ? 'Posting...' : 'Post Comment'}
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => {
-                        setShowCommentForm(false);
-                        setNewComment('');
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </form>
+                <CommentForm
+                  postId={post.id}
+                  onCancel={() => setShowCommentForm(false)}
+                />
               )}
             </CardContent>
           </Card>
