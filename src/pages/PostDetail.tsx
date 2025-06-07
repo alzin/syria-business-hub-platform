@@ -386,7 +386,12 @@ const PostDetail = () => {
                 </h3>
                 <div className="space-y-6">
                   {sortedAnswers.map((answer) => (
-                    <AnswerCard key={answer.id} answer={answer} />
+                    <AnswerCard 
+                      key={answer.id} 
+                      answer={answer} 
+                      postId={post.id}
+                      comments={post.comments || []}
+                    />
                   ))}
                 </div>
               </div>
