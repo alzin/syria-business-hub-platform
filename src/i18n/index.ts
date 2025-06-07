@@ -80,7 +80,7 @@ const resources = {
       expertise: 'Expertise',
       location: 'Location',
       joinedDate: 'Joined',
-      posts: 'Posts',
+      userPosts: 'Posts',
       answers: 'Answers',
       
       // Filters
@@ -184,7 +184,7 @@ const resources = {
       expertise: 'الخبرة',
       location: 'الموقع',
       joinedDate: 'تاريخ الانضمام',
-      posts: 'المنشورات',
+      userPosts: 'المنشورات',
       answers: 'الإجابات',
       
       // Filters
