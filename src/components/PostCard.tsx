@@ -3,10 +3,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ExpertiseBadge from '@/components/ExpertiseBadge';
+import VotingButtons from '@/components/VotingButtons';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ThumbsUp, MessageSquare, Calendar, User, ArrowRight } from 'lucide-react';
+import { MessageSquare, Calendar, User, ArrowRight } from 'lucide-react';
 import { Post } from '@/types';
 
 interface PostCardProps {
@@ -90,17 +91,23 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             </div>
           </div>
           
-          <div className="flex items-center space-x-4 text-sm text-gray-500">
-            <div className="flex items-center space-x-1">
+          <div className="flex items-center space-x-4 text-sm">
+            <div className="flex items-center space-x-1 text-gray-500">
               <Calendar className="w-4 h-4" />
               <span>{post.createdAt.toLocaleDateString()}</span>
             </div>
-            <div className="flex items-center space-x-1">
-              <ThumbsUp className="w-4 h-4" />
-              <span>{post.votes}</span>
+            
+            <div onClick={(e) => e.stopPropagation()}>
+              <VotingButtons 
+                itemId={post.id} 
+                itemType="post" 
+                votes={post.votes} 
+                size="sm"
+              />
             </div>
+            
             {post.type === 'question' && (
-              <div className="flex items-center space-x-1">
+              <div className="flex items-center space-x-1 text-gray-500">
                 <MessageSquare className="w-4 h-4" />
                 <span>{post.answers?.length || 0}</span>
               </div>

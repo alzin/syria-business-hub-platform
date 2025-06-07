@@ -8,12 +8,13 @@ import Header from '@/components/Header';
 import ExpertiseBadge from '@/components/ExpertiseBadge';
 import AnswerCard from '@/components/AnswerCard';
 import CommentCard from '@/components/CommentCard';
+import VotingButtons from '@/components/VotingButtons';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/components/ui/use-toast';
-import { ArrowLeft, MessageSquare, ThumbsUp, ThumbsDown, Calendar, User } from 'lucide-react';
+import { ArrowLeft, MessageSquare, Calendar, User } from 'lucide-react';
 import { Post, Answer, Comment, User as UserType, ExpertiseType, CategoryType } from '@/types';
 
 const PostDetail = () => {
@@ -88,9 +89,9 @@ const PostDetail = () => {
             name: answer.profiles.name,
             expertise: answer.profiles.expertise as ExpertiseType,
             location: answer.profiles.location as 'syria' | 'international',
-            accessLevel: answer.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
-            verified: answer.profiles.verified,
-            avatar: answer.profiles.avatar,
+            accessLevel: data.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
+            verified: data.profiles.verified,
+            avatar: data.profiles.avatar,
             joinedAt: new Date(answer.profiles.created_at),
           } as UserType,
           postId: answer.post_id,
@@ -102,19 +103,19 @@ const PostDetail = () => {
           id: comment.id,
           content: comment.content,
           author: {
-            id: comment.profiles.id,
-            email: comment.profiles.email,
-            name: comment.profiles.name,
-            expertise: comment.profiles.expertise as ExpertiseType,
-            location: comment.profiles.location as 'syria' | 'international',
-            accessLevel: comment.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
-            verified: comment.profiles.verified,
-            avatar: comment.profiles.avatar,
-            joinedAt: new Date(comment.profiles.created_at),
+            id: data.profiles.id,
+            email: data.profiles.email,
+            name: data.profiles.name,
+            expertise: data.profiles.expertise as ExpertiseType,
+            location: data.profiles.location as 'syria' | 'international',
+            accessLevel: data.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
+            verified: data.profiles.verified,
+            avatar: data.profiles.avatar,
+            joinedAt: new Date(data.profiles.created_at),
           } as UserType,
-          postId: comment.post_id,
-          answerId: comment.answer_id,
-          createdAt: new Date(comment.created_at),
+          postId: data.post_id,
+          answerId: data.answer_id,
+          createdAt: new Date(data.created_at),
         })) as Comment[],
       };
 
@@ -197,6 +198,12 @@ const PostDetail = () => {
     addCommentMutation.mutate(newComment);
   };
 
+  const handleViewUser = () => {
+    if (post?.author.id) {
+      navigate(`/user/${post.author.id}`);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -231,6 +238,13 @@ const PostDetail = () => {
   }
 
   const postComments = post.comments?.filter(comment => !comment.answerId) || [];
+  const sortedAnswers = post.answers ? [...post.answers].sort((a, b) => {
+    // Sort verified answers first, then by votes, then by date
+    if (a.verified && !b.verified) return -1;
+    if (!a.verified && b.verified) return 1;
+    if (a.votes !== b.votes) return b.votes - a.votes;
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  }) : [];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -275,9 +289,12 @@ const PostDetail = () => {
               </div>
             )}
 
-            {/* Author info */}
+            {/* Author info and voting */}
             <div className="flex items-center justify-between pt-4 border-t">
-              <div className="flex items-center space-x-3">
+              <div 
+                className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 rounded-lg p-2 -m-2 transition-colors"
+                onClick={handleViewUser}
+              >
                 <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
                   {post.author.avatar ? (
                     <img src={post.author.avatar} alt={post.author.name} className="w-10 h-10 rounded-full" />
@@ -293,15 +310,17 @@ const PostDetail = () => {
                 </div>
               </div>
               
-              <div className="flex items-center space-x-4 text-sm text-gray-500">
-                <div className="flex items-center space-x-1">
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-1 text-sm text-gray-500">
                   <Calendar className="w-4 h-4" />
                   <span>{post.createdAt.toLocaleDateString()}</span>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <ThumbsUp className="w-4 h-4" />
-                  <span>{post.votes}</span>
-                </div>
+                
+                <VotingButtons 
+                  itemId={post.id} 
+                  itemType="post" 
+                  votes={post.votes}
+                />
               </div>
             </div>
           </CardContent>
@@ -374,14 +393,14 @@ const PostDetail = () => {
             <Card className="mb-8">
               <CardHeader>
                 <h3 className="text-xl font-semibold">
-                  Answers ({post.answers?.length || 0})
+                  Answers ({sortedAnswers.length})
                 </h3>
               </CardHeader>
               <CardContent>
-                {post.answers && post.answers.length > 0 ? (
+                {sortedAnswers.length > 0 ? (
                   <div className="space-y-6">
-                    {post.answers.map((answer) => (
-                      <AnswerCard key={answer.id} answer={answer} postId={post.id} />
+                    {sortedAnswers.map((answer) => (
+                      <AnswerCard key={answer.id} answer={answer} postId={post.id} comments={post.comments} />
                     ))}
                   </div>
                 ) : (
