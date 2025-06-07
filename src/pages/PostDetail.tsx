@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -61,7 +60,7 @@ const PostDetail = () => {
       // Transform the data
       const transformedPost: Post = {
         id: data.id,
-        type: data.type,
+        type: data.type as 'question' | 'news',
         title: data.title,
         content: data.content,
         author: {
@@ -69,8 +68,8 @@ const PostDetail = () => {
           email: data.profiles.email,
           name: data.profiles.name,
           expertise: data.profiles.expertise as ExpertiseType,
-          location: data.profiles.location,
-          accessLevel: data.profiles.access_level,
+          location: data.profiles.location as 'syria' | 'international',
+          accessLevel: data.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
           verified: data.profiles.verified,
           avatar: data.profiles.avatar,
           joinedAt: new Date(data.profiles.created_at),
@@ -88,8 +87,8 @@ const PostDetail = () => {
             email: answer.profiles.email,
             name: answer.profiles.name,
             expertise: answer.profiles.expertise as ExpertiseType,
-            location: answer.profiles.location,
-            accessLevel: answer.profiles.access_level,
+            location: answer.profiles.location as 'syria' | 'international',
+            accessLevel: answer.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
             verified: answer.profiles.verified,
             avatar: answer.profiles.avatar,
             joinedAt: new Date(answer.profiles.created_at),
@@ -107,8 +106,8 @@ const PostDetail = () => {
             email: comment.profiles.email,
             name: comment.profiles.name,
             expertise: comment.profiles.expertise as ExpertiseType,
-            location: comment.profiles.location,
-            accessLevel: comment.profiles.access_level,
+            location: comment.profiles.location as 'syria' | 'international',
+            accessLevel: comment.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
             verified: comment.profiles.verified,
             avatar: comment.profiles.avatar,
             joinedAt: new Date(comment.profiles.created_at),
@@ -123,7 +122,6 @@ const PostDetail = () => {
     },
   });
 
-  // Add answer mutation
   const addAnswerMutation = useMutation({
     mutationFn: async (content: string) => {
       if (!user || !id) throw new Error('User must be logged in');
@@ -155,7 +153,6 @@ const PostDetail = () => {
     },
   });
 
-  // Add comment mutation
   const addCommentMutation = useMutation({
     mutationFn: async (content: string) => {
       if (!user || !id) throw new Error('User must be logged in');

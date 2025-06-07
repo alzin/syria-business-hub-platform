@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -37,8 +36,8 @@ const UserProfile = () => {
         email: data.email,
         name: data.name,
         expertise: data.expertise as ExpertiseType,
-        location: data.location,
-        accessLevel: data.access_level,
+        location: data.location as 'syria' | 'international',
+        accessLevel: data.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
         verified: data.verified,
         avatar: data.avatar,
         joinedAt: new Date(data.created_at),
@@ -69,7 +68,7 @@ const UserProfile = () => {
 
       const posts: Post[] = data.map((post: any) => ({
         id: post.id,
-        type: post.type,
+        type: post.type as 'question' | 'news',
         title: post.title,
         content: post.content,
         author: {
@@ -77,8 +76,8 @@ const UserProfile = () => {
           email: post.profiles.email,
           name: post.profiles.name,
           expertise: post.profiles.expertise as ExpertiseType,
-          location: post.profiles.location,
-          accessLevel: post.profiles.access_level,
+          location: post.profiles.location as 'syria' | 'international',
+          accessLevel: post.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
           verified: post.profiles.verified,
           avatar: post.profiles.avatar,
           joinedAt: new Date(post.profiles.created_at),
