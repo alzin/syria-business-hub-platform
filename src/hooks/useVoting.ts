@@ -96,11 +96,23 @@ export const useVoting = () => {
         .eq('id', postId);
 
       if (updateError) throw updateError;
+
+      return voteCount;
     },
-    onSuccess: (_, variables) => {
+    onSuccess: (newVoteCount, variables) => {
+      // Invalidate and refetch queries
       queryClient.invalidateQueries({ queryKey: ['post', variables.postId] });
       queryClient.invalidateQueries({ queryKey: ['posts'] });
       queryClient.invalidateQueries({ queryKey: ['user-votes', user?.id] });
+      
+      // Optimistically update the cache
+      queryClient.setQueryData(['post', variables.postId], (oldData: any) => {
+        if (oldData) {
+          return { ...oldData, votes: newVoteCount };
+        }
+        return oldData;
+      });
+
       toast({
         title: "Vote recorded!",
         description: "Your vote has been registered.",
@@ -122,7 +134,7 @@ export const useVoting = () => {
       // Check if user is trying to vote on their own answer
       const { data: answer, error: fetchError } = await supabase
         .from('answers')
-        .select('author_id')
+        .select('author_id, post_id')
         .eq('id', answerId)
         .single();
 
@@ -186,11 +198,28 @@ export const useVoting = () => {
         .eq('id', answerId);
 
       if (updateError) throw updateError;
+
+      return { voteCount, postId: answer.post_id };
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['post'] });
+    onSuccess: ({ voteCount, postId }, variables) => {
+      // Invalidate and refetch queries
+      queryClient.invalidateQueries({ queryKey: ['post', postId] });
       queryClient.invalidateQueries({ queryKey: ['posts'] });
       queryClient.invalidateQueries({ queryKey: ['user-votes', user?.id] });
+
+      // Optimistically update the cache
+      queryClient.setQueryData(['post', postId], (oldData: any) => {
+        if (oldData && oldData.answers) {
+          const updatedAnswers = oldData.answers.map((answer: any) => 
+            answer.id === variables.answerId 
+              ? { ...answer, votes: voteCount }
+              : answer
+          );
+          return { ...oldData, answers: updatedAnswers };
+        }
+        return oldData;
+      });
+
       toast({
         title: "Vote recorded!",
         description: "Your vote has been registered.",
