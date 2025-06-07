@@ -48,7 +48,7 @@ const PostStats: React.FC<PostStatsProps> = ({
         <span>{commentsCount}</span>
       </div>
 
-      {/* Votes */}
+      {/* Likes */}
       <div className="flex items-center space-x-1">
         <ThumbsUp className={iconSize} />
         <span>{votes}</span>
