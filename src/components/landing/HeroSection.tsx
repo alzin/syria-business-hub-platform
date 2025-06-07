@@ -73,20 +73,20 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
                 <Button 
                   size="lg" 
-                  className="bg-background text-primary hover:bg-background/90 font-semibold shadow-lg px-8"
+                  className="bg-background text-primary hover:bg-background/90 font-semibold shadow-lg px-8 text-base"
                   onClick={handleAskQuestion}
                 >
                   <MessageSquare className="w-5 h-5 mr-2" />
-                  <span>Ask a Question</span>
+                  Ask a Question
                 </Button>
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="border-background text-background hover:bg-background hover:text-primary font-semibold px-8"
+                  className="border-2 border-background text-background bg-transparent hover:bg-background hover:text-primary font-semibold px-8 text-base"
                   onClick={handleJoinAsExpert}
                 >
                   <Users className="w-5 h-5 mr-2" />
-                  <span>Join as Expert</span>
+                  Join as Expert
                 </Button>
               </div>
             </div>

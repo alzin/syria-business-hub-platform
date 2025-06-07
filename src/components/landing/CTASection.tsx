@@ -49,20 +49,20 @@ const CTASection: React.FC<CTASectionProps> = ({ onNavigateToMainPage }) => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-background text-primary hover:bg-background/90 font-semibold px-8"
+              className="bg-background text-primary hover:bg-background/90 font-semibold px-8 text-base"
               onClick={handleAskQuestion}
             >
               <HelpCircle className="w-5 h-5 mr-2" />
-              <span>Ask Your First Question</span>
+              Ask Your First Question
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-background text-background hover:bg-background hover:text-primary font-semibold px-8"
+              className="border-2 border-background text-background bg-transparent hover:bg-background hover:text-primary font-semibold px-8 text-base"
               onClick={onNavigateToMainPage}
             >
               <Newspaper className="w-5 h-5 mr-2" />
-              <span>Browse Community</span>
+              Browse Community
             </Button>
           </div>
         </div>
