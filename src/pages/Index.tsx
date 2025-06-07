@@ -72,21 +72,41 @@ const Index = () => {
     <div className="min-h-screen bg-gray-50">
       <Header onSearch={handleSearchChange} searchTerm={searchTerm} />
       
-      {/* Back to landing page option */}
-      <div className="bg-white border-b border-gray-200 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Button 
-            variant="ghost" 
-            onClick={() => {
-              setSearchParams({});
-              setSearchTerm('');
-            }}
-            className="text-syrian-green hover:bg-syrian-green/10"
-          >
-            ← Back to Home
-          </Button>
+      {/* Back to posts option - only show if there's a search term */}
+      {searchTerm && (
+        <div className="bg-white border-b border-gray-200 py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Button 
+              variant="ghost" 
+              onClick={() => {
+                setSearchTerm('');
+                setSearchParams({ posts: 'true' });
+              }}
+              className="text-syrian-green hover:bg-syrian-green/10"
+            >
+              ← Back to Posts
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Show back to home only when not searching */}
+      {!searchTerm && (
+        <div className="bg-white border-b border-gray-200 py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Button 
+              variant="ghost" 
+              onClick={() => {
+                setSearchParams({});
+                setSearchTerm('');
+              }}
+              className="text-syrian-green hover:bg-syrian-green/10"
+            >
+              ← Back to Home
+            </Button>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Category filters */}
