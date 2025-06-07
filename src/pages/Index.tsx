@@ -18,8 +18,8 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | 'all'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   
-  // Check if we should show posts based on URL params or if user is logged in
-  const shouldShowPosts = searchParams.get('posts') === 'true' || searchTerm.length > 0 || user;
+  // Authenticated users should always see posts, plus check for URL params or search
+  const shouldShowPosts = user || searchParams.get('posts') === 'true' || searchTerm.length > 0;
   
   const { data: posts, isLoading, error } = usePosts(selectedCategory, searchTerm);
 
@@ -31,8 +31,11 @@ const Index = () => {
     } else if (searchParams.get('search')) {
       const newParams = new URLSearchParams(searchParams);
       newParams.delete('search');
-      if (!newParams.get('posts')) {
+      // Keep posts=true for authenticated users
+      if (!user && !newParams.get('posts')) {
         newParams.delete('posts');
+      } else if (user) {
+        newParams.set('posts', 'true');
       }
       setSearchParams(newParams);
     }
@@ -44,7 +47,12 @@ const Index = () => {
     if (searchFromUrl) {
       setSearchTerm(searchFromUrl);
     }
-  }, [searchParams]);
+    
+    // Ensure authenticated users always have posts=true in URL
+    if (user && !searchParams.get('posts') && !searchFromUrl) {
+      setSearchParams({ posts: 'true' });
+    }
+  }, [searchParams, user, setSearchParams]);
 
   const categories: { key: CategoryType | 'all'; label: string }[] = [
     { key: 'all', label: 'All Categories' },
@@ -59,7 +67,7 @@ const Index = () => {
     console.error('Error loading posts:', error);
   }
 
-  // Show full landing page only for non-logged-in users
+  // Show landing page only for non-authenticated users who haven't requested posts
   if (!shouldShowPosts) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -91,7 +99,7 @@ const Index = () => {
         </div>
       )}
 
-      {/* Show back to home only when not searching and user is not logged in */}
+      {/* Show back to home only for non-authenticated users when not searching */}
       {!searchTerm && !user && (
         <div className="bg-white border-b border-gray-200 py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
