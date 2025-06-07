@@ -11,12 +11,29 @@ import CommentForm from '@/components/CommentForm';
 import VotingButtons from '@/components/VotingButtons';
 import AuthorInfo from '@/components/AuthorInfo';
 import PostStats from '@/components/PostStats';
+import EditPostDialog from '@/components/EditPostDialog';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { toast } from '@/components/ui/use-toast';
-import { ArrowLeft, MessageSquare } from 'lucide-react';
+import { ArrowLeft, MessageSquare, MoreVertical } from 'lucide-react';
 import { Post, Answer, Comment, User as UserType, ExpertiseType, CategoryType } from '@/types';
 
 const PostDetail = () => {
@@ -27,6 +44,8 @@ const PostDetail = () => {
   const queryClient = useQueryClient();
   const [newAnswer, setNewAnswer] = useState('');
   const [showCommentForm, setShowCommentForm] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   // Fetch post with answers and comments
   const { data: post, isLoading } = useQuery({
@@ -124,6 +143,35 @@ const PostDetail = () => {
     },
   });
 
+  // Add delete post mutation
+  const deletePostMutation = useMutation({
+    mutationFn: async () => {
+      if (!user || !id) throw new Error('User must be logged in');
+
+      const { error } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', id)
+        .eq('author_id', user.id);
+
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      navigate('/');
+      toast({
+        title: "Post deleted!",
+        description: "Your post has been deleted successfully.",
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Failed to delete post",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
   const addAnswerMutation = useMutation({
     mutationFn: async (content: string) => {
       if (!user || !id) throw new Error('User must be logged in');
@@ -203,6 +251,8 @@ const PostDetail = () => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   }) : [];
 
+  const canEditPost = user && user.id === post.author.id;
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -222,162 +272,37 @@ const PostDetail = () => {
         <Card className="mb-8">
           <CardHeader>
             <div className="flex items-center justify-between">
-              <Badge variant={post.type === 'question' ? 'default' : 'secondary'}>
-                {post.type === 'question' ? 'Question' : 'News'}
-              </Badge>
-              <Badge variant="outline">{post.category}</Badge>
+              <div className="flex items-center space-x-2">
+                <Badge variant={post.type === 'question' ? 'default' : 'secondary'}>
+                  {post.type === 'question' ? 'Question' : 'News'}
+                </Badge>
+                <Badge variant="outline">{post.category}</Badge>
+              </div>
+              
+              {canEditPost && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm">
+                      <MoreVertical className="w-4 h-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => setShowEditDialog(true)}>
+                      Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => setShowDeleteDialog(true)}
+                      className="text-red-600"
+                    >
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
             </div>
             <h1 className="text-2xl font-bold text-gray-900 mt-4">{post.title}</h1>
           </CardHeader>
           
           <CardContent>
             <div className="prose max-w-none mb-6">
-              <p className="text-gray-700 whitespace-pre-wrap">{post.content}</p>
-            </div>
-
-            {/* Tags */}
-            {post.tags && post.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-6">
-                {post.tags.map((tag, index) => (
-                  <Badge key={index} variant="outline" className="text-xs">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            )}
-
-            {/* Author info and voting */}
-            <div className="flex items-center justify-between pt-4 border-t">
-              <AuthorInfo author={post.author} />
-              
-              <div className="flex items-center space-x-4">
-                <PostStats
-                  type={post.type}
-                  answersCount={sortedAnswers.length}
-                  commentsCount={postComments.length}
-                  votes={post.votes}
-                  createdAt={post.createdAt}
-                />
-                
-                <VotingButtons 
-                  itemId={post.id} 
-                  itemType="post" 
-                  votes={post.votes}
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Comments on post */}
-        {postComments.length > 0 && (
-          <Card className="mb-8">
-            <CardHeader>
-              <h3 className="text-lg font-semibold flex items-center">
-                <MessageSquare className="w-5 h-5 mr-2" />
-                Comments ({postComments.length})
-              </h3>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {postComments.map((comment) => (
-                  <CommentCard key={comment.id} comment={comment} />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Add comment form */}
-        {user && (
-          <Card className="mb-8">
-            <CardContent className="pt-6">
-              {!showCommentForm ? (
-                <Button
-                  variant="outline"
-                  onClick={() => setShowCommentForm(true)}
-                  className="w-full"
-                >
-                  <MessageSquare className="w-4 h-4 mr-2" />
-                  Add a comment
-                </Button>
-              ) : (
-                <CommentForm
-                  postId={post.id}
-                  onCancel={() => setShowCommentForm(false)}
-                />
-              )}
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Answers section */}
-        {post.type === 'question' && (
-          <>
-            <Card className="mb-8">
-              <CardHeader>
-                <h3 className="text-xl font-semibold">
-                  Answers ({sortedAnswers.length})
-                </h3>
-              </CardHeader>
-              <CardContent>
-                {sortedAnswers.length > 0 ? (
-                  <div className="space-y-6">
-                    {sortedAnswers.map((answer) => (
-                      <AnswerCard key={answer.id} answer={answer} postId={post.id} comments={post.comments} />
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-500 text-center py-8">
-                    No answers yet. Be the first to answer this question!
-                  </p>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Add answer form */}
-            {user && (
-              <Card>
-                <CardHeader>
-                  <h3 className="text-lg font-semibold">Your Answer</h3>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmitAnswer} className="space-y-4">
-                    <Textarea
-                      placeholder="Write your answer..."
-                      value={newAnswer}
-                      onChange={(e) => setNewAnswer(e.target.value)}
-                      rows={6}
-                      required
-                    />
-                    <Button type="submit" disabled={addAnswerMutation.isPending}>
-                      {addAnswerMutation.isPending ? 'Posting...' : 'Post Answer'}
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            )}
-          </>
-        )}
-
-        {!user && (
-          <Card>
-            <CardContent className="text-center py-8">
-              <p className="text-gray-500 mb-4">
-                {post.type === 'question' 
-                  ? 'Please log in to answer this question or add comments.'
-                  : 'Please log in to add comments.'
-                }
-              </p>
-              <Button onClick={() => navigate('/')}>
-                Go to Login
-              </Button>
-            </CardContent>
-          </Card>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default PostDetail;
+              <p className="text-gray-
