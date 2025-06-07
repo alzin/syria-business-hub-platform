@@ -1,19 +1,18 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
+import AvatarUpload from '@/components/AvatarUpload';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '@/hooks/use-toast';
 import ExpertiseBadge from '@/components/ExpertiseBadge';
-import { ArrowLeft, Edit2, Save, X, User, Mail, MapPin, Calendar } from 'lucide-react';
+import { ArrowLeft, Edit2, Save, X, Mail, MapPin, Calendar } from 'lucide-react';
 import { ExpertiseType } from '@/types';
 
 const Profile = () => {
@@ -22,6 +21,7 @@ const Profile = () => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentAvatar, setCurrentAvatar] = useState(user?.avatar || null);
   
   // Form state
   const [formData, setFormData] = useState({
@@ -95,6 +95,10 @@ const Profile = () => {
     navigate('/');
   };
 
+  const handleAvatarUpdate = (avatarUrl: string | null) => {
+    setCurrentAvatar(avatarUrl);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -115,15 +119,13 @@ const Profile = () => {
           <CardHeader>
             <div className="flex items-start justify-between">
               <div className="flex items-start space-x-6">
-                <Avatar className="w-24 h-24">
-                  <AvatarFallback className="bg-blue-100 text-blue-600">
-                    {user.avatar ? (
-                      <img src={user.avatar} alt={user.name} className="w-24 h-24 rounded-full" />
-                    ) : (
-                      <User className="w-12 h-12" />
-                    )}
-                  </AvatarFallback>
-                </Avatar>
+                {/* Avatar Upload Section */}
+                <AvatarUpload
+                  currentAvatar={currentAvatar}
+                  userName={user.name}
+                  onAvatarUpdate={handleAvatarUpdate}
+                  size="lg"
+                />
                 
                 <div className="flex-1">
                   <div className="flex items-center space-x-3 mb-2">

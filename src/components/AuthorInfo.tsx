@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ExpertiseBadge from '@/components/ExpertiseBadge';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Calendar, User as UserIcon } from 'lucide-react';
 import { User } from '@/types';
 
@@ -32,13 +32,13 @@ const AuthorInfo: React.FC<AuthorInfoProps> = ({ author, size = 'default', onCli
       onClick={handleClick}
     >
       <Avatar className={avatarSize}>
-        <AvatarFallback className="bg-blue-100 text-blue-600">
-          {author.avatar ? (
-            <img src={author.avatar} alt={author.name} className={`${avatarSize} rounded-full`} />
-          ) : (
+        {author.avatar ? (
+          <AvatarImage src={author.avatar} alt={author.name} />
+        ) : (
+          <AvatarFallback className="bg-blue-100 text-blue-600">
             <UserIcon className="w-4 h-4" />
-          )}
-        </AvatarFallback>
+          </AvatarFallback>
+        )}
       </Avatar>
       
       <div className="flex-1 min-w-0">
