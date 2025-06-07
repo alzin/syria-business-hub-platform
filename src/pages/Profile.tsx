@@ -5,15 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import Header from '@/components/Header';
-import AvatarUpload from '@/components/AvatarUpload';
+import ProfileHeader from '@/components/profile/ProfileHeader';
+import ProfileForm from '@/components/profile/ProfileForm';
+import AccountInfo from '@/components/profile/AccountInfo';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
-import ExpertiseBadge from '@/components/ExpertiseBadge';
-import { ArrowLeft, Edit2, Save, X, Mail, MapPin, Calendar } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { ExpertiseType } from '@/types';
 
 const Profile = () => {
@@ -113,155 +111,26 @@ const Profile = () => {
         {/* Profile Header */}
         <Card className="mb-8">
           <CardHeader>
-            <div className="flex items-start justify-between">
-              <div className="flex items-start space-x-6">
-                {/* Avatar Upload Section */}
-                <AvatarUpload
-                  currentAvatar={currentAvatar}
-                  userName={user.name}
-                  onAvatarUpdate={handleAvatarUpdate}
-                  size="lg"
-                />
-                
-                <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <h1 className="text-2xl font-bold text-gray-900">
-                      {isEditing ? (
-                        <Input
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                          className="text-2xl font-bold"
-                        />
-                      ) : (
-                        user.name
-                      )}
-                    </h1>
-                    {user.verified && (
-                      <Badge variant="secondary" className="text-blue-600">
-                        ✓ {t('verified')}
-                      </Badge>
-                    )}
-                  </div>
-                  
-                  <div className="flex items-center space-x-4 mb-4">
-                    {isEditing ? (
-                      <Select 
-                        value={formData.expertise} 
-                        onValueChange={(value: ExpertiseType) => setFormData({ ...formData, expertise: value })}
-                      >
-                        <SelectTrigger className="w-48">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="legal">{t('legalExpert')}</SelectItem>
-                          <SelectItem value="investor">{t('investor')}</SelectItem>
-                          <SelectItem value="founder">{t('startupFounder')}</SelectItem>
-                          <SelectItem value="developer">{t('developer')}</SelectItem>
-                          <SelectItem value="government">{t('governmentRep')}</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    ) : (
-                      <ExpertiseBadge expertise={user.expertise} verified={user.verified} />
-                    )}
-                    
-                    {isEditing ? (
-                      <Select 
-                        value={formData.location} 
-                        onValueChange={(value: 'syria' | 'international') => setFormData({ ...formData, location: value })}
-                      >
-                        <SelectTrigger className="w-48">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="syria">Syria</SelectItem>
-                          <SelectItem value="international">International</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    ) : (
-                      <div className="flex items-center space-x-1 text-sm text-gray-500">
-                        <MapPin className="w-4 h-4" />
-                        <span>{user.location === 'syria' ? 'Syria' : 'International'}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex items-center space-x-6 text-sm text-gray-600">
-                    <div className="flex items-center space-x-1">
-                      <Mail className="w-4 h-4" />
-                      <span>{user.email}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Calendar className="w-4 h-4" />
-                      <span>{t('joined')} {user.joinedAt.toLocaleDateString()}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Action buttons */}
-              <div className="flex items-center space-x-2">
-                {isEditing ? (
-                  <>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={handleCancel}
-                      disabled={isLoading}
-                    >
-                      <X className="w-4 h-4 mr-2" />
-                      {t('cancel')}
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={handleSave}
-                      disabled={isLoading}
-                    >
-                      <Save className="w-4 h-4 mr-2" />
-                      {isLoading ? t('saving') : t('save')}
-                    </Button>
-                  </>
-                ) : (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setIsEditing(true)}
-                  >
-                    <Edit2 className="w-4 h-4 mr-2" />
-                    {t('editProfile')}
-                  </Button>
-                )}
-              </div>
-            </div>
+            <ProfileHeader
+              user={user}
+              currentAvatar={currentAvatar}
+              isEditing={isEditing}
+              isLoading={isLoading}
+              onAvatarUpdate={handleAvatarUpdate}
+              onEdit={() => setIsEditing(true)}
+              onSave={handleSave}
+              onCancel={handleCancel}
+            >
+              <ProfileForm
+                formData={formData}
+                onFormDataChange={setFormData}
+              />
+            </ProfileHeader>
           </CardHeader>
         </Card>
 
         {/* Account Information */}
-        <Card>
-          <CardHeader>
-            <CardTitle>{t('accountInformation')}</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="text-sm font-medium text-gray-700">{t('accessLevel')}</label>
-                <div className="mt-1">
-                  <Badge variant={user.accessLevel === 'verified' ? 'default' : 'secondary'}>
-                    {user.accessLevel.charAt(0).toUpperCase() + user.accessLevel.slice(1)}
-                  </Badge>
-                </div>
-              </div>
-              
-              <div>
-                <label className="text-sm font-medium text-gray-700">{t('accountStatus')}</label>
-                <div className="mt-1">
-                  <Badge variant={user.verified ? 'default' : 'outline'}>
-                    {user.verified ? t('verified') : t('unverified')}
-                  </Badge>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <AccountInfo user={user} />
       </div>
     </div>
   );
