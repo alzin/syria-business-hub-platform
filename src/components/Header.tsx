@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
 
   return (
     <>
-      <header className="bg-white border-b border-border sticky top-0 z-50 shadow-sm">
+      <header className="bg-background border-b border-border sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -102,15 +102,15 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
 
                   <div className="flex items-center space-x-2">
                     <div className="flex items-center space-x-1 cursor-pointer" onClick={() => navigate('/profile')}>
-                      <User className="w-4 h-4 text-gray-500" />
-                      <span className="text-sm font-medium text-gray-700">{user.name}</span>
+                      <User className="w-4 h-4 text-muted-foreground" />
+                      <span className="text-sm font-medium text-foreground">{user.name}</span>
                     </div>
                     
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => navigate('/profile')}
-                      className="text-gray-500 hover:text-gray-700"
+                      className="text-muted-foreground hover:text-foreground"
                     >
                       <Settings className="w-4 h-4" />
                     </Button>
@@ -119,7 +119,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
                       variant="ghost"
                       size="sm"
                       onClick={logout}
-                      className="text-gray-500 hover:text-gray-700"
+                      className="text-muted-foreground hover:text-foreground"
                     >
                       <LogOut className="w-4 h-4" />
                     </Button>

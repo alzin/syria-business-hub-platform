@@ -17,43 +17,43 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    /* Syrian flag inspired colors */
-    --primary: 142 69% 30%; /* Syrian green */
+    /* Professional and inspirational colors */
+    --primary: 217 91% 60%; /* Professional blue */
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 84% 55%; /* Syrian red */
+    --secondary: 262 83% 58%; /* Inspiring purple */
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 120 20% 96%;
+    --muted: 210 40% 96%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 142 69% 35%; /* Accent green */
+    --accent: 142 76% 36%; /* Growth green */
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 120 15% 85%;
-    --input: 120 15% 85%;
-    --ring: 142 69% 30%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 217 91% 60%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 120 30% 98%;
+    --sidebar-background: 210 40% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 142 69% 30%;
+    --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 120 25% 95%;
+    --sidebar-accent: 210 40% 95%;
     --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 120 15% 85%;
-    --sidebar-ring: 142 69% 30%;
+    --sidebar-border: 214.3 31.8% 91.4%;
+    --sidebar-ring: 217 91% 60%;
 
-    /* Success and growth colors (Syrian green) */
-    --success: 142 69% 35%;
+    /* Success and growth colors */
+    --success: 142 76% 36%;
     --success-foreground: 0 0% 98%;
     
-    /* Warning/energy colors (Syrian red) */
-    --warning: 0 84% 55%;
+    /* Warning/energy colors */
+    --warning: 43 96% 56%;
     --warning-foreground: 0 0% 98%;
   }
 
@@ -67,16 +67,16 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 142 69% 40%; /* Lighter Syrian green for dark mode */
+    --primary: 217 91% 70%; /* Lighter blue for dark mode */
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 0 84% 65%; /* Lighter Syrian red for dark mode */
+    --secondary: 262 83% 68%; /* Lighter purple for dark mode */
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 142 69% 45%; /* Accent green for dark mode */
+    --accent: 142 76% 46%; /* Accent green for dark mode */
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -84,23 +84,23 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 142 69% 40%;
+    --ring: 217 91% 70%;
     
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 142 69% 40%;
+    --sidebar-primary: 217 91% 70%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 142 69% 40%;
+    --sidebar-ring: 217 91% 70%;
 
     /* Success and growth colors for dark mode */
-    --success: 142 69% 45%;
+    --success: 142 76% 46%;
     --success-foreground: 0 0% 98%;
     
     /* Warning/energy colors for dark mode */
-    --warning: 0 84% 65%;
+    --warning: 43 96% 66%;
     --warning-foreground: 222.2 47.4% 11.2%;
   }
 }
@@ -162,7 +162,7 @@
     outline-offset: 2px;
   }
 
-  /* Custom gradient backgrounds inspired by Syrian flag */
+  /* Custom gradient backgrounds for professional look */
   .gradient-bg {
     background: linear-gradient(135deg, 
       hsl(var(--primary) / 0.1) 0%, 

@@ -26,10 +26,10 @@ const LandingPage = () => {
   const { user } = useAuth();
 
   const stats = [
-    { icon: MessageSquare, label: 'Active Discussions', value: '1,200+', color: 'text-green-600' },
-    { icon: Users, label: 'Syrian Experts', value: '250+', color: 'text-blue-600' },
-    { icon: Globe, label: 'Countries Connected', value: '35+', color: 'text-purple-600' },
-    { icon: BookOpen, label: 'Knowledge Articles', value: '500+', color: 'text-orange-600' },
+    { icon: MessageSquare, label: 'Active Discussions', value: '1,200+', color: 'text-professional-blue' },
+    { icon: Users, label: 'Syrian Experts', value: '250+', color: 'text-professional-purple' },
+    { icon: Globe, label: 'Countries Connected', value: '35+', color: 'text-professional-green' },
+    { icon: BookOpen, label: 'Knowledge Articles', value: '500+', color: 'text-professional-orange' },
   ];
 
   const features = [
@@ -86,34 +86,34 @@ const LandingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted">
       {/* Hero Section */}
-      <section className="relative bg-gradient-inspire text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-syrian-green/20 to-syrian-red/20"></div>
+      <section className="relative bg-gradient-inspire text-background overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
           <div className="text-center">
-            <Badge className="mb-6 bg-white/20 text-white border-white/30 hover:bg-white/30">
+            <Badge className="mb-6 bg-background/20 text-background border-background/30 hover:bg-background/30">
               🇸🇾 Connecting Syrian Voices Worldwide
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
               Your Gateway to
-              <span className="block text-yellow-300">Syrian Knowledge</span>
+              <span className="block text-warning">Syrian Knowledge</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-4 text-white/90 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl mb-4 text-background/90 max-w-4xl mx-auto leading-relaxed">
               Connect with Syrian experts, ask questions, share news, and engage in meaningful 
               discussions about Syria's present and future
             </p>
-            <p className="text-lg mb-8 text-yellow-200 font-medium">
+            <p className="text-lg mb-8 text-warning font-medium">
               {t('platformTagline', 'Where Syrian Expertise Meets Global Community')}
             </p>
             
             {!user && (
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <Button size="lg" className="bg-white text-syrian-green hover:bg-gray-100 font-semibold shadow-lg px-8">
+                <Button size="lg" className="bg-background text-primary hover:bg-background/90 font-semibold shadow-lg px-8">
                   <MessageSquare className="w-5 h-5 mr-2" />
                   Ask a Question
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-syrian-green font-semibold px-8">
+                <Button size="lg" variant="outline" className="border-background text-background hover:bg-background hover:text-primary font-semibold px-8">
                   <Users className="w-5 h-5 mr-2" />
                   Join as Expert
                 </Button>
@@ -123,11 +123,11 @@ const LandingPage = () => {
             {/* Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
               {stats.map((stat, index) => (
-                <Card key={index} className="bg-white/10 border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all duration-300">
+                <Card key={index} className="bg-background/10 border-background/20 backdrop-blur-sm hover:bg-background/20 transition-all duration-300">
                   <CardContent className="p-6 text-center">
                     <stat.icon className={`w-8 h-8 mx-auto mb-2 ${stat.color}`} />
-                    <div className="text-2xl font-bold text-white">{stat.value}</div>
-                    <div className="text-white/80 text-sm">{stat.label}</div>
+                    <div className="text-2xl font-bold text-background">{stat.value}</div>
+                    <div className="text-background/80 text-sm">{stat.label}</div>
                   </CardContent>
                 </Card>
               ))}
@@ -137,36 +137,36 @@ const LandingPage = () => {
       </section>
 
       {/* Expertise Areas Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Expertise Areas & Discussions
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Get expert insights and engage in discussions across various topics relevant to Syria
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {expertiseAreas.map((area, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow duration-300 border-l-4 border-l-syrian-green">
+              <Card key={index} className="hover:shadow-lg transition-shadow duration-300 border-l-4 border-l-primary">
                 <CardHeader>
                   <div className="flex items-center space-x-3 mb-4">
-                    <div className="p-2 bg-syrian-green/10 rounded-lg">
-                      <area.icon className="w-6 h-6 text-syrian-green" />
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <area.icon className="w-6 h-6 text-primary" />
                     </div>
-                    <Badge variant="outline" className="text-syrian-green border-syrian-green">
+                    <Badge variant="outline" className="text-primary border-primary">
                       {area.experts}
                     </Badge>
                   </div>
-                  <CardTitle className="text-xl font-bold text-gray-900">
+                  <CardTitle className="text-xl font-bold text-foreground">
                     {area.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 mb-4">{area.description}</p>
-                  <Button variant="outline" className="w-full border-syrian-green text-syrian-green hover:bg-syrian-green hover:text-white">
+                  <p className="text-muted-foreground mb-4">{area.description}</p>
+                  <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                     Browse Questions
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
@@ -178,13 +178,13 @@ const LandingPage = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               How Our Platform Works
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               A comprehensive hub for Syrian knowledge sharing and community discussions
             </p>
           </div>
@@ -194,10 +194,10 @@ const LandingPage = () => {
               <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-300">
                 <CardContent className="p-8">
                   <div className="p-3 bg-gradient-inspire rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                    <feature.icon className="w-8 h-8 text-white" />
+                    <feature.icon className="w-8 h-8 text-background" />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.description}</p>
+                  <h3 className="text-lg font-semibold text-foreground mb-3">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -206,41 +206,41 @@ const LandingPage = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
                 Why Choose SyrVest for Syrian Knowledge?
               </h2>
-              <p className="text-xl text-gray-600 mb-8">
+              <p className="text-xl text-muted-foreground mb-8">
                 We provide a trusted platform where Syrian experts and community members 
                 can share knowledge, discuss important topics, and stay connected.
               </p>
               <div className="space-y-4">
                 {benefits.map((benefit, index) => (
                   <div key={index} className="flex items-start space-x-3">
-                    <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700">{benefit}</span>
+                    <CheckCircle className="w-6 h-6 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground">{benefit}</span>
                   </div>
                 ))}
               </div>
             </div>
             <div className="relative">
-              <Card className="p-8 bg-gradient-to-br from-syrian-green/5 to-syrian-red/5 border-syrian-green/20">
+              <Card className="p-8 bg-gradient-to-br from-primary/5 to-secondary/5 border-primary/20">
                 <CardContent>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-syrian-green mb-2">10K+</div>
-                    <div className="text-gray-600 mb-6">Questions Answered</div>
+                    <div className="text-4xl font-bold text-primary mb-2">10K+</div>
+                    <div className="text-muted-foreground mb-6">Questions Answered</div>
                     
                     <div className="grid grid-cols-2 gap-4 text-center">
                       <div>
-                        <div className="text-2xl font-bold text-syrian-red">500+</div>
-                        <div className="text-sm text-gray-600">News Articles</div>
+                        <div className="text-2xl font-bold text-secondary">500+</div>
+                        <div className="text-sm text-muted-foreground">News Articles</div>
                       </div>
                       <div>
-                        <div className="text-2xl font-bold text-syrian-red">25+</div>
-                        <div className="text-sm text-gray-600">Countries</div>
+                        <div className="text-2xl font-bold text-secondary">25+</div>
+                        <div className="text-sm text-muted-foreground">Countries</div>
                       </div>
                     </div>
                   </div>
@@ -252,28 +252,28 @@ const LandingPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-inspire text-white">
+      <section className="py-20 bg-gradient-inspire text-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Ready to Connect with Syrian Experts?
           </h2>
-          <p className="text-xl mb-8 text-white/90">
+          <p className="text-xl mb-8 text-background/90">
             Join thousands of Syrians and friends of Syria who are sharing knowledge and building community
           </p>
           
           {!user ? (
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-white text-syrian-green hover:bg-gray-100 font-semibold px-8">
+              <Button size="lg" className="bg-background text-primary hover:bg-background/90 font-semibold px-8">
                 <HelpCircle className="w-5 h-5 mr-2" />
                 Ask Your First Question
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-syrian-green font-semibold px-8">
+              <Button size="lg" variant="outline" className="border-background text-background hover:bg-background hover:text-primary font-semibold px-8">
                 <Newspaper className="w-5 h-5 mr-2" />
                 Share News & Insights
               </Button>
             </div>
           ) : (
-            <Button size="lg" className="bg-white text-syrian-green hover:bg-gray-100 font-semibold px-8">
+            <Button size="lg" className="bg-background text-primary hover:bg-background/90 font-semibold px-8">
               <MessageSquare className="w-5 h-5 mr-2" />
               Start Discussing
             </Button>

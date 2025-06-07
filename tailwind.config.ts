@@ -71,12 +71,12 @@ export default {
 					DEFAULT: 'hsl(var(--warning))',
 					foreground: 'hsl(var(--warning-foreground))'
 				},
-				// Syrian flag inspired colors
-				syrian: {
-					green: '#2d7d32', // Deep Syrian green
-					red: '#d32f2f', // Syrian red
-					white: '#ffffff', // Pure white
-					black: '#212121', // Deep black
+				// Professional and inspirational colors
+				professional: {
+					blue: '#3b82f6', // Professional blue
+					purple: '#8b5cf6', // Inspiring purple
+					green: '#059669', // Growth green
+					orange: '#ea580c', // Energetic orange
 				}
 			},
 			borderRadius: {
@@ -89,9 +89,9 @@ export default {
 				arabic: ['Amiri', 'serif'],
 			},
 			backgroundImage: {
-				'gradient-inspire': 'linear-gradient(135deg, #2d7d32 0%, #d32f2f 50%, #388e3c 100%)',
-				'gradient-success': 'linear-gradient(135deg, #2d7d32 0%, #388e3c 100%)',
-				'gradient-energy': 'linear-gradient(135deg, #d32f2f 0%, #f44336 100%)',
+				'gradient-inspire': 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #059669 100%)',
+				'gradient-success': 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+				'gradient-energy': 'linear-gradient(135deg, #ea580c 0%, #dc2626 100%)',
 			},
 			keyframes: {
 				'accordion-down': {
