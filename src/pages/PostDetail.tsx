@@ -123,19 +123,19 @@ const PostDetail = () => {
           id: comment.id,
           content: comment.content,
           author: {
-            id: data.profiles.id,
-            email: data.profiles.email,
-            name: data.profiles.name,
-            expertise: data.profiles.expertise as ExpertiseType,
-            location: data.profiles.location as 'syria' | 'international',
-            accessLevel: data.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
-            verified: data.profiles.verified,
-            avatar: data.profiles.avatar,
-            joinedAt: new Date(data.profiles.created_at),
+            id: comment.profiles.id,
+            email: comment.profiles.email,
+            name: comment.profiles.name,
+            expertise: comment.profiles.expertise as ExpertiseType,
+            location: comment.profiles.location as 'syria' | 'international',
+            accessLevel: comment.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
+            verified: comment.profiles.verified,
+            avatar: comment.profiles.avatar,
+            joinedAt: new Date(comment.profiles.created_at),
           } as UserType,
           postId: comment.post_id,
           answerId: comment.answer_id,
-          createdAt: new Date(data.created_at),
+          createdAt: new Date(comment.created_at),
         })) as Comment[],
       };
 
@@ -143,7 +143,6 @@ const PostDetail = () => {
     },
   });
 
-  // Add delete post mutation
   const deletePostMutation = useMutation({
     mutationFn: async () => {
       if (!user || !id) throw new Error('User must be logged in');
