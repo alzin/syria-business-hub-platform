@@ -23,8 +23,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     navigate(`/post/${post.id}`);
   };
 
-  const handleViewUser = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleViewUser = () => {
     navigate(`/user/${post.author.id}`);
   };
 
