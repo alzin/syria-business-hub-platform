@@ -176,13 +176,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     console.log('Logging out...');
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error('Error logging out:', error);
-    } else {
+    
+    try {
+      // Clear local state first to provide immediate feedback
       setUser(null);
       setSession(null);
-      console.log('Logout successful');
+      
+      // Then attempt to sign out from Supabase
+      // If there's no session, this might fail, but that's okay
+      const { error } = await supabase.auth.signOut();
+      
+      if (error) {
+        console.warn('Logout warning (but continuing):', error.message);
+        // Don't throw the error since we've already cleared local state
+        // This handles cases where the session is already expired or missing
+      } else {
+        console.log('Logout successful');
+      }
+    } catch (error) {
+      console.warn('Logout error (but continuing):', error);
+      // Even if logout fails on the server side, we've cleared local state
+      // so the user appears logged out in the UI
     }
   };
 
