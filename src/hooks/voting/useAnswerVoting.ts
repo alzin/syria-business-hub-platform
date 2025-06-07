@@ -64,26 +64,17 @@ export const useAnswerVoting = () => {
         if (error) throw error;
       }
 
-      // Manually update the answer vote count
-      const { data: votes, error: votesError } = await supabase
-        .from('votes')
-        .select('vote_type')
-        .eq('answer_id', answerId);
-
-      if (votesError) throw votesError;
-
-      const voteCount = votes.reduce((sum, vote) => {
-        return sum + (vote.vote_type === 'up' ? 1 : -1);
-      }, 0);
-
-      const { error: updateError } = await supabase
+      // Let the database trigger handle the vote count update
+      // Just fetch the updated answer to get the new vote count
+      const { data: updatedAnswer, error: updateError } = await supabase
         .from('answers')
-        .update({ votes: voteCount })
-        .eq('id', answerId);
+        .select('votes')
+        .eq('id', answerId)
+        .single();
 
       if (updateError) throw updateError;
 
-      return { voteCount, postId: answer.post_id };
+      return { voteCount: updatedAnswer.votes, postId: answer.post_id };
     },
     onSuccess: ({ voteCount, postId }, variables) => {
       updateAnswerVoteCache(queryClient, postId, variables.answerId, voteCount, user?.id);

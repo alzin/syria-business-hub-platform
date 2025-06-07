@@ -64,28 +64,20 @@ export const usePostVoting = () => {
         if (error) throw error;
       }
 
-      // Manually update the post vote count
-      const { data: votes, error: votesError } = await supabase
-        .from('votes')
-        .select('vote_type')
-        .eq('post_id', postId);
-
-      if (votesError) throw votesError;
-
-      const voteCount = votes.reduce((sum, vote) => {
-        return sum + (vote.vote_type === 'up' ? 1 : -1);
-      }, 0);
-
-      const { error: updateError } = await supabase
+      // Let the database trigger handle the vote count update
+      // Just fetch the updated post to get the new vote count
+      const { data: updatedPost, error: updateError } = await supabase
         .from('posts')
-        .update({ votes: voteCount })
-        .eq('id', postId);
+        .select('votes')
+        .eq('id', postId)
+        .single();
 
       if (updateError) throw updateError;
 
-      return voteCount;
+      return updatedPost.votes;
     },
     onSuccess: (newVoteCount, variables) => {
+      // Update cache with the new vote count from database
       updatePostVoteCache(queryClient, variables.postId, newVoteCount, user?.id);
 
       toast({
