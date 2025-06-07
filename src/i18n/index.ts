@@ -7,15 +7,15 @@ const resources = {
     translation: {
       // Navigation
       home: "Home",
-      questions: "Questions",
-      news: "News",
-      experts: "Experts",
+      questions: "Investment Q&A",
+      news: "Market News",
+      experts: "Investment Experts",
       profile: "Profile",
       admin: "Admin",
       
       // Authentication
       login: "Login",
-      register: "Register",
+      register: "Join Platform",
       logout: "Logout",
       email: "Email",
       password: "Password",
@@ -24,27 +24,23 @@ const resources = {
       
       // Platform
       platformName: "SyriaTech Rise",
-      platformTagline: "Where Innovation Meets Heritage",
+      platformTagline: "Where Global Capital Meets Syrian Innovation",
       appName: "SyriaTech Rise",
-      welcomeTitle: "Empowering Syrian Innovation Worldwide",
-      welcomeSubtitle: "Connect, innovate, and rise together - bridging Syria with global opportunities",
-      getStarted: "Start Rising",
-      learnMore: "Explore Opportunities",
+      welcomeTitle: "Connecting Global Investors with Syrian Innovation",
+      welcomeSubtitle: "Discover investment opportunities, connect with entrepreneurs, and be part of Syria's economic renaissance",
+      getStarted: "Start Investing",
+      learnMore: "List Your Startup",
       
       // Posts
-      askQuestion: "Ask Question",
-      postNews: "Share News",
-      postArticle: "Post Article",
+      askQuestion: "Ask Investment Question",
+      postNews: "Share Market News",
+      postArticle: "Post Investment Insight",
       categories: "Categories",
       tags: "Tags",
       answers: "Answers",
       comments: "Comments",
       votes: "Votes",
       views: "Views",
-      
-      // Post types
-      question: "Question",
-      article: "Article",
       
       // Actions
       submit: "Submit",
@@ -202,15 +198,15 @@ const resources = {
     translation: {
       // Navigation
       home: "الرئيسية",
-      questions: "الأسئلة",
-      news: "الأخبار", 
-      experts: "الخبراء",
+      questions: "أسئلة الاستثمار",
+      news: "أخبار السوق",
+      experts: "خبراء الاستثمار",
       profile: "الملف الشخصي",
       admin: "الإدارة",
       
       // Authentication
       login: "تسجيل الدخول",
-      register: "إنشاء حساب",
+      register: "انضم للمنصة",
       logout: "تسجيل الخروج",
       email: "البريد الإلكتروني",
       password: "كلمة المرور",
@@ -219,27 +215,23 @@ const resources = {
       
       // Platform
       platformName: "سوريا تك رايز",
-      platformTagline: "حيث يلتقي الابتكار بالتراث",
+      platformTagline: "حيث يلتقي رأس المال العالمي بالابتكار السوري",
       appName: "سوريا تك رايز",
-      welcomeTitle: "تمكين الابتكار السوري عالمياً",
-      welcomeSubtitle: "تواصل وابتكر وانهض معاً - ربط سوريا بالفرص العالمية",
-      getStarted: "ابدأ النهوض",
-      learnMore: "استكشف الفرص",
+      welcomeTitle: "ربط المستثمرين العالميين بالابتكار السوري",
+      welcomeSubtitle: "اكتشف فرص الاستثمار، تواصل مع رواد الأعمال، وكن جزءاً من النهضة الاقتصادية السورية",
+      getStarted: "ابدأ الاستثمار",
+      learnMore: "أدرج شركتك الناشئة",
       
       // Posts
-      askQuestion: "اطرح سؤالاً",
-      postNews: "شارك خبراً",
-      postArticle: "انشر مقالاً",
+      askQuestion: "اطرح سؤال استثماري",
+      postNews: "شارك أخبار السوق",
+      postArticle: "انشر رؤية استثمارية",
       categories: "الفئات",
       tags: "العلامات",
       answers: "الإجابات",
       comments: "التعليقات",
       votes: "الأصوات",
       views: "المشاهدات",
-      
-      // Post types
-      question: "سؤال",
-      article: "مقال",
       
       // Actions
       submit: "إرسال",
