@@ -12,8 +12,9 @@ import {
   TrendingUp, 
   Building2, 
   Lightbulb, 
-  DollarSign,
-  Target,
+  BookOpen,
+  HelpCircle,
+  Newspaper,
   Shield,
   Network,
   ArrowRight,
@@ -25,63 +26,63 @@ const LandingPage = () => {
   const { user } = useAuth();
 
   const stats = [
-    { icon: DollarSign, label: 'Investment Opportunities', value: '500+', color: 'text-green-600' },
-    { icon: Building2, label: 'Startups Connected', value: '250+', color: 'text-blue-600' },
-    { icon: Globe, label: 'Countries Represented', value: '35+', color: 'text-purple-600' },
-    { icon: TrendingUp, label: 'Success Rate', value: '89%', color: 'text-orange-600' },
+    { icon: MessageSquare, label: 'Active Discussions', value: '1,200+', color: 'text-green-600' },
+    { icon: Users, label: 'Syrian Experts', value: '250+', color: 'text-blue-600' },
+    { icon: Globe, label: 'Countries Connected', value: '35+', color: 'text-purple-600' },
+    { icon: BookOpen, label: 'Knowledge Articles', value: '500+', color: 'text-orange-600' },
   ];
 
   const features = [
     {
-      icon: MessageSquare,
-      title: 'Investment Q&A Forum',
-      description: 'Connect with investors and entrepreneurs to discuss opportunities, ask questions, and share insights about the Syrian market.'
+      icon: HelpCircle,
+      title: 'Expert Q&A Forum',
+      description: 'Ask questions and get answers from verified Syrian experts across various fields including legal, technology, business, and more.'
     },
     {
-      icon: Network,
-      title: 'Startup Networking',
-      description: 'Build meaningful connections between Syrian entrepreneurs and international investors looking for emerging market opportunities.'
+      icon: Newspaper,
+      title: 'Syrian News Hub',
+      description: 'Stay updated with the latest news, developments, and insights about Syria from trusted sources and community members.'
     },
     {
       icon: Shield,
       title: 'Verified Expertise',
-      description: 'Access verified legal experts, investment advisors, and successful entrepreneurs who understand the Syrian business landscape.'
+      description: 'Connect with verified professionals including lawyers, doctors, engineers, entrepreneurs, and government representatives.'
     },
     {
-      icon: Target,
-      title: 'Market Intelligence',
-      description: 'Stay updated with the latest news, regulations, and opportunities in Syria\'s growing technology and business sectors.'
+      icon: Network,
+      title: 'Community Discussions',
+      description: 'Engage in meaningful discussions about Syrian affairs, share experiences, and build connections with the diaspora.'
     }
   ];
 
-  const investmentTypes = [
+  const expertiseAreas = [
     {
-      title: 'Tech Startups',
-      description: 'Innovative technology companies leveraging Syria\'s talented developer community',
-      opportunities: '120+ Active',
+      title: 'Legal & Compliance',
+      description: 'Get guidance on Syrian laws, regulations, and legal procedures from practicing attorneys',
+      experts: '45+ Legal Experts',
+      icon: Shield
+    },
+    {
+      title: 'Technology & Innovation',
+      description: 'Discuss tech developments, startup ecosystem, and digital transformation in Syria',
+      experts: '80+ Tech Professionals',
       icon: Lightbulb
     },
     {
-      title: 'Digital Products',
-      description: 'Software solutions, mobile apps, and digital services with global potential',
-      opportunities: '85+ Projects',
-      icon: Globe
-    },
-    {
-      title: 'Manufacturing',
-      description: 'Traditional industries modernizing with technology and seeking growth capital',
-      opportunities: '60+ Companies',
+      title: 'Business & Economy',
+      description: 'Insights on Syrian market conditions, business opportunities, and economic developments',
+      experts: '60+ Business Leaders',
       icon: Building2
     }
   ];
 
   const benefits = [
-    'Direct access to Syrian entrepreneurs and business opportunities',
-    'Legal guidance for international investment in Syria',
-    'Market insights from local experts and successful investors',
-    'Networking with verified business professionals',
-    'Due diligence support and risk assessment',
-    'Cultural bridge between international and local business practices'
+    'Direct access to Syrian experts and professionals',
+    'Real-time updates on Syrian news and developments',
+    'Verified answers from trusted community members',
+    'Multi-language support (Arabic and English)',
+    'Safe space for diaspora and local discussions',
+    'Educational resources about Syrian affairs'
   ];
 
   return (
@@ -92,29 +93,29 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
           <div className="text-center">
             <Badge className="mb-6 bg-white/20 text-white border-white/30 hover:bg-white/30">
-              🇸🇾 Connecting Syria with Global Investment
+              🇸🇾 Connecting Syrian Voices Worldwide
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-              Unlock Syria's
-              <span className="block text-yellow-300">Investment Potential</span>
+              Your Gateway to
+              <span className="block text-yellow-300">Syrian Knowledge</span>
             </h1>
             <p className="text-xl md:text-2xl mb-4 text-white/90 max-w-4xl mx-auto leading-relaxed">
-              The premier platform connecting international investors with Syrian entrepreneurs, 
-              startups, and digital innovation opportunities
+              Connect with Syrian experts, ask questions, share news, and engage in meaningful 
+              discussions about Syria's present and future
             </p>
             <p className="text-lg mb-8 text-yellow-200 font-medium">
-              {t('platformTagline', 'Where Global Capital Meets Syrian Innovation')}
+              {t('platformTagline', 'Where Syrian Expertise Meets Global Community')}
             </p>
             
             {!user && (
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
                 <Button size="lg" className="bg-white text-syrian-green hover:bg-gray-100 font-semibold shadow-lg px-8">
-                  <DollarSign className="w-5 h-5 mr-2" />
-                  Start Investing
+                  <MessageSquare className="w-5 h-5 mr-2" />
+                  Ask a Question
                 </Button>
                 <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-syrian-green font-semibold px-8">
-                  <Building2 className="w-5 h-5 mr-2" />
-                  List Your Startup
+                  <Users className="w-5 h-5 mr-2" />
+                  Join as Expert
                 </Button>
               </div>
             )}
@@ -135,38 +136,38 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Investment Types Section */}
+      {/* Expertise Areas Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Investment Opportunities in Syria
+              Expertise Areas & Discussions
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Discover high-potential investment opportunities across various sectors in Syria's emerging economy
+              Get expert insights and engage in discussions across various topics relevant to Syria
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {investmentTypes.map((type, index) => (
+            {expertiseAreas.map((area, index) => (
               <Card key={index} className="hover:shadow-lg transition-shadow duration-300 border-l-4 border-l-syrian-green">
                 <CardHeader>
                   <div className="flex items-center space-x-3 mb-4">
                     <div className="p-2 bg-syrian-green/10 rounded-lg">
-                      <type.icon className="w-6 h-6 text-syrian-green" />
+                      <area.icon className="w-6 h-6 text-syrian-green" />
                     </div>
                     <Badge variant="outline" className="text-syrian-green border-syrian-green">
-                      {type.opportunities}
+                      {area.experts}
                     </Badge>
                   </div>
                   <CardTitle className="text-xl font-bold text-gray-900">
-                    {type.title}
+                    {area.title}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 mb-4">{type.description}</p>
+                  <p className="text-gray-600 mb-4">{area.description}</p>
                   <Button variant="outline" className="w-full border-syrian-green text-syrian-green hover:bg-syrian-green hover:text-white">
-                    Explore Opportunities
+                    Browse Questions
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </CardContent>
@@ -181,10 +182,10 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              How We Connect Investors & Entrepreneurs
+              How Our Platform Works
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our platform provides the tools and community you need to make informed investment decisions
+              A comprehensive hub for Syrian knowledge sharing and community discussions
             </p>
           </div>
 
@@ -210,11 +211,11 @@ const LandingPage = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Why Choose SyriaTech Rise for Your Investment Journey?
+                Why Choose SyriaTech Rise for Syrian Knowledge?
               </h2>
               <p className="text-xl text-gray-600 mb-8">
-                We bridge the gap between international capital and Syrian innovation, 
-                providing transparency, expertise, and community support every step of the way.
+                We provide a trusted platform where Syrian experts and community members 
+                can share knowledge, discuss important topics, and stay connected.
               </p>
               <div className="space-y-4">
                 {benefits.map((benefit, index) => (
@@ -229,13 +230,13 @@ const LandingPage = () => {
               <Card className="p-8 bg-gradient-to-br from-syrian-green/5 to-syrian-red/5 border-syrian-green/20">
                 <CardContent>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-syrian-green mb-2">$50M+</div>
-                    <div className="text-gray-600 mb-6">Total Investment Facilitated</div>
+                    <div className="text-4xl font-bold text-syrian-green mb-2">10K+</div>
+                    <div className="text-gray-600 mb-6">Questions Answered</div>
                     
                     <div className="grid grid-cols-2 gap-4 text-center">
                       <div>
-                        <div className="text-2xl font-bold text-syrian-red">150+</div>
-                        <div className="text-sm text-gray-600">Successful Deals</div>
+                        <div className="text-2xl font-bold text-syrian-red">500+</div>
+                        <div className="text-sm text-gray-600">News Articles</div>
                       </div>
                       <div>
                         <div className="text-2xl font-bold text-syrian-red">25+</div>
@@ -254,27 +255,27 @@ const LandingPage = () => {
       <section className="py-20 bg-gradient-inspire text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Ready to Discover Syria's Next Big Opportunity?
+            Ready to Connect with Syrian Experts?
           </h2>
           <p className="text-xl mb-8 text-white/90">
-            Join thousands of investors and entrepreneurs who are already building the future of Syrian business
+            Join thousands of Syrians and friends of Syria who are sharing knowledge and building community
           </p>
           
           {!user ? (
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-white text-syrian-green hover:bg-gray-100 font-semibold px-8">
-                <Users className="w-5 h-5 mr-2" />
-                Join as Investor
+                <HelpCircle className="w-5 h-5 mr-2" />
+                Ask Your First Question
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-syrian-green font-semibold px-8">
-                <Lightbulb className="w-5 h-5 mr-2" />
-                Join as Entrepreneur
+                <Newspaper className="w-5 h-5 mr-2" />
+                Share News & Insights
               </Button>
             </div>
           ) : (
             <Button size="lg" className="bg-white text-syrian-green hover:bg-gray-100 font-semibold px-8">
               <MessageSquare className="w-5 h-5 mr-2" />
-              Start Networking
+              Start Discussing
             </Button>
           )}
         </div>

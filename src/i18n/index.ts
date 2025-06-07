@@ -24,12 +24,12 @@ const resources = {
       
       // Platform
       platformName: "SyriaTech Rise",
-      platformTagline: "Where Global Capital Meets Syrian Innovation",
+      platformTagline: "Where Syrian Expertise Meets Global Community",
       appName: "SyriaTech Rise",
-      welcomeTitle: "Connecting Global Investors with Syrian Innovation",
-      welcomeSubtitle: "Discover investment opportunities, connect with entrepreneurs, and be part of Syria's economic renaissance",
-      getStarted: "Start Investing",
-      learnMore: "List Your Startup",
+      welcomeTitle: "Connecting Syrian Voices Worldwide",
+      welcomeSubtitle: "Connect with Syrian experts, ask questions, share news, and engage in meaningful discussions about Syria",
+      getStarted: "Ask a Question",
+      learnMore: "Join as Expert",
       
       // Posts
       askQuestion: "Ask Investment Question",
@@ -215,12 +215,12 @@ const resources = {
       
       // Platform
       platformName: "سوريا تك رايز",
-      platformTagline: "حيث يلتقي رأس المال العالمي بالابتكار السوري",
+      platformTagline: "حيث تلتقي الخبرة السورية بالمجتمع العالمي",
       appName: "سوريا تك رايز",
-      welcomeTitle: "ربط المستثمرين العالميين بالابتكار السوري",
-      welcomeSubtitle: "اكتشف فرص الاستثمار، تواصل مع رواد الأعمال، وكن جزءاً من النهضة الاقتصادية السورية",
-      getStarted: "ابدأ الاستثمار",
-      learnMore: "أدرج شركتك الناشئة",
+      welcomeTitle: "ربط الأصوات السورية حول العالم",
+      welcomeSubtitle: "تواصل مع الخبراء السوريين، اطرح الأسئلة، شارك الأخبار، وشارك في نقاشات مهمة حول سوريا",
+      getStarted: "اطرح سؤال",
+      learnMore: "انضم كخبير",
       
       // Posts
       askQuestion: "اطرح سؤال استثماري",
@@ -300,7 +300,7 @@ const resources = {
       answerDeleted: "تم حذف الإجابة!",
       answerDeletedDesc: "تم حذف إجابتك بنجاح.",
       commentDeleted: "تم حذف التعليق!",
-      commentDeletedDesc: "تم حذف تعليقك بنجاح.",
+      commentDeletedDesc: "تم تحديث تعليقك بنجاح.",
       postDeleted: "تم حذف المنشور!",
       postDeletedDesc: "تم حذف منشورك بنجاح.",
       questionPosted: "تم نشر السؤال!",

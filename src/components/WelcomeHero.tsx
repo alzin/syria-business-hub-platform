@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { MessageSquare, DollarSign, Building2, TrendingUp } from 'lucide-react';
+import { MessageSquare, Users, BookOpen, HelpCircle } from 'lucide-react';
 
 const WelcomeHero = () => {
   const { t } = useTranslation();
@@ -12,9 +12,9 @@ const WelcomeHero = () => {
 
   const stats = [
     { icon: MessageSquare, label: 'Active Discussions', value: '1,200+' },
-    { icon: DollarSign, label: 'Investment Ready', value: '$50M+' },
-    { icon: Building2, label: 'Startups Listed', value: '250+' },
-    { icon: TrendingUp, label: 'Success Rate', value: '89%' },
+    { icon: Users, label: 'Syrian Experts', value: '250+' },
+    { icon: BookOpen, label: 'Knowledge Articles', value: '500+' },
+    { icon: HelpCircle, label: 'Questions Answered', value: '10K+' },
   ];
 
   return (
@@ -23,24 +23,24 @@ const WelcomeHero = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-            {t('welcomeTitle', 'Connecting Global Investors with Syrian Innovation')}
+            {t('welcomeTitle', 'Connecting Syrian Voices Worldwide')}
           </h1>
           <p className="text-xl md:text-2xl mb-4 text-white/90 max-w-3xl mx-auto">
-            {t('welcomeSubtitle', 'Discover investment opportunities, connect with entrepreneurs, and be part of Syria\'s economic renaissance')}
+            {t('welcomeSubtitle', 'Connect with Syrian experts, ask questions, share news, and engage in meaningful discussions about Syria')}
           </p>
           <p className="text-lg mb-8 text-yellow-200 font-medium">
-            {t('platformTagline', 'Where Global Capital Meets Syrian Innovation')}
+            {t('platformTagline', 'Where Syrian Expertise Meets Global Community')}
           </p>
           
           {!user && (
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Button size="lg" className="bg-white text-syrian-green hover:bg-white/90 font-semibold shadow-lg">
-                <DollarSign className="w-5 h-5 mr-2" />
-                {t('getStarted', 'Start Investing')}
+                <MessageSquare className="w-5 h-5 mr-2" />
+                {t('getStarted', 'Ask a Question')}
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-syrian-green font-semibold">
-                <Building2 className="w-5 h-5 mr-2" />
-                {t('learnMore', 'List Your Startup')}
+                <Users className="w-5 h-5 mr-2" />
+                {t('learnMore', 'Join as Expert')}
               </Button>
             </div>
           )}
