@@ -1,13 +1,13 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import ExpertiseBadge from '@/components/ExpertiseBadge';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { formatDistanceToNow } from 'date-fns';
+import { Button } from '@/components/ui/button';
+import { ThumbsUp, MessageSquare, Calendar, User, ArrowRight } from 'lucide-react';
 import { Post } from '@/types';
-import ExpertiseBadge from './ExpertiseBadge';
-import { MessageCircle, ThumbsUp } from 'lucide-react';
 
 interface PostCardProps {
   post: Post;
@@ -15,82 +15,97 @@ interface PostCardProps {
 
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
-  const categoryColors = {
-    legal: 'bg-blue-100 text-blue-800',
-    technology: 'bg-green-100 text-green-800',
-    investment: 'bg-purple-100 text-purple-800',
-    marketing: 'bg-orange-100 text-orange-800',
-    operations: 'bg-gray-100 text-gray-800',
+  const handleViewPost = () => {
+    navigate(`/post/${post.id}`);
+  };
+
+  const handleViewUser = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigate(`/user/${post.author.id}`);
+  };
+
+  const truncateContent = (content: string, maxLength: number = 200) => {
+    if (content.length <= maxLength) return content;
+    return content.substring(0, maxLength) + '...';
   };
 
   return (
-    <Card className="hover:shadow-md transition-shadow duration-200 border-l-4 border-l-blue-500">
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex items-center space-x-3">
-            <Avatar className="w-10 h-10">
-              <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white">
-                {post.author.name.charAt(0).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="font-medium text-gray-900">{post.author.name}</span>
-                <ExpertiseBadge 
-                  expertise={post.author.expertise} 
-                  verified={post.author.verified}
-                  size="sm"
-                />
-              </div>
-              <p className="text-sm text-gray-500">
-                {formatDistanceToNow(post.createdAt, { addSuffix: true })}
-              </p>
-            </div>
+    <Card className="hover:shadow-md transition-shadow cursor-pointer" onClick={handleViewPost}>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <Badge variant={post.type === 'question' ? 'default' : 'secondary'}>
+              {post.type === 'question' ? t('question') : t('news')}
+            </Badge>
+            <Badge variant="outline">{t(post.category)}</Badge>
           </div>
-          <Badge 
-            variant="secondary" 
-            className={`${categoryColors[post.category]} font-medium`}
-          >
-            {t(post.category)}
-          </Badge>
+          <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); handleViewPost(); }}>
+            <ArrowRight className="w-4 h-4" />
+          </Button>
         </div>
+        <h3 className="text-xl font-semibold text-gray-900 line-clamp-2">{post.title}</h3>
       </CardHeader>
       
       <CardContent>
-        <h3 className="text-lg font-semibold text-gray-900 mb-3 leading-tight">
-          {post.title}
-        </h3>
-        
-        <p className="text-gray-700 mb-4 line-clamp-3">
-          {post.content}
-        </p>
-        
-        {post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-4">
-            {post.tags.map((tag, index) => (
+        <div className="mb-4">
+          <p className="text-gray-700 text-sm line-clamp-3">
+            {truncateContent(post.content)}
+          </p>
+        </div>
+
+        {/* Tags */}
+        {post.tags && post.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1 mb-4">
+            {post.tags.slice(0, 3).map((tag, index) => (
               <Badge key={index} variant="outline" className="text-xs">
-                #{tag}
+                {tag}
               </Badge>
             ))}
+            {post.tags.length > 3 && (
+              <Badge variant="outline" className="text-xs">
+                +{post.tags.length - 3} more
+              </Badge>
+            )}
           </div>
         )}
-        
-        <div className="flex items-center justify-between text-sm text-gray-500">
-          <div className="flex items-center space-x-4">
+
+        {/* Author and stats */}
+        <div className="flex items-center justify-between pt-4 border-t">
+          <div 
+            className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 rounded-lg p-2 -m-2 transition-colors"
+            onClick={handleViewUser}
+          >
+            <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+              {post.author.avatar ? (
+                <img src={post.author.avatar} alt={post.author.name} className="w-8 h-8 rounded-full" />
+              ) : (
+                <User className="w-4 h-4 text-gray-500" />
+              )}
+            </div>
+            <div>
+              <p className="font-medium text-gray-900 text-sm">{post.author.name}</p>
+              <ExpertiseBadge expertise={post.author.expertise} verified={post.author.verified} size="sm" />
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-4 text-sm text-gray-500">
+            <div className="flex items-center space-x-1">
+              <Calendar className="w-4 h-4" />
+              <span>{post.createdAt.toLocaleDateString()}</span>
+            </div>
             <div className="flex items-center space-x-1">
               <ThumbsUp className="w-4 h-4" />
               <span>{post.votes}</span>
             </div>
-            <div className="flex items-center space-x-1">
-              <MessageCircle className="w-4 h-4" />
-              <span>{post.answers?.length || 0} {t('answers')}</span>
-            </div>
+            {post.type === 'question' && (
+              <div className="flex items-center space-x-1">
+                <MessageSquare className="w-4 h-4" />
+                <span>{post.answers?.length || 0}</span>
+              </div>
+            )}
           </div>
-          
-          <Badge variant="outline" className="text-xs">
-            {post.type === 'question' ? '❓ Question' : '📰 News'}
-          </Badge>
         </div>
       </CardContent>
     </Card>
