@@ -22,6 +22,16 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ open, onOpenChange, onSwitchT
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!email || !password) {
+      toast({
+        title: "Missing information",
+        description: "Please enter both email and password.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -34,9 +44,21 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ open, onOpenChange, onSwitchT
       setEmail('');
       setPassword('');
     } catch (error: any) {
+      console.error('Login failed:', error);
+      
+      let errorMessage = "Please check your credentials and try again.";
+      
+      if (error.message?.includes('Invalid login credentials')) {
+        errorMessage = "Invalid email or password. Please try again.";
+      } else if (error.message?.includes('Email not confirmed')) {
+        errorMessage = "Please check your email and confirm your account before logging in.";
+      } else if (error.message?.includes('Too many requests')) {
+        errorMessage = "Too many login attempts. Please wait a moment before trying again.";
+      }
+      
       toast({
         title: "Login failed",
-        description: error.message || "Please check your credentials and try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -44,8 +66,16 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ open, onOpenChange, onSwitchT
     }
   };
 
+  const handleDialogClose = (open: boolean) => {
+    if (!open && !isLoading) {
+      setEmail('');
+      setPassword('');
+    }
+    onOpenChange(open);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t('login')}</DialogTitle>
@@ -59,6 +89,8 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ open, onOpenChange, onSwitchT
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={isLoading}
+              autoComplete="email"
             />
           </div>
           
@@ -69,6 +101,8 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ open, onOpenChange, onSwitchT
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              disabled={isLoading}
+              autoComplete="current-password"
             />
           </div>
           
@@ -78,7 +112,11 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ open, onOpenChange, onSwitchT
         </form>
         
         <div className="text-center">
-          <Button variant="link" onClick={onSwitchToRegister}>
+          <Button 
+            variant="link" 
+            onClick={onSwitchToRegister}
+            disabled={isLoading}
+          >
             Don't have an account? {t('register')}
           </Button>
         </div>

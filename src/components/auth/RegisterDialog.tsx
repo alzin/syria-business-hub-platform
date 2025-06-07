@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
@@ -30,6 +31,25 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!email || !password || !name) {
+      toast({
+        title: "Missing information",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      toast({
+        title: "Password too short",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -37,7 +57,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
       
       toast({
         title: "Welcome!",
-        description: "Your account has been created successfully.",
+        description: "Your account has been created successfully. Please check your email to confirm your account.",
       });
       
       onOpenChange(false);
@@ -48,9 +68,21 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
       setExpertise('founder');
       setLocation('international');
     } catch (error: any) {
+      console.error('Registration failed:', error);
+      
+      let errorMessage = "Please try again.";
+      
+      if (error.message?.includes('User already registered')) {
+        errorMessage = "An account with this email already exists. Please try logging in instead.";
+      } else if (error.message?.includes('Password should be at least 6 characters')) {
+        errorMessage = "Password must be at least 6 characters long.";
+      } else if (error.message?.includes('Invalid email')) {
+        errorMessage = "Please enter a valid email address.";
+      }
+      
       toast({
         title: "Registration failed",
-        description: error.message || "Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -58,8 +90,19 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
     }
   };
 
+  const handleDialogClose = (open: boolean) => {
+    if (!open && !isLoading) {
+      setEmail('');
+      setPassword('');
+      setName('');
+      setExpertise('founder');
+      setLocation('international');
+    }
+    onOpenChange(open);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{t('register')}</DialogTitle>
@@ -73,6 +116,8 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              disabled={isLoading}
+              autoComplete="name"
             />
           </div>
 
@@ -83,6 +128,8 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={isLoading}
+              autoComplete="email"
             />
           </div>
           
@@ -94,11 +141,17 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
+              disabled={isLoading}
+              autoComplete="new-password"
             />
           </div>
 
           <div>
-            <Select value={expertise} onValueChange={(value: ExpertiseType) => setExpertise(value)}>
+            <Select 
+              value={expertise} 
+              onValueChange={(value: ExpertiseType) => setExpertise(value)}
+              disabled={isLoading}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select your expertise" />
               </SelectTrigger>
@@ -113,7 +166,11 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
           </div>
 
           <div>
-            <Select value={location} onValueChange={(value: 'syria' | 'international') => setLocation(value)}>
+            <Select 
+              value={location} 
+              onValueChange={(value: 'syria' | 'international') => setLocation(value)}
+              disabled={isLoading}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select your location" />
               </SelectTrigger>
@@ -130,7 +187,11 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
         </form>
         
         <div className="text-center">
-          <Button variant="link" onClick={onSwitchToLogin}>
+          <Button 
+            variant="link" 
+            onClick={onSwitchToLogin}
+            disabled={isLoading}
+          >
             Already have an account? {t('login')}
           </Button>
         </div>

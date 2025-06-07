@@ -1,11 +1,12 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User as SupabaseUser } from '@supabase/supabase-js';
+import { User as SupabaseUser, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { User, GeolocationData, ExpertiseType } from '@/types';
 
 interface AuthContextType {
   user: User | null;
+  session: Session | null;
   geolocation: GeolocationData | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
@@ -25,43 +26,66 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [geolocation, setGeolocation] = useState<GeolocationData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Get initial session
+    let isMounted = true;
+
+    // Set up auth state listener FIRST
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state changed:', event, session?.user?.id);
+      
+      if (!isMounted) return;
+
+      setSession(session);
+      
+      if (session?.user) {
+        // Defer profile fetching to avoid blocking the auth state change
+        setTimeout(() => {
+          if (isMounted) {
+            fetchUserProfile(session.user);
+          }
+        }, 0);
+      } else {
+        setUser(null);
+      }
+      
+      setIsLoading(false);
+    });
+
+    // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!isMounted) return;
+      
+      setSession(session);
       if (session?.user) {
         fetchUserProfile(session.user);
       }
       setIsLoading(false);
     });
 
-    // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (session?.user) {
-        await fetchUserProfile(session.user);
-      } else {
-        setUser(null);
-      }
-      setIsLoading(false);
-    });
-
-    // Detect geolocation
+    // Detect geolocation only once on mount
     detectGeolocation();
 
-    return () => subscription.unsubscribe();
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const fetchUserProfile = async (supabaseUser: SupabaseUser) => {
     try {
+      console.log('Fetching profile for user:', supabaseUser.id);
+      
       const { data: profile, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', supabaseUser.id)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error('Error fetching profile:', error);
@@ -81,6 +105,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           joinedAt: new Date(profile.created_at),
         };
         setUser(userProfile);
+        console.log('Profile loaded successfully:', userProfile.name);
+      } else {
+        console.warn('No profile found for user:', supabaseUser.id);
       }
     } catch (error) {
       console.error('Error in fetchUserProfile:', error);
@@ -88,7 +115,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const detectGeolocation = async () => {
+    // Only detect geolocation once and cache the result
+    if (geolocation) return;
+
     try {
+      console.log('Detecting geolocation...');
       const response = await fetch('https://ipapi.co/json/');
       const data = await response.json();
       const geoData: GeolocationData = {
@@ -109,17 +140,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const login = async (email: string, password: string) => {
+    console.log('Attempting login for:', email);
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
     if (error) {
+      console.error('Login error:', error);
       throw error;
     }
+    console.log('Login successful');
   };
 
   const register = async (email: string, password: string, name: string, expertise: ExpertiseType, location: 'syria' | 'international') => {
+    console.log('Attempting registration for:', email);
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -133,21 +168,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     if (error) {
+      console.error('Registration error:', error);
       throw error;
     }
+    console.log('Registration successful');
   };
 
   const logout = async () => {
+    console.log('Logging out...');
     const { error } = await supabase.auth.signOut();
     if (error) {
       console.error('Error logging out:', error);
+    } else {
+      setUser(null);
+      setSession(null);
+      console.log('Logout successful');
     }
-    setUser(null);
   };
 
   return (
     <AuthContext.Provider value={{
       user,
+      session,
       geolocation,
       isLoading,
       login,
