@@ -49,7 +49,7 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
 
   const updatePostMutation = useMutation({
     mutationFn: async () => {
-      if (!user) throw new Error('User must be logged in');
+      if (!user) throw new Error(t('userMustBeLoggedIn'));
 
       const { error } = await supabase
         .from('posts')
@@ -71,13 +71,13 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
       queryClient.invalidateQueries({ queryKey: ['user-posts'] });
       onOpenChange(false);
       toast({
-        title: "Post updated!",
-        description: "Your post has been updated successfully.",
+        title: t('postUpdated'),
+        description: t('postUpdatedDesc'),
       });
     },
     onError: (error: any) => {
       toast({
-        title: "Failed to update post",
+        title: t('failedToUpdate', { item: t('post') }),
         description: error.message,
         variant: "destructive",
       });
@@ -88,8 +88,8 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
     e.preventDefault();
     if (!title.trim() || !content.trim()) {
       toast({
-        title: "Missing information",
-        description: "Please fill in all required fields.",
+        title: t('missingInformation'),
+        description: t('fillAllFields'),
         variant: "destructive",
       });
       return;
@@ -120,17 +120,17 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {post.type === 'question' ? 'Edit Question' : 'Edit Article'}
+            {post.type === 'question' ? t('editPost') + ' - ' + t('question') : t('editPost') + ' - ' + t('article')}
           </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="title">Title *</Label>
+            <Label htmlFor="title">{t('title')} *</Label>
             <Input
               id="title"
               type="text"
-              placeholder={post.type === 'question' ? 'What is your question?' : 'Article title'}
+              placeholder={post.type === 'question' ? t('questionPlaceholder') : t('articlePlaceholder')}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -138,26 +138,26 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="category">Category *</Label>
+            <Label htmlFor="category">{t('category')} *</Label>
             <Select value={category} onValueChange={(value: CategoryType) => setCategory(value)} required>
               <SelectTrigger>
-                <SelectValue placeholder="Select a category" />
+                <SelectValue placeholder={t('selectCategory')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="legal">Legal</SelectItem>
-                <SelectItem value="technology">Technology</SelectItem>
-                <SelectItem value="investment">Investment</SelectItem>
-                <SelectItem value="marketing">Marketing</SelectItem>
-                <SelectItem value="operations">Operations</SelectItem>
+                <SelectItem value="legal">{t('legal')}</SelectItem>
+                <SelectItem value="technology">{t('technology')}</SelectItem>
+                <SelectItem value="investment">{t('investment')}</SelectItem>
+                <SelectItem value="marketing">{t('marketing')}</SelectItem>
+                <SelectItem value="operations">{t('operations')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="content">Content *</Label>
+            <Label htmlFor="content">{t('content')} *</Label>
             <Textarea
               id="content"
-              placeholder={post.type === 'question' ? 'Describe your question in detail...' : 'Write your article content...'}
+              placeholder={post.type === 'question' ? t('questionContentPlaceholder') : t('articleContentPlaceholder')}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={8}
@@ -166,7 +166,7 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="tags">Tags</Label>
+            <Label htmlFor="tags">{t('tags')}</Label>
             <div className="flex flex-wrap gap-2 mb-2">
               {tags.map((tag, index) => (
                 <Badge key={index} variant="secondary" className="flex items-center gap-1">
@@ -182,23 +182,23 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
               <Input
                 id="tags"
                 type="text"
-                placeholder="Add a tag and press Enter"
+                placeholder={t('addTagPlaceholder')}
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyPress={handleKeyPress}
               />
               <Button type="button" variant="outline" onClick={addTag}>
-                Add
+                {t('addTag')}
               </Button>
             </div>
           </div>
 
           <div className="flex justify-end space-x-2">
             <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-              Cancel
+              {t('cancel')}
             </Button>
             <Button type="submit" disabled={updatePostMutation.isPending}>
-              {updatePostMutation.isPending ? 'Updating...' : 'Update Post'}
+              {updatePostMutation.isPending ? t('updating') : t('updatePost')}
             </Button>
           </div>
         </form>

@@ -119,9 +119,9 @@ const UserProfile = () => {
         <div className="max-w-4xl mx-auto px-4 py-8">
           <Card>
             <CardContent className="text-center py-12">
-              <p className="text-gray-500">User not found</p>
+              <p className="text-gray-500">{t('userNotFound')}</p>
               <Button className="mt-4" onClick={() => navigate('/')}>
-                Go back home
+                {t('goBackHome')}
               </Button>
             </CardContent>
           </Card>
@@ -145,7 +145,7 @@ const UserProfile = () => {
           className="mb-6"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to posts
+          {t('backToPosts')}
         </Button>
 
         {/* User profile header */}
@@ -164,7 +164,7 @@ const UserProfile = () => {
                 <div className="flex items-center space-x-3 mb-2">
                   <h1 className="text-2xl font-bold text-gray-900">{userProfile.name}</h1>
                   {userProfile.verified && (
-                    <span className="text-blue-500 text-sm">✓ Verified</span>
+                    <span className="text-blue-500 text-sm">✓ {t('verified')}</span>
                   )}
                 </div>
                 
@@ -176,14 +176,14 @@ const UserProfile = () => {
                   </div>
                   <div className="flex items-center space-x-1 text-sm text-gray-500">
                     <Calendar className="w-4 h-4" />
-                    <span>Joined {userProfile.joinedAt.toLocaleDateString()}</span>
+                    <span>{t('joined')} {userProfile.joinedAt.toLocaleDateString()}</span>
                   </div>
                 </div>
 
                 <div className="flex items-center space-x-6 text-sm text-gray-600">
-                  <span>{userPosts?.length || 0} posts</span>
-                  <span>{questions.length} questions</span>
-                  <span>{news.length} news articles</span>
+                  <span>{userPosts?.length || 0} {t('posts')}</span>
+                  <span>{questions.length} {t('questionsLower')}</span>
+                  <span>{news.length} {t('newsLower')}</span>
                 </div>
               </div>
             </div>
@@ -193,14 +193,14 @@ const UserProfile = () => {
         {/* User's posts */}
         <Card>
           <CardHeader>
-            <CardTitle>Posts by {userProfile.name}</CardTitle>
+            <CardTitle>{t('posts')} {t('postedBy')} {userProfile.name}</CardTitle>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="all" className="w-full">
               <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="all">All Posts ({userPosts?.length || 0})</TabsTrigger>
-                <TabsTrigger value="questions">Questions ({questions.length})</TabsTrigger>
-                <TabsTrigger value="news">News ({news.length})</TabsTrigger>
+                <TabsTrigger value="all">{t('allPosts')} ({userPosts?.length || 0})</TabsTrigger>
+                <TabsTrigger value="questions">{t('questions')} ({questions.length})</TabsTrigger>
+                <TabsTrigger value="news">{t('news')} ({news.length})</TabsTrigger>
               </TabsList>
               
               <TabsContent value="all" className="mt-6">
@@ -212,7 +212,7 @@ const UserProfile = () => {
                   </div>
                 ) : (
                   <p className="text-gray-500 text-center py-8">
-                    This user hasn't posted anything yet.
+                    {t('noPostsFound')}
                   </p>
                 )}
               </TabsContent>
@@ -226,7 +226,7 @@ const UserProfile = () => {
                   </div>
                 ) : (
                   <p className="text-gray-500 text-center py-8">
-                    This user hasn't asked any questions yet.
+                    {t('noPostsFound')}
                   </p>
                 )}
               </TabsContent>
@@ -240,7 +240,7 @@ const UserProfile = () => {
                   </div>
                 ) : (
                   <p className="text-gray-500 text-center py-8">
-                    This user hasn't posted any news yet.
+                    {t('noPostsFound')}
                   </p>
                 )}
               </TabsContent>

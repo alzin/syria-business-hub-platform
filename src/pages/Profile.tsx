@@ -37,9 +37,9 @@ const Profile = () => {
         <div className="max-w-4xl mx-auto px-4 py-8">
           <Card>
             <CardContent className="text-center py-12">
-              <p className="text-gray-500">Please log in to view your profile.</p>
+              <p className="text-gray-500">{t('userMustBeLoggedIn')}</p>
               <Button className="mt-4" onClick={() => navigate('/')}>
-                Go back home
+                {t('goBackHome')}
               </Button>
             </CardContent>
           </Card>
@@ -63,8 +63,8 @@ const Profile = () => {
       if (error) throw error;
 
       toast({
-        title: "Profile updated",
-        description: "Your profile has been updated successfully.",
+        title: t('profileUpdated'),
+        description: t('profileUpdatedDesc'),
       });
 
       setIsEditing(false);
@@ -72,7 +72,7 @@ const Profile = () => {
       window.location.reload();
     } catch (error: any) {
       toast({
-        title: "Error",
+        title: t('failedToUpdate', { item: t('profile') }),
         description: error.message || "Failed to update profile.",
         variant: "destructive",
       });
@@ -111,7 +111,7 @@ const Profile = () => {
           className="mb-6"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to home
+          {t('backToHome')}
         </Button>
 
         {/* Profile Header */}
@@ -142,7 +142,7 @@ const Profile = () => {
                     </h1>
                     {user.verified && (
                       <Badge variant="secondary" className="text-blue-600">
-                        ✓ Verified
+                        ✓ {t('verified')}
                       </Badge>
                     )}
                   </div>
@@ -157,11 +157,11 @@ const Profile = () => {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="legal">Legal Expert</SelectItem>
-                          <SelectItem value="investor">Investor</SelectItem>
-                          <SelectItem value="founder">Founder</SelectItem>
-                          <SelectItem value="developer">Developer</SelectItem>
-                          <SelectItem value="government">Government</SelectItem>
+                          <SelectItem value="legal">{t('legalExpert')}</SelectItem>
+                          <SelectItem value="investor">{t('investor')}</SelectItem>
+                          <SelectItem value="founder">{t('startupFounder')}</SelectItem>
+                          <SelectItem value="developer">{t('developer')}</SelectItem>
+                          <SelectItem value="government">{t('governmentRep')}</SelectItem>
                         </SelectContent>
                       </Select>
                     ) : (
@@ -196,7 +196,7 @@ const Profile = () => {
                     </div>
                     <div className="flex items-center space-x-1">
                       <Calendar className="w-4 h-4" />
-                      <span>Joined {user.joinedAt.toLocaleDateString()}</span>
+                      <span>{t('joined')} {user.joinedAt.toLocaleDateString()}</span>
                     </div>
                   </div>
                 </div>
@@ -213,7 +213,7 @@ const Profile = () => {
                       disabled={isLoading}
                     >
                       <X className="w-4 h-4 mr-2" />
-                      Cancel
+                      {t('cancel')}
                     </Button>
                     <Button
                       size="sm"
@@ -221,7 +221,7 @@ const Profile = () => {
                       disabled={isLoading}
                     >
                       <Save className="w-4 h-4 mr-2" />
-                      {isLoading ? 'Saving...' : 'Save'}
+                      {isLoading ? t('saving') : t('save')}
                     </Button>
                   </>
                 ) : (
@@ -231,7 +231,7 @@ const Profile = () => {
                     onClick={() => setIsEditing(true)}
                   >
                     <Edit2 className="w-4 h-4 mr-2" />
-                    Edit Profile
+                    {t('editProfile')}
                   </Button>
                 )}
               </div>
@@ -242,12 +242,12 @@ const Profile = () => {
         {/* Account Information */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Account Information</CardTitle>
+            <CardTitle>{t('accountInformation')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="text-sm font-medium text-gray-700">Access Level</label>
+                <label className="text-sm font-medium text-gray-700">{t('accessLevel')}</label>
                 <div className="mt-1">
                   <Badge variant={user.accessLevel === 'verified' ? 'default' : 'secondary'}>
                     {user.accessLevel.charAt(0).toUpperCase() + user.accessLevel.slice(1)}
@@ -256,10 +256,10 @@ const Profile = () => {
               </div>
               
               <div>
-                <label className="text-sm font-medium text-gray-700">Account Status</label>
+                <label className="text-sm font-medium text-gray-700">{t('accountStatus')}</label>
                 <div className="mt-1">
                   <Badge variant={user.verified ? 'default' : 'outline'}>
-                    {user.verified ? 'Verified' : 'Unverified'}
+                    {user.verified ? t('verified') : t('unverified')}
                   </Badge>
                 </div>
               </div>
@@ -270,26 +270,26 @@ const Profile = () => {
         {/* Account Actions */}
         <Card>
           <CardHeader>
-            <CardTitle>Account Actions</CardTitle>
+            <CardTitle>{t('accountActions')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between p-4 border rounded-lg">
               <div>
-                <h3 className="font-medium">Sign Out</h3>
-                <p className="text-sm text-gray-500">Sign out of your account</p>
+                <h3 className="font-medium">{t('signOut')}</h3>
+                <p className="text-sm text-gray-500">{t('signOutDesc')}</p>
               </div>
               <Button variant="outline" onClick={handleLogout}>
-                Sign Out
+                {t('signOut')}
               </Button>
             </div>
             
             <div className="flex items-center justify-between p-4 border rounded-lg">
               <div>
-                <h3 className="font-medium">View Public Profile</h3>
-                <p className="text-sm text-gray-500">See how your profile appears to others</p>
+                <h3 className="font-medium">{t('viewPublicProfile')}</h3>
+                <p className="text-sm text-gray-500">{t('viewPublicProfileDesc')}</p>
               </div>
               <Button variant="outline" onClick={() => navigate(`/user/${user.id}`)}>
-                View Profile
+                {t('viewProfile')}
               </Button>
             </div>
           </CardContent>

@@ -42,7 +42,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
 
   const createPostMutation = useMutation({
     mutationFn: async () => {
-      if (!user) throw new Error('User must be logged in');
+      if (!user) throw new Error(t('userMustBeLoggedIn'));
 
       const { error } = await supabase
         .from('posts')
@@ -60,15 +60,15 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] });
       toast({
-        title: `${type === 'question' ? 'Question' : 'News'} posted!`,
-        description: `Your ${type} has been posted successfully.`,
+        title: type === 'question' ? t('questionPosted') : t('newsPosted'),
+        description: type === 'question' ? t('questionPostedDesc') : t('newsPostedDesc'),
       });
       resetForm();
       onOpenChange(false);
     },
     onError: (error: any) => {
       toast({
-        title: `Failed to post ${type}`,
+        title: type === 'question' ? t('failedToPostQuestion') : t('failedToPostNews'),
         description: error.message,
         variant: "destructive",
       });
@@ -96,7 +96,14 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !content.trim()) return;
+    if (!title.trim() || !content.trim()) {
+      toast({
+        title: t('missingInformation'),
+        description: t('fillAllFields'),
+        variant: "destructive",
+      });
+      return;
+    }
     createPostMutation.mutate();
   };
 
@@ -122,7 +129,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
             <Label htmlFor="title">{t('title')}</Label>
             <Input
               id="title"
-              placeholder={type === 'question' ? 'What is your question?' : 'News title'}
+              placeholder={type === 'question' ? t('questionPlaceholder') : t('newsPlaceholder')}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -134,7 +141,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
             <Label htmlFor="category">{t('category')}</Label>
             <Select value={category} onValueChange={(value: CategoryType) => setCategory(value)}>
               <SelectTrigger>
-                <SelectValue placeholder="Select a category" />
+                <SelectValue placeholder={t('selectCategory')} />
               </SelectTrigger>
               <SelectContent>
                 {categories.map((cat) => (
@@ -151,7 +158,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
             <Label htmlFor="content">{t('content')}</Label>
             <Textarea
               id="content"
-              placeholder={type === 'question' ? 'Describe your question in detail...' : 'Write your news article...'}
+              placeholder={type === 'question' ? t('questionContentPlaceholder') : t('newsContentPlaceholder')}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={8}
@@ -161,17 +168,17 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
 
           {/* Tags */}
           <div>
-            <Label htmlFor="tags">Tags</Label>
+            <Label htmlFor="tags">{t('tags')}</Label>
             <div className="flex space-x-2 mb-2">
               <Input
                 id="tags"
-                placeholder="Add a tag..."
+                placeholder={t('addTagPlaceholder')}
                 value={newTag}
                 onChange={(e) => setNewTag(e.target.value)}
                 onKeyPress={handleKeyPress}
               />
               <Button type="button" onClick={handleAddTag} variant="outline">
-                Add
+                {t('addTag')}
               </Button>
             </div>
             
@@ -197,14 +204,14 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
               disabled={createPostMutation.isPending || !title.trim() || !content.trim()}
               className="flex-1"
             >
-              {createPostMutation.isPending ? 'Posting...' : `Post ${type === 'question' ? 'Question' : 'News'}`}
+              {createPostMutation.isPending ? t('posting') : (type === 'question' ? t('postQuestion') : t('postNews'))}
             </Button>
             <Button 
               type="button" 
               variant="outline" 
               onClick={() => onOpenChange(false)}
             >
-              Cancel
+              {t('cancel')}
             </Button>
           </div>
         </form>

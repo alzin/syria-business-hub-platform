@@ -1,15 +1,15 @@
 
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Globe } from 'lucide-react';
 
 const LanguageToggle: React.FC = () => {
-  const { i18n } = useTranslation();
+  const { language, setLanguage } = useLanguage();
 
   const toggleLanguage = () => {
-    const newLang = i18n.language === 'en' ? 'ar' : 'en';
-    i18n.changeLanguage(newLang);
+    const newLang = language === 'en' ? 'ar' : 'en';
+    setLanguage(newLang);
   };
 
   return (
@@ -21,7 +21,7 @@ const LanguageToggle: React.FC = () => {
     >
       <Globe className="w-4 h-4" />
       <span className="text-xs uppercase">
-        {i18n.language === 'en' ? 'AR' : 'EN'}
+        {language === 'en' ? 'AR' : 'EN'}
       </span>
     </Button>
   );
