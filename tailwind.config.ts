@@ -62,6 +62,21 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				success: {
+					DEFAULT: 'hsl(var(--success))',
+					foreground: 'hsl(var(--success-foreground))'
+				},
+				warning: {
+					DEFAULT: 'hsl(var(--warning))',
+					foreground: 'hsl(var(--warning-foreground))'
+				},
+				// Syrian flag inspired colors
+				syrian: {
+					green: '#2d7d32', // Deep Syrian green
+					red: '#d32f2f', // Syrian red
+					white: '#ffffff', // Pure white
+					black: '#212121', // Deep black
 				}
 			},
 			borderRadius: {
@@ -72,6 +87,11 @@ export default {
 			fontFamily: {
 				sans: ['Inter', 'system-ui', 'sans-serif'],
 				arabic: ['Amiri', 'serif'],
+			},
+			backgroundImage: {
+				'gradient-inspire': 'linear-gradient(135deg, #2d7d32 0%, #d32f2f 50%, #388e3c 100%)',
+				'gradient-success': 'linear-gradient(135deg, #2d7d32 0%, #388e3c 100%)',
+				'gradient-energy': 'linear-gradient(135deg, #d32f2f 0%, #f44336 100%)',
 			},
 			keyframes: {
 				'accordion-down': {

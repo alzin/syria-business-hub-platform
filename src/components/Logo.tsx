@@ -9,43 +9,59 @@ const Logo = ({ className = "w-8 h-8" }: { className?: string }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Outer circle representing global reach */}
+      {/* Outer circle representing unity and global reach */}
       <circle
         cx="50"
         cy="50"
         r="45"
-        stroke="url(#gradient1)"
+        stroke="url(#syrianGreen)"
         strokeWidth="3"
         fill="none"
+        opacity="0.9"
+      />
+      
+      {/* Central star representing hope and aspiration - inspired by Syrian flag */}
+      <path
+        d="M50 20 L55 35 L70 35 L58 45 L63 60 L50 50 L37 60 L42 45 L30 35 L45 35 Z"
+        fill="url(#syrianRed)"
+      />
+      
+      {/* Smaller stars representing community and network */}
+      <path
+        d="M25 25 L27 30 L32 30 L28 33 L30 38 L25 35 L20 38 L22 33 L18 30 L23 30 Z"
+        fill="url(#syrianGreen)"
+        opacity="0.8"
+      />
+      <path
+        d="M75 25 L77 30 L82 30 L78 33 L80 38 L75 35 L70 38 L72 33 L68 30 L73 30 Z"
+        fill="url(#syrianGreen)"
+        opacity="0.8"
+      />
+      <path
+        d="M25 75 L27 80 L32 80 L28 83 L30 88 L25 85 L20 88 L22 83 L18 80 L23 80 Z"
+        fill="url(#syrianGreen)"
+        opacity="0.8"
+      />
+      <path
+        d="M75 75 L77 80 L82 80 L78 83 L80 88 L75 85 L70 88 L72 83 L68 80 L73 80 Z"
+        fill="url(#syrianGreen)"
         opacity="0.8"
       />
       
-      {/* Inner star representing aspiration and success */}
-      <path
-        d="M50 15 L55 35 L75 35 L60 48 L65 68 L50 55 L35 68 L40 48 L25 35 L45 35 Z"
-        fill="url(#gradient2)"
-      />
-      
-      {/* Small connecting dots representing network */}
-      <circle cx="30" cy="30" r="3" fill="url(#gradient1)" />
-      <circle cx="70" cy="30" r="3" fill="url(#gradient1)" />
-      <circle cx="30" cy="70" r="3" fill="url(#gradient1)" />
-      <circle cx="70" cy="70" r="3" fill="url(#gradient1)" />
-      
-      {/* Connection lines */}
-      <line x1="33" y1="33" x2="47" y2="47" stroke="url(#gradient1)" strokeWidth="2" opacity="0.6" />
-      <line x1="67" y1="33" x2="53" y2="47" stroke="url(#gradient1)" strokeWidth="2" opacity="0.6" />
-      <line x1="33" y1="67" x2="47" y2="53" stroke="url(#gradient1)" strokeWidth="2" opacity="0.6" />
-      <line x1="67" y1="67" x2="53" y2="53" stroke="url(#gradient1)" strokeWidth="2" opacity="0.6" />
+      {/* Connection lines representing networking and collaboration */}
+      <line x1="32" y1="32" x2="43" y2="43" stroke="url(#syrianGreen)" strokeWidth="2" opacity="0.6" />
+      <line x1="68" y1="32" x2="57" y2="43" stroke="url(#syrianGreen)" strokeWidth="2" opacity="0.6" />
+      <line x1="32" y1="68" x2="43" y2="57" stroke="url(#syrianGreen)" strokeWidth="2" opacity="0.6" />
+      <line x1="68" y1="68" x2="57" y2="57" stroke="url(#syrianGreen)" strokeWidth="2" opacity="0.6" />
       
       <defs>
-        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#f59e0b" />
-          <stop offset="100%" stopColor="#d97706" />
+        <linearGradient id="syrianGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#2d7d32" />
+          <stop offset="100%" stopColor="#388e3c" />
         </linearGradient>
-        <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#3b82f6" />
-          <stop offset="100%" stopColor="#1d4ed8" />
+        <linearGradient id="syrianRed" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#d32f2f" />
+          <stop offset="100%" stopColor="#f44336" />
         </linearGradient>
       </defs>
     </svg>
