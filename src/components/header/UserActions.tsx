@@ -16,8 +16,13 @@ import { User, Settings, LogOut, Plus } from 'lucide-react';
 import CreatePostDialog from '@/components/CreatePostDialog';
 import NotificationsDropdown from '@/components/NotificationsDropdown';
 
-const UserActions = () => {
-  const { user, signOut } = useAuth();
+interface UserActionsProps {
+  onCreateQuestion: () => void;
+  onCreateArticle: () => void;
+}
+
+const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArticle }) => {
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [showCreatePost, setShowCreatePost] = React.useState(false);
 
@@ -26,7 +31,7 @@ const UserActions = () => {
   }
 
   const handleSignOut = async () => {
-    await signOut();
+    await logout();
     navigate('/');
   };
 
@@ -43,7 +48,7 @@ const UserActions = () => {
     <div className="flex items-center space-x-4">
       {/* Create Post Button */}
       <Button
-        onClick={() => setShowCreatePost(true)}
+        onClick={onCreateQuestion}
         className="bg-syrian-green hover:bg-syrian-green/90"
       >
         <Plus className="w-4 h-4 mr-2" />
@@ -91,7 +96,8 @@ const UserActions = () => {
 
       <CreatePostDialog 
         open={showCreatePost} 
-        onOpenChange={setShowCreatePost} 
+        onOpenChange={setShowCreatePost}
+        type="question"
       />
     </div>
   );
