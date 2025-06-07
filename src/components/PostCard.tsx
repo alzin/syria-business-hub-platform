@@ -2,6 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useQueryClient } from '@tanstack/react-query';
 import AuthorInfo from '@/components/AuthorInfo';
 import VotingButtons from '@/components/VotingButtons';
 import PostStats from '@/components/PostStats';
@@ -19,6 +20,7 @@ interface PostCardProps {
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const handleViewPost = () => {
     navigate(`/post/${post.id}`);
@@ -33,9 +35,28 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     return content.substring(0, maxLength) + '...';
   };
 
+  // Get fresh vote count from query cache
+  const getFreshVoteCount = () => {
+    const postData = queryClient.getQueryData(['post', post.id]);
+    if (postData && typeof postData === 'object' && 'votes' in postData) {
+      return postData.votes as number;
+    }
+    
+    const postsData = queryClient.getQueryData(['posts']);
+    if (Array.isArray(postsData)) {
+      const cachedPost = postsData.find((p: any) => p.id === post.id);
+      if (cachedPost && 'votes' in cachedPost) {
+        return cachedPost.votes as number;
+      }
+    }
+    
+    return post.votes;
+  };
+
   // Use the actual counts from the post data
   const answersCount = post.answersCount || post.answers?.length || 0;
   const commentsCount = post.commentsCount || post.comments?.length || 0;
+  const currentVotes = getFreshVoteCount();
 
   return (
     <PostActions post={post}>
@@ -91,7 +112,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
                 type={post.type}
                 answersCount={answersCount}
                 commentsCount={commentsCount}
-                votes={post.votes}
+                votes={currentVotes}
                 createdAt={post.createdAt}
               />
               
@@ -99,7 +120,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
                 <VotingButtons 
                   itemId={post.id} 
                   itemType="post" 
-                  votes={post.votes} 
+                  votes={currentVotes} 
                   authorId={post.author.id}
                   size="sm"
                 />

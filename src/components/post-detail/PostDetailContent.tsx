@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { Badge } from '@/components/ui/badge';
 import AuthorInfo from '@/components/AuthorInfo';
 import PostStats from '@/components/PostStats';
@@ -17,6 +18,19 @@ const PostDetailContent: React.FC<PostDetailContentProps> = ({
   answersCount,
   commentsCount,
 }) => {
+  const queryClient = useQueryClient();
+
+  // Get fresh vote count from query cache
+  const getFreshVoteCount = () => {
+    const postData = queryClient.getQueryData(['post', post.id]);
+    if (postData && typeof postData === 'object' && 'votes' in postData) {
+      return postData.votes as number;
+    }
+    return post.votes;
+  };
+
+  const currentVotes = getFreshVoteCount();
+
   return (
     <>
       <h1 className="text-2xl font-bold text-gray-900 mt-4">{post.title}</h1>
@@ -45,14 +59,14 @@ const PostDetailContent: React.FC<PostDetailContentProps> = ({
             type={post.type}
             answersCount={answersCount}
             commentsCount={commentsCount}
-            votes={post.votes}
+            votes={currentVotes}
             createdAt={post.createdAt}
           />
           
           <VotingButtons 
             itemId={post.id} 
             itemType="post" 
-            votes={post.votes}
+            votes={currentVotes}
             authorId={post.author.id}
           />
         </div>
