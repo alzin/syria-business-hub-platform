@@ -23,13 +23,13 @@ const resources = {
       forgotPassword: "Forgot Password?",
       
       // Platform
-      platformName: "Syrian Business Hub",
-      platformTagline: "Where Syrian Dreams Take Flight",
-      appName: "Syrian Entrepreneurs Hub",
-      welcomeTitle: "Empowering Syrian Entrepreneurs Worldwide",
-      welcomeSubtitle: "Connect, collaborate, and build the future together - from Syria to the world",
-      getStarted: "Start Your Journey",
-      learnMore: "Discover More",
+      platformName: "SyriaTech Rise",
+      platformTagline: "Where Innovation Meets Heritage",
+      appName: "SyriaTech Rise",
+      welcomeTitle: "Empowering Syrian Innovation Worldwide",
+      welcomeSubtitle: "Connect, innovate, and rise together - bridging Syria with global opportunities",
+      getStarted: "Start Rising",
+      learnMore: "Explore Opportunities",
       
       // Posts
       askQuestion: "Ask Question",
@@ -171,7 +171,7 @@ const resources = {
       posting: "Posting...",
 
       // Dashboard/Home
-      welcomeMessage: "Welcome to the Syrian Business Hub",
+      welcomeMessage: "Welcome to SyriaTech Rise",
       recentPosts: "Recent Posts",
       filterByCategory: "Filter by category",
       filterByType: "Filter by type",
@@ -218,13 +218,13 @@ const resources = {
       forgotPassword: "نسيت كلمة المرور؟",
       
       // Platform
-      platformName: "مركز الأعمال السوري",
-      platformTagline: "حيث تحلق الأحلام السورية",
-      appName: "مركز رواد الأعمال السوريين",
-      welcomeTitle: "تمكين رواد الأعمال السوريين حول العالم",
-      welcomeSubtitle: "تواصل وتعاون وابن المستقبل معاً - من سوريا إلى العالم",
-      getStarted: "ابدأ رحلتك",
-      learnMore: "اكتشف المزيد",
+      platformName: "سوريا تك رايز",
+      platformTagline: "حيث يلتقي الابتكار بالتراث",
+      appName: "سوريا تك رايز",
+      welcomeTitle: "تمكين الابتكار السوري عالمياً",
+      welcomeSubtitle: "تواصل وابتكر وانهض معاً - ربط سوريا بالفرص العالمية",
+      getStarted: "ابدأ النهوض",
+      learnMore: "استكشف الفرص",
       
       // Posts
       askQuestion: "اطرح سؤالاً",
@@ -366,7 +366,7 @@ const resources = {
       posting: "جاري النشر...",
 
       // Dashboard/Home
-      welcomeMessage: "مرحباً بك في مركز الأعمال السوري",
+      welcomeMessage: "مرحباً بك في سوريا تك رايز",
       recentPosts: "المنشورات الحديثة",
       filterByCategory: "تصفية حسب الفئة",
       filterByType: "تصفية حسب النوع",
