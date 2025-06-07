@@ -12,15 +12,21 @@ export const useVoting = () => {
     mutationFn: async ({ postId, voteType }: { postId: string; voteType: 'up' | 'down' }) => {
       if (!user) throw new Error('User must be logged in');
 
-      // For now, we'll just increment/decrement the votes directly
-      // In a real app, you'd want to track individual votes to prevent double voting
+      // Get current votes count
+      const { data: currentPost, error: fetchError } = await supabase
+        .from('posts')
+        .select('votes')
+        .eq('id', postId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
       const increment = voteType === 'up' ? 1 : -1;
+      const newVotes = (currentPost.votes || 0) + increment;
       
       const { error } = await supabase
         .from('posts')
-        .update({ 
-          votes: supabase.sql`votes + ${increment}` 
-        })
+        .update({ votes: newVotes })
         .eq('id', postId);
 
       if (error) throw error;
@@ -46,13 +52,21 @@ export const useVoting = () => {
     mutationFn: async ({ answerId, voteType }: { answerId: string; voteType: 'up' | 'down' }) => {
       if (!user) throw new Error('User must be logged in');
 
+      // Get current votes count
+      const { data: currentAnswer, error: fetchError } = await supabase
+        .from('answers')
+        .select('votes')
+        .eq('id', answerId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
       const increment = voteType === 'up' ? 1 : -1;
+      const newVotes = (currentAnswer.votes || 0) + increment;
       
       const { error } = await supabase
         .from('answers')
-        .update({ 
-          votes: supabase.sql`votes + ${increment}` 
-        })
+        .update({ votes: newVotes })
         .eq('id', answerId);
 
       if (error) throw error;

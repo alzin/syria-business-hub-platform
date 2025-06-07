@@ -47,7 +47,7 @@ const AuthorInfo: React.FC<AuthorInfoProps> = ({ author, size = 'default', onCli
           <ExpertiseBadge 
             expertise={author.expertise} 
             verified={author.verified} 
-            size={size}
+            size={size === 'sm' ? 'sm' : 'md'}
           />
         </div>
         
