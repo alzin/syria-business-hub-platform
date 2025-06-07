@@ -1,13 +1,15 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User, GeolocationData } from '@/types';
+import { User as SupabaseUser } from '@supabase/supabase-js';
+import { supabase } from '@/integrations/supabase/client';
+import { User, GeolocationData, ExpertiseType } from '@/types';
 
 interface AuthContextType {
   user: User | null;
   geolocation: GeolocationData | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, name: string, expertise: string) => Promise<void>;
+  register: (email: string, password: string, name: string, expertise: ExpertiseType, location: 'syria' | 'international') => Promise<void>;
   logout: () => void;
 }
 
@@ -27,16 +29,63 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check for existing user session
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        fetchUserProfile(session.user);
+      }
+      setIsLoading(false);
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session?.user) {
+        await fetchUserProfile(session.user);
+      } else {
+        setUser(null);
+      }
+      setIsLoading(false);
+    });
 
     // Detect geolocation
     detectGeolocation();
-    setIsLoading(false);
+
+    return () => subscription.unsubscribe();
   }, []);
+
+  const fetchUserProfile = async (supabaseUser: SupabaseUser) => {
+    try {
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', supabaseUser.id)
+        .single();
+
+      if (error) {
+        console.error('Error fetching profile:', error);
+        return;
+      }
+
+      if (profile) {
+        const userProfile: User = {
+          id: profile.id,
+          email: profile.email,
+          name: profile.name,
+          expertise: profile.expertise as ExpertiseType,
+          location: profile.location as 'syria' | 'international',
+          accessLevel: profile.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
+          avatar: profile.avatar,
+          verified: profile.verified,
+          joinedAt: new Date(profile.created_at),
+        };
+        setUser(userProfile);
+      }
+    } catch (error) {
+      console.error('Error in fetchUserProfile:', error);
+    }
+  };
 
   const detectGeolocation = async () => {
     try {
@@ -51,7 +100,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.log('Geolocation detected:', geoData);
     } catch (error) {
       console.error('Failed to detect geolocation:', error);
-      // Default to non-Syrian location
       setGeolocation({
         country: 'Unknown',
         countryCode: 'UN',
@@ -61,45 +109,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const login = async (email: string, password: string) => {
-    // Mock login - in real implementation, this would call your auth API
-    const mockUser: User = {
-      id: '1',
+    const { error } = await supabase.auth.signInWithPassword({
       email,
-      name: 'Demo User',
-      expertise: 'founder',
-      location: geolocation?.inSyria ? 'syria' : 'international',
-      accessLevel: geolocation?.inSyria ? 'registered' : 'registered',
-      verified: false,
-      joinedAt: new Date(),
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('user', JSON.stringify(mockUser));
-    console.log('User logged in:', mockUser);
+      password,
+    });
+
+    if (error) {
+      throw error;
+    }
   };
 
-  const register = async (email: string, password: string, name: string, expertise: string) => {
-    // Mock registration
-    const mockUser: User = {
-      id: Date.now().toString(),
+  const register = async (email: string, password: string, name: string, expertise: ExpertiseType, location: 'syria' | 'international') => {
+    const { error } = await supabase.auth.signUp({
       email,
-      name,
-      expertise: expertise as any,
-      location: geolocation?.inSyria ? 'syria' : 'international',
-      accessLevel: geolocation?.inSyria ? 'registered' : 'registered',
-      verified: false,
-      joinedAt: new Date(),
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('user', JSON.stringify(mockUser));
-    console.log('User registered:', mockUser);
+      password,
+      options: {
+        data: {
+          name,
+          expertise,
+          location,
+        },
+      },
+    });
+
+    if (error) {
+      throw error;
+    }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Error logging out:', error);
+    }
     setUser(null);
-    localStorage.removeItem('user');
-    console.log('User logged out');
   };
 
   return (

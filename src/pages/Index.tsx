@@ -2,14 +2,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
+import { usePosts } from '@/hooks/usePosts';
 import Header from '@/components/Header';
 import WelcomeHero from '@/components/WelcomeHero';
 import PostCard from '@/components/PostCard';
+import CreatePostDialog from '@/components/CreatePostDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Post, CategoryType } from '@/types';
+import { CategoryType } from '@/types';
 import { Search, Plus, Filter } from 'lucide-react';
 
 const Index = () => {
@@ -17,79 +18,10 @@ const Index = () => {
   const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | 'all'>('all');
+  const [showCreateQuestion, setShowCreateQuestion] = useState(false);
+  const [showCreateNews, setShowCreateNews] = useState(false);
 
-  // Mock data for demonstration
-  const mockPosts: Post[] = [
-    {
-      id: '1',
-      type: 'question',
-      title: 'How to register a startup in Syria?',
-      content: 'I am planning to start a tech company in Damascus. What are the legal requirements and steps I need to follow? Any recent changes in regulations?',
-      author: {
-        id: '2',
-        email: 'ahmad@example.com',
-        name: 'Ahmad Hassan',
-        expertise: 'founder',
-        location: 'syria',
-        accessLevel: 'registered',
-        verified: true,
-        joinedAt: new Date('2024-01-15'),
-      },
-      category: 'legal',
-      tags: ['startup', 'registration', 'syria', 'legal'],
-      createdAt: new Date('2024-06-06'),
-      updatedAt: new Date('2024-06-06'),
-      votes: 12,
-      answers: [],
-      comments: [],
-    },
-    {
-      id: '2',
-      type: 'news',
-      title: 'New Investment Fund Launches for Syrian Startups',
-      content: 'A new $10M investment fund has been announced to support Syrian entrepreneurs globally. The fund focuses on technology and sustainable business models.',
-      author: {
-        id: '3',
-        email: 'sara@example.com',
-        name: 'Sara Khalil',
-        expertise: 'investor',
-        location: 'international',
-        accessLevel: 'verified',
-        verified: true,
-        joinedAt: new Date('2024-02-01'),
-      },
-      category: 'investment',
-      tags: ['investment', 'funding', 'startups', 'global'],
-      createdAt: new Date('2024-06-05'),
-      updatedAt: new Date('2024-06-05'),
-      votes: 25,
-      answers: [],
-      comments: [],
-    },
-    {
-      id: '3',
-      type: 'question',
-      title: 'Best practices for remote team management?',
-      content: 'As a Syrian startup founder with a distributed team across multiple countries, what tools and strategies work best for managing remote teams effectively?',
-      author: {
-        id: '4',
-        email: 'omar@example.com',
-        name: 'Omar Abdel',
-        expertise: 'developer',
-        location: 'international',
-        accessLevel: 'registered',
-        verified: false,
-        joinedAt: new Date('2024-03-10'),
-      },
-      category: 'operations',
-      tags: ['remote-work', 'management', 'tools', 'productivity'],
-      createdAt: new Date('2024-06-04'),
-      updatedAt: new Date('2024-06-04'),
-      votes: 8,
-      answers: [],
-      comments: [],
-    }
-  ];
+  const { data: posts = [], isLoading, error } = usePosts(selectedCategory, searchTerm);
 
   const categories: { key: CategoryType | 'all'; label: string }[] = [
     { key: 'all', label: 'All' },
@@ -100,12 +32,9 @@ const Index = () => {
     { key: 'operations', label: t('operations') },
   ];
 
-  const filteredPosts = mockPosts.filter(post => {
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         post.content.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  if (error) {
+    console.error('Error loading posts:', error);
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -164,11 +93,17 @@ const Index = () => {
               
               {user && (
                 <div className="flex gap-2">
-                  <Button className="bg-blue-600 hover:bg-blue-700">
+                  <Button 
+                    className="bg-blue-600 hover:bg-blue-700"
+                    onClick={() => setShowCreateQuestion(true)}
+                  >
                     <Plus className="w-4 h-4 mr-2" />
                     {t('askQuestion')}
                   </Button>
-                  <Button variant="outline">
+                  <Button 
+                    variant="outline"
+                    onClick={() => setShowCreateNews(true)}
+                  >
                     <Plus className="w-4 h-4 mr-2" />
                     {t('postNews')}
                   </Button>
@@ -178,8 +113,16 @@ const Index = () => {
             
             {/* Posts Feed */}
             <div className="space-y-6">
-              {filteredPosts.length > 0 ? (
-                filteredPosts.map((post) => (
+              {isLoading ? (
+                <Card className="text-center py-12">
+                  <CardContent>
+                    <p className="text-gray-500 text-lg">
+                      {t('loading')}
+                    </p>
+                  </CardContent>
+                </Card>
+              ) : posts.length > 0 ? (
+                posts.map((post) => (
                   <PostCard key={post.id} post={post} />
                 ))
               ) : (
@@ -188,6 +131,19 @@ const Index = () => {
                     <p className="text-gray-500 text-lg">
                       No posts found matching your criteria.
                     </p>
+                    {user && (
+                      <div className="mt-4">
+                        <p className="text-gray-400 mb-4">Be the first to start the conversation!</p>
+                        <div className="flex gap-2 justify-center">
+                          <Button onClick={() => setShowCreateQuestion(true)}>
+                            {t('askQuestion')}
+                          </Button>
+                          <Button variant="outline" onClick={() => setShowCreateNews(true)}>
+                            {t('postNews')}
+                          </Button>
+                        </div>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               )}
@@ -195,6 +151,18 @@ const Index = () => {
           </div>
         </div>
       </div>
+
+      <CreatePostDialog 
+        open={showCreateQuestion}
+        onOpenChange={setShowCreateQuestion}
+        type="question"
+      />
+      
+      <CreatePostDialog 
+        open={showCreateNews}
+        onOpenChange={setShowCreateNews}
+        type="news"
+      />
     </div>
   );
 };
