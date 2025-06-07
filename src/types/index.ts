@@ -26,6 +26,8 @@ export interface Post {
   answers?: Answer[];
   comments?: Comment[];
   votes: number;
+  answersCount?: number;
+  commentsCount?: number;
 }
 
 export type CategoryType = 'legal' | 'technology' | 'investment' | 'marketing' | 'operations';

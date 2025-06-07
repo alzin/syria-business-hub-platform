@@ -33,7 +33,9 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     return content.substring(0, maxLength) + '...';
   };
 
-  const commentsCount = (post.comments?.length || 0);
+  // Use the actual counts from the post data
+  const answersCount = post.answersCount || post.answers?.length || 0;
+  const commentsCount = post.commentsCount || post.comments?.length || 0;
 
   return (
     <PostActions post={post}>
@@ -87,7 +89,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
             <div className="flex items-center space-x-4 text-sm">
               <PostStats
                 type={post.type}
-                answersCount={post.answers?.length}
+                answersCount={answersCount}
                 commentsCount={commentsCount}
                 votes={post.votes}
                 createdAt={post.createdAt}

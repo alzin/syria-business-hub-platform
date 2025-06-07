@@ -65,8 +65,10 @@ export const usePosts = (category?: CategoryType | 'all', searchTerm?: string) =
         createdAt: new Date(post.created_at),
         updatedAt: new Date(post.updated_at),
         votes: post.votes,
-        answers: [], // We'll populate this when needed
-        comments: [], // We'll populate this when needed
+        answers: [], // We'll populate this when needed in individual post views
+        comments: [], // We'll populate this when needed in individual post views
+        answersCount: post.answers?.[0]?.count || 0,
+        commentsCount: post.comments?.[0]?.count || 0,
       }));
 
       return posts;
