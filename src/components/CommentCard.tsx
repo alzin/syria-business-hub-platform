@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -34,6 +35,7 @@ interface CommentCardProps {
 
 const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [showEditDialog, setShowEditDialog] = useState(false);
@@ -47,7 +49,7 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
 
   const deleteCommentMutation = useMutation({
     mutationFn: async () => {
-      if (!user) throw new Error('User must be logged in');
+      if (!user) throw new Error(t('userMustBeLoggedIn'));
 
       const { error } = await supabase
         .from('comments')
@@ -61,13 +63,13 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
       queryClient.invalidateQueries({ queryKey: ['post', comment.postId] });
       setShowDeleteDialog(false);
       toast({
-        title: "Comment deleted!",
-        description: "Your comment has been deleted successfully.",
+        title: t('commentDeleted'),
+        description: t('commentDeletedDesc'),
       });
     },
     onError: (error: any) => {
       toast({
-        title: "Failed to delete comment",
+        title: t('failedToDelete', { item: t('comments').toLowerCase() }),
         description: error.message,
         variant: "destructive",
       });
@@ -103,13 +105,13 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem onClick={() => setShowEditDialog(true)}>
-                      Edit
+                      {t('edit')}
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={() => setShowDeleteDialog(true)}
                       className="text-red-600"
                     >
-                      Delete
+                      {t('delete')}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -132,19 +134,19 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Comment</AlertDialogTitle>
+            <AlertDialogTitle>{t('deleteComment')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this comment? This action cannot be undone.
+              {t('deleteConfirmation', { item: t('comments').toLowerCase() })}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => deleteCommentMutation.mutate()}
               disabled={deleteCommentMutation.isPending}
               className="bg-red-600 hover:bg-red-700"
             >
-              {deleteCommentMutation.isPending ? 'Deleting...' : 'Delete'}
+              {deleteCommentMutation.isPending ? t('deleting') : t('delete')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

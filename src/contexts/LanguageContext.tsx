@@ -22,7 +22,10 @@ export const useLanguage = () => {
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { i18n } = useTranslation();
-  const [language, setLanguageState] = useState<Language>('en');
+  const [language, setLanguageState] = useState<Language>(() => {
+    // Initialize from localStorage or default to 'en'
+    return (localStorage.getItem('language') as Language) || 'en';
+  });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
@@ -30,13 +33,18 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     localStorage.setItem('language', lang);
+    
+    // Apply RTL class to body for better styling control
+    if (lang === 'ar') {
+      document.body.classList.add('rtl');
+    } else {
+      document.body.classList.remove('rtl');
+    }
   };
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language;
-    if (savedLanguage) {
-      setLanguage(savedLanguage);
-    }
+    // Set initial language on mount
+    setLanguage(language);
   }, []);
 
   const isRTL = language === 'ar';

@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -25,13 +26,14 @@ const EditCommentDialog: React.FC<EditCommentDialogProps> = ({
   onOpenChange,
   comment,
 }) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [content, setContent] = useState(comment.content);
 
   const updateCommentMutation = useMutation({
     mutationFn: async () => {
-      if (!user) throw new Error('User must be logged in');
+      if (!user) throw new Error(t('userMustBeLoggedIn'));
 
       const { error } = await supabase
         .from('comments')
@@ -45,13 +47,13 @@ const EditCommentDialog: React.FC<EditCommentDialogProps> = ({
       queryClient.invalidateQueries({ queryKey: ['post', comment.postId] });
       onOpenChange(false);
       toast({
-        title: "Comment updated!",
-        description: "Your comment has been updated successfully.",
+        title: t('commentUpdated'),
+        description: t('commentUpdatedDesc'),
       });
     },
     onError: (error: any) => {
       toast({
-        title: "Failed to update comment",
+        title: t('failedToUpdate', { item: t('comments').toLowerCase() }),
         description: error.message,
         variant: "destructive",
       });
@@ -68,7 +70,7 @@ const EditCommentDialog: React.FC<EditCommentDialogProps> = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-lg">
         <DialogHeader>
-          <DialogTitle>Edit Comment</DialogTitle>
+          <DialogTitle>{t('editComment')}</DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -77,7 +79,7 @@ const EditCommentDialog: React.FC<EditCommentDialogProps> = ({
             onChange={(e) => setContent(e.target.value)}
             rows={4}
             required
-            placeholder="Edit your comment..."
+            placeholder={t('editCommentPlaceholder')}
           />
           
           <div className="flex justify-end space-x-2">
@@ -86,13 +88,13 @@ const EditCommentDialog: React.FC<EditCommentDialogProps> = ({
               variant="outline"
               onClick={() => onOpenChange(false)}
             >
-              Cancel
+              {t('cancel')}
             </Button>
             <Button
               type="submit"
               disabled={updateCommentMutation.isPending || !content.trim()}
             >
-              {updateCommentMutation.isPending ? 'Updating...' : 'Update Comment'}
+              {updateCommentMutation.isPending ? t('updating') : t('updateComment')}
             </Button>
           </div>
         </form>

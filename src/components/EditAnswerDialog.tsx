@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -27,13 +28,14 @@ const EditAnswerDialog: React.FC<EditAnswerDialogProps> = ({
   answer,
   postId,
 }) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const queryClient = useQueryClient();
   const [content, setContent] = useState(answer.content);
 
   const updateAnswerMutation = useMutation({
     mutationFn: async () => {
-      if (!user) throw new Error('User must be logged in');
+      if (!user) throw new Error(t('userMustBeLoggedIn'));
 
       const { error } = await supabase
         .from('answers')
@@ -47,13 +49,13 @@ const EditAnswerDialog: React.FC<EditAnswerDialogProps> = ({
       queryClient.invalidateQueries({ queryKey: ['post', postId] });
       onOpenChange(false);
       toast({
-        title: "Answer updated!",
-        description: "Your answer has been updated successfully.",
+        title: t('answerUpdated'),
+        description: t('answerUpdatedDesc'),
       });
     },
     onError: (error: any) => {
       toast({
-        title: "Failed to update answer",
+        title: t('failedToUpdate', { item: t('answers').toLowerCase() }),
         description: error.message,
         variant: "destructive",
       });
@@ -70,7 +72,7 @@ const EditAnswerDialog: React.FC<EditAnswerDialogProps> = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>Edit Answer</DialogTitle>
+          <DialogTitle>{t('editAnswer')}</DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -79,7 +81,7 @@ const EditAnswerDialog: React.FC<EditAnswerDialogProps> = ({
             onChange={(e) => setContent(e.target.value)}
             rows={8}
             required
-            placeholder="Edit your answer..."
+            placeholder={t('editAnswerPlaceholder')}
           />
           
           <div className="flex justify-end space-x-2">
@@ -88,13 +90,13 @@ const EditAnswerDialog: React.FC<EditAnswerDialogProps> = ({
               variant="outline"
               onClick={() => onOpenChange(false)}
             >
-              Cancel
+              {t('cancel')}
             </Button>
             <Button
               type="submit"
               disabled={updateAnswerMutation.isPending || !content.trim()}
             >
-              {updateAnswerMutation.isPending ? 'Updating...' : 'Update Answer'}
+              {updateAnswerMutation.isPending ? t('updating') : t('updateAnswer')}
             </Button>
           </div>
         </form>
