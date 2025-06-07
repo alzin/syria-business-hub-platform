@@ -9,7 +9,7 @@ import LanguageToggle from '@/components/LanguageToggle';
 import LoginDialog from '@/components/auth/LoginDialog';
 import RegisterDialog from '@/components/auth/RegisterDialog';
 import CreatePostDialog from '@/components/CreatePostDialog';
-import { Search, Plus, User, LogOut, Settings } from 'lucide-react';
+import { Search, Plus, User, LogOut, Settings, MessageSquare, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
@@ -23,7 +23,8 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
   const navigate = useNavigate();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [showCreatePost, setShowCreatePost] = useState(false);
+  const [showCreateQuestion, setShowCreateQuestion] = useState(false);
+  const [showCreateArticle, setShowCreateArticle] = useState(false);
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -80,11 +81,21 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
                   <Button
                     variant="default"
                     size="sm"
-                    onClick={() => setShowCreatePost(true)}
+                    onClick={() => setShowCreateQuestion(true)}
                     className="flex items-center space-x-1"
                   >
-                    <Plus className="w-4 h-4" />
-                    <span className="hidden sm:inline">{t('createPost', 'Create Post')}</span>
+                    <MessageSquare className="w-4 h-4" />
+                    <span className="hidden sm:inline">{t('askQuestion', 'Ask Question')}</span>
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowCreateArticle(true)}
+                    className="flex items-center space-x-1"
+                  >
+                    <FileText className="w-4 h-4" />
+                    <span className="hidden sm:inline">{t('postArticle', 'Post Article')}</span>
                   </Button>
 
                   <div className="flex items-center space-x-2">
@@ -149,11 +160,19 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
       />
 
       {user && (
-        <CreatePostDialog
-          open={showCreatePost}
-          onOpenChange={setShowCreatePost}
-          type="question"
-        />
+        <>
+          <CreatePostDialog
+            open={showCreateQuestion}
+            onOpenChange={setShowCreateQuestion}
+            type="question"
+          />
+
+          <CreatePostDialog
+            open={showCreateArticle}
+            onOpenChange={setShowCreateArticle}
+            type="news"
+          />
+        </>
       )}
     </>
   );
