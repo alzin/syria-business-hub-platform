@@ -7,6 +7,7 @@ import ExpertiseAreasSection from '@/components/landing/ExpertiseAreasSection';
 import FeaturesSection from '@/components/landing/FeaturesSection';
 import BenefitsSection from '@/components/landing/BenefitsSection';
 import CTASection from '@/components/landing/CTASection';
+import CommunitySection from '@/components/landing/CommunitySection';
 import Footer from '@/components/landing/Footer';
 
 const LandingPage = () => {
@@ -38,6 +39,9 @@ const LandingPage = () => {
 
       {/* CTA Section */}
       <CTASection onNavigateToMainPage={handleNavigateToMainPage} />
+
+      {/* Community Section */}
+      <CommunitySection />
 
       {/* Footer */}
       <Footer />

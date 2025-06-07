@@ -64,25 +64,6 @@ const Index = () => {
       <div className="min-h-screen bg-gray-50">
         <Header onSearch={handleSearchChange} searchTerm={searchTerm} />
         <LandingPage />
-        
-        {/* Quick access to community section */}
-        <div className="bg-white border-t border-gray-200 py-8">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Join the Community Discussion
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Connect with investors and entrepreneurs in our active Q&A community
-            </p>
-            <Button 
-              onClick={() => setSearchParams({ posts: 'true' })}
-              size="lg"
-              className="bg-syrian-green hover:bg-syrian-green/90"
-            >
-              Browse Community Posts
-            </Button>
-          </div>
-        </div>
       </div>
     );
   }
