@@ -53,6 +53,7 @@ const PostDetailContent: React.FC<PostDetailContentProps> = ({
             itemId={post.id} 
             itemType="post" 
             votes={post.votes}
+            authorId={post.author.id}
           />
         </div>
       </div>

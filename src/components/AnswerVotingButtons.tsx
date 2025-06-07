@@ -5,46 +5,37 @@ import { ThumbsUp, ThumbsDown } from 'lucide-react';
 import { useVoting } from '@/hooks/useVoting';
 import { useAuth } from '@/contexts/AuthContext';
 
-interface VotingButtonsProps {
-  itemId: string;
-  itemType: 'post' | 'answer';
+interface AnswerVotingButtonsProps {
+  answerId: string;
   votes: number;
   authorId: string;
   size?: 'sm' | 'default';
 }
 
-const VotingButtons: React.FC<VotingButtonsProps> = ({ 
-  itemId, 
-  itemType, 
+const AnswerVotingButtons: React.FC<AnswerVotingButtonsProps> = ({ 
+  answerId, 
   votes, 
   authorId,
   size = 'default' 
 }) => {
   const { user } = useAuth();
-  const { voteOnPost, voteOnAnswer, getUserVoteForPost, getUserVoteForAnswer } = useVoting();
+  const { voteOnAnswer, getUserVoteForAnswer } = useVoting();
 
   const handleVote = (voteType: 'up' | 'down') => {
     if (!user) return;
-
-    if (itemType === 'post') {
-      voteOnPost.mutate({ postId: itemId, voteType });
-    } else {
-      voteOnAnswer.mutate({ answerId: itemId, voteType });
-    }
+    voteOnAnswer.mutate({ answerId, voteType });
   };
 
-  // Get the user's current vote for this item
-  const userVote = itemType === 'post' 
-    ? getUserVoteForPost(itemId)
-    : getUserVoteForAnswer(itemId);
+  // Get the user's current vote for this answer
+  const userVote = getUserVoteForAnswer(answerId);
 
-  // Check if user is the author of this item
-  const isOwnItem = user?.id === authorId;
+  // Check if user is the author of this answer
+  const isOwnAnswer = user?.id === authorId;
 
   const buttonSize = size === 'sm' ? 'sm' : 'default';
   const iconSize = size === 'sm' ? 'w-3 h-3' : 'w-4 h-4';
 
-  const isLoading = voteOnPost.isPending || voteOnAnswer.isPending;
+  const isLoading = voteOnAnswer.isPending;
 
   return (
     <div className="flex items-center space-x-1">
@@ -52,11 +43,11 @@ const VotingButtons: React.FC<VotingButtonsProps> = ({
         variant="ghost"
         size={buttonSize}
         onClick={() => handleVote('up')}
-        disabled={!user || isLoading || isOwnItem}
+        disabled={!user || isLoading || isOwnAnswer}
         className={`hover:bg-green-50 hover:text-green-600 ${
           userVote?.vote_type === 'up' ? 'bg-green-50 text-green-600' : ''
-        } ${isOwnItem ? 'opacity-50 cursor-not-allowed' : ''}`}
-        title={isOwnItem ? 'You cannot vote on your own content' : 'Upvote'}
+        } ${isOwnAnswer ? 'opacity-50 cursor-not-allowed' : ''}`}
+        title={isOwnAnswer ? 'You cannot vote on your own answer' : 'Upvote'}
       >
         <ThumbsUp className={iconSize} />
       </Button>
@@ -69,11 +60,11 @@ const VotingButtons: React.FC<VotingButtonsProps> = ({
         variant="ghost"
         size={buttonSize}
         onClick={() => handleVote('down')}
-        disabled={!user || isLoading || isOwnItem}
+        disabled={!user || isLoading || isOwnAnswer}
         className={`hover:bg-red-50 hover:text-red-600 ${
           userVote?.vote_type === 'down' ? 'bg-red-50 text-red-600' : ''
-        } ${isOwnItem ? 'opacity-50 cursor-not-allowed' : ''}`}
-        title={isOwnItem ? 'You cannot vote on your own content' : 'Downvote'}
+        } ${isOwnAnswer ? 'opacity-50 cursor-not-allowed' : ''}`}
+        title={isOwnAnswer ? 'You cannot vote on your own answer' : 'Downvote'}
       >
         <ThumbsDown className={iconSize} />
       </Button>
@@ -81,4 +72,4 @@ const VotingButtons: React.FC<VotingButtonsProps> = ({
   );
 };
 
-export default VotingButtons;
+export default AnswerVotingButtons;

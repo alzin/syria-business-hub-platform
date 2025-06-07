@@ -100,6 +100,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
                   itemId={post.id} 
                   itemType="post" 
                   votes={post.votes} 
+                  authorId={post.author.id}
                   size="sm"
                 />
               </div>

@@ -225,6 +225,48 @@ export type Database = {
         }
         Relationships: []
       }
+      votes: {
+        Row: {
+          answer_id: string | null
+          created_at: string
+          id: string
+          post_id: string | null
+          user_id: string
+          vote_type: string
+        }
+        Insert: {
+          answer_id?: string | null
+          created_at?: string
+          id?: string
+          post_id?: string | null
+          user_id: string
+          vote_type: string
+        }
+        Update: {
+          answer_id?: string | null
+          created_at?: string
+          id?: string
+          post_id?: string | null
+          user_id?: string
+          vote_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "votes_answer_id_fkey"
+            columns: ["answer_id"]
+            isOneToOne: false
+            referencedRelation: "answers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "votes_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
