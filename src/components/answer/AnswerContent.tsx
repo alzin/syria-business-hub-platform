@@ -2,6 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthorInfo from '@/components/AuthorInfo';
+import PostStats from '@/components/PostStats';
 import { Answer } from '@/types';
 
 interface AnswerContentProps {
@@ -30,8 +31,16 @@ const AnswerContent: React.FC<AnswerContentProps> = ({ answer }) => {
           onClick={handleViewUser}
         />
         
-        <div className="text-sm text-gray-500">
-          {answer.createdAt.toLocaleDateString()}
+        <div className="flex items-center space-x-4">
+          <PostStats
+            type="question"
+            commentsCount={0}
+            votes={answer.votes}
+            createdAt={answer.createdAt}
+            size="sm"
+            itemId={answer.id}
+            itemType="answer"
+          />
         </div>
       </div>
     </>

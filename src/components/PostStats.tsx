@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { MessageSquare, MessageCircle, ThumbsUp, Clock } from 'lucide-react';
+import { useVoting } from '@/hooks/useVoting';
 
 interface PostStatsProps {
   type: 'question' | 'news';
@@ -9,6 +10,8 @@ interface PostStatsProps {
   votes: number;
   createdAt: Date;
   size?: 'sm' | 'default';
+  itemId?: string;
+  itemType?: 'post' | 'answer';
 }
 
 const PostStats: React.FC<PostStatsProps> = ({
@@ -17,7 +20,9 @@ const PostStats: React.FC<PostStatsProps> = ({
   commentsCount = 0,
   votes,
   createdAt,
-  size = 'default'
+  size = 'default',
+  itemId,
+  itemType = 'post'
 }) => {
   const iconSize = size === 'sm' ? 'w-3 h-3' : 'w-4 h-4';
   const textSize = size === 'sm' ? 'text-xs' : 'text-sm';
