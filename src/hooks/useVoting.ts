@@ -77,6 +77,25 @@ export const useVoting = () => {
         
         if (error) throw error;
       }
+
+      // Manually update the post vote count
+      const { data: votes, error: votesError } = await supabase
+        .from('votes')
+        .select('vote_type')
+        .eq('post_id', postId);
+
+      if (votesError) throw votesError;
+
+      const voteCount = votes.reduce((sum, vote) => {
+        return sum + (vote.vote_type === 'up' ? 1 : -1);
+      }, 0);
+
+      const { error: updateError } = await supabase
+        .from('posts')
+        .update({ votes: voteCount })
+        .eq('id', postId);
+
+      if (updateError) throw updateError;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['post', variables.postId] });
@@ -148,9 +167,29 @@ export const useVoting = () => {
         
         if (error) throw error;
       }
+
+      // Manually update the answer vote count
+      const { data: votes, error: votesError } = await supabase
+        .from('votes')
+        .select('vote_type')
+        .eq('answer_id', answerId);
+
+      if (votesError) throw votesError;
+
+      const voteCount = votes.reduce((sum, vote) => {
+        return sum + (vote.vote_type === 'up' ? 1 : -1);
+      }, 0);
+
+      const { error: updateError } = await supabase
+        .from('answers')
+        .update({ votes: voteCount })
+        .eq('id', answerId);
+
+      if (updateError) throw updateError;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['post'] });
+      queryClient.invalidateQueries({ queryKey: ['posts'] });
       queryClient.invalidateQueries({ queryKey: ['user-votes', user?.id] });
       toast({
         title: "Vote recorded!",
