@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -28,10 +28,24 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
   const [showCreateArticle, setShowCreateArticle] = useState(false);
   const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
 
+  // Update local search term when prop changes
+  useEffect(() => {
+    setLocalSearchTerm(searchTerm);
+  }, [searchTerm]);
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (onSearch) {
       onSearch(localSearchTerm);
+    }
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setLocalSearchTerm(value);
+    // Trigger search on every character change for real-time search
+    if (onSearch) {
+      onSearch(value);
     }
   };
 
@@ -67,7 +81,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
                     type="text"
                     placeholder={t('searchPlaceholder', 'Search questions and news...')}
                     value={localSearchTerm}
-                    onChange={(e) => setLocalSearchTerm(e.target.value)}
+                    onChange={handleSearchChange}
                     className="pl-10 pr-4 border-border focus:ring-primary"
                   />
                 </form>

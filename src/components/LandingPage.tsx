@@ -1,7 +1,7 @@
-
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -27,6 +27,7 @@ import {
 const LandingPage = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showCreateQuestion, setShowCreateQuestion] = useState(false);
@@ -39,6 +40,27 @@ const LandingPage = () => {
   const handleSwitchToLogin = () => {
     setShowRegister(false);
     setShowLogin(true);
+  };
+
+  const handleNavigateToMainPage = () => {
+    // Navigate to main posts page
+    navigate('/?posts=true');
+  };
+
+  const handleAskQuestion = () => {
+    if (user) {
+      setShowCreateQuestion(true);
+    } else {
+      setShowRegister(true);
+    }
+  };
+
+  const handleJoinAsExpert = () => {
+    if (user) {
+      handleNavigateToMainPage();
+    } else {
+      setShowRegister(true);
+    }
   };
 
   const stats = [
@@ -126,27 +148,25 @@ const LandingPage = () => {
                   {t('platformTagline', 'Where Syrian Expertise Meets Global Community')}
                 </p>
                 
-                {!user && (
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
-                    <Button 
-                      size="lg" 
-                      className="bg-background text-primary hover:bg-background/90 font-semibold shadow-lg px-8"
-                      onClick={() => setShowRegister(true)}
-                    >
-                      <MessageSquare className="w-5 h-5 mr-2" />
-                      Ask a Question
-                    </Button>
-                    <Button 
-                      size="lg" 
-                      variant="outline" 
-                      className="border-background text-background hover:bg-background hover:text-primary font-semibold px-8"
-                      onClick={() => setShowRegister(true)}
-                    >
-                      <Users className="w-5 h-5 mr-2" />
-                      Join as Expert
-                    </Button>
-                  </div>
-                )}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+                  <Button 
+                    size="lg" 
+                    className="bg-background text-primary hover:bg-background/90 font-semibold shadow-lg px-8"
+                    onClick={handleAskQuestion}
+                  >
+                    <MessageSquare className="w-5 h-5 mr-2" />
+                    Ask a Question
+                  </Button>
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="border-background text-background hover:bg-background hover:text-primary font-semibold px-8"
+                    onClick={handleJoinAsExpert}
+                  >
+                    <Users className="w-5 h-5 mr-2" />
+                    Join as Expert
+                  </Button>
+                </div>
               </div>
 
               {/* Hero Image */}
@@ -207,7 +227,11 @@ const LandingPage = () => {
                   </CardHeader>
                   <CardContent>
                     <p className="text-muted-foreground mb-4">{area.description}</p>
-                    <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                      onClick={handleNavigateToMainPage}
+                    >
                       Browse Questions
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
@@ -302,36 +326,25 @@ const LandingPage = () => {
               Join thousands of Syrians and friends of Syria who are sharing knowledge and building community
             </p>
             
-            {!user ? (
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  size="lg" 
-                  className="bg-background text-primary hover:bg-background/90 font-semibold px-8"
-                  onClick={() => setShowRegister(true)}
-                >
-                  <HelpCircle className="w-5 h-5 mr-2" />
-                  Ask Your First Question
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-background text-background hover:bg-background hover:text-primary font-semibold px-8"
-                  onClick={() => setShowLogin(true)}
-                >
-                  <Newspaper className="w-5 h-5 mr-2" />
-                  Share News & Insights
-                </Button>
-              </div>
-            ) : (
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 size="lg" 
                 className="bg-background text-primary hover:bg-background/90 font-semibold px-8"
-                onClick={() => setShowCreateQuestion(true)}
+                onClick={handleAskQuestion}
               >
-                <MessageSquare className="w-5 h-5 mr-2" />
-                Start Discussing
+                <HelpCircle className="w-5 h-5 mr-2" />
+                Ask Your First Question
               </Button>
-            )}
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="border-background text-background hover:bg-background hover:text-primary font-semibold px-8"
+                onClick={handleNavigateToMainPage}
+              >
+                <Newspaper className="w-5 h-5 mr-2" />
+                Browse Community
+              </Button>
+            </div>
           </div>
         </section>
       </div>

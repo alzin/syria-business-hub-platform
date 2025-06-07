@@ -1,6 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSearchParams } from 'react-router-dom';
 import { usePosts } from '@/hooks/usePosts';
 import Header from '@/components/Header';
 import PostCard from '@/components/PostCard';
@@ -12,11 +13,37 @@ import { CategoryType } from '@/types';
 
 const Index = () => {
   const { t } = useTranslation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | 'all'>('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [showPosts, setShowPosts] = useState(false);
+  
+  // Check if we should show posts based on URL params
+  const shouldShowPosts = searchParams.get('posts') === 'true' || searchTerm.length > 0;
   
   const { data: posts, isLoading, error } = usePosts(selectedCategory, searchTerm);
+
+  // Handle search term changes with real-time navigation
+  const handleSearchChange = (term: string) => {
+    setSearchTerm(term);
+    if (term.length > 0) {
+      setSearchParams({ posts: 'true', search: term });
+    } else if (searchParams.get('search')) {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete('search');
+      if (!newParams.get('posts')) {
+        newParams.delete('posts');
+      }
+      setSearchParams(newParams);
+    }
+  };
+
+  // Initialize search term from URL params
+  useEffect(() => {
+    const searchFromUrl = searchParams.get('search');
+    if (searchFromUrl) {
+      setSearchTerm(searchFromUrl);
+    }
+  }, [searchParams]);
 
   const categories: { key: CategoryType | 'all'; label: string }[] = [
     { key: 'all', label: 'All Categories' },
@@ -32,10 +59,10 @@ const Index = () => {
   }
 
   // Show full landing page by default
-  if (!showPosts) {
+  if (!shouldShowPosts) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header onSearch={setSearchTerm} searchTerm={searchTerm} />
+        <Header onSearch={handleSearchChange} searchTerm={searchTerm} />
         <LandingPage />
         
         {/* Quick access to community section */}
@@ -48,7 +75,7 @@ const Index = () => {
               Connect with investors and entrepreneurs in our active Q&A community
             </p>
             <Button 
-              onClick={() => setShowPosts(true)}
+              onClick={() => setSearchParams({ posts: 'true' })}
               size="lg"
               className="bg-syrian-green hover:bg-syrian-green/90"
             >
@@ -62,14 +89,17 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header onSearch={setSearchTerm} searchTerm={searchTerm} />
+      <Header onSearch={handleSearchChange} searchTerm={searchTerm} />
       
       {/* Back to landing page option */}
       <div className="bg-white border-b border-gray-200 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Button 
             variant="ghost" 
-            onClick={() => setShowPosts(false)}
+            onClick={() => {
+              setSearchParams({});
+              setSearchTerm('');
+            }}
             className="text-syrian-green hover:bg-syrian-green/10"
           >
             ← Back to Home
@@ -135,7 +165,7 @@ const Index = () => {
                   }
                 </p>
                 {searchTerm && (
-                  <Button onClick={() => setSearchTerm('')} variant="outline">
+                  <Button onClick={() => handleSearchChange('')} variant="outline">
                     Clear search
                   </Button>
                 )}
