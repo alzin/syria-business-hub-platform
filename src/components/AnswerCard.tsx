@@ -1,132 +1,109 @@
 
 import React, { useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useAnswerVerification } from '@/hooks/useAnswerVerification';
-import ExpertiseBadge from '@/components/ExpertiseBadge';
+import { useNavigate } from 'react-router-dom';
+import AuthorInfo from '@/components/AuthorInfo';
 import VotingButtons from '@/components/VotingButtons';
 import CommentCard from '@/components/CommentCard';
 import CommentForm from '@/components/CommentForm';
-import AuthorInfo from '@/components/AuthorInfo';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, MessageSquare, CheckCircle, Shield } from 'lucide-react';
-import { Answer } from '@/types';
+import { Card, CardContent } from '@/components/ui/card';
+import { MessageSquare, CheckCircle } from 'lucide-react';
+import { Answer, Comment } from '@/types';
 
 interface AnswerCardProps {
   answer: Answer;
   postId: string;
-  comments?: any[];
+  comments?: Comment[];
 }
 
 const AnswerCard: React.FC<AnswerCardProps> = ({ answer, postId, comments = [] }) => {
-  const { user } = useAuth();
-  const { verifyAnswer, unverifyAnswer } = useAnswerVerification();
+  const navigate = useNavigate();
   const [showCommentForm, setShowCommentForm] = useState(false);
 
-  const answerComments = comments.filter(comment => comment.answerId === answer.id);
-  const isVerifiedExpert = user?.verified && user?.expertise;
-  const canVerify = isVerifiedExpert && user?.id !== answer.author.id;
-
-  const handleVerifyToggle = () => {
-    if (answer.verified) {
-      unverifyAnswer.mutate(answer.id);
-    } else {
-      verifyAnswer.mutate(answer.id);
-    }
+  const handleViewUser = () => {
+    navigate(`/user/${answer.author.id}`);
   };
 
+  const answerComments = comments.filter(comment => comment.answerId === answer.id);
+
   return (
-    <div className={`border rounded-lg p-6 ${answer.verified ? 'bg-green-50 border-green-200' : 'bg-white'}`}>
-      {/* Answer Header */}
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          <AuthorInfo author={answer.author} size="default" />
-          <div className="flex items-center space-x-1 text-xs text-gray-500">
-            <Calendar className="w-3 h-3" />
-            <span>{answer.createdAt.toLocaleDateString()}</span>
+    <Card className="border-l-4 border-l-blue-200">
+      <CardContent className="pt-6">
+        {/* Answer header */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center space-x-2">
+            {answer.verified && (
+              <Badge variant="default" className="bg-green-100 text-green-800">
+                <CheckCircle className="w-3 h-3 mr-1" />
+                Verified Answer
+              </Badge>
+            )}
+          </div>
+          
+          <VotingButtons 
+            itemId={answer.id} 
+            itemType="answer" 
+            votes={answer.votes}
+          />
+        </div>
+
+        {/* Answer content */}
+        <div className="prose max-w-none mb-6">
+          <p className="text-gray-700 whitespace-pre-wrap">{answer.content}</p>
+        </div>
+
+        {/* Author info and stats */}
+        <div className="flex items-center justify-between pt-4 border-t">
+          <AuthorInfo 
+            author={answer.author} 
+            size="sm" 
+            onClick={handleViewUser}
+          />
+          
+          <div className="text-sm text-gray-500">
+            {answer.createdAt.toLocaleDateString()}
           </div>
         </div>
 
-        <div className="flex items-center space-x-2">
-          {answer.verified && (
-            <Badge variant="default" className="bg-green-600">
-              <CheckCircle className="w-3 h-3 mr-1" />
-              Verified
-            </Badge>
-          )}
-          
-          {canVerify && (
-            <Button
-              variant={answer.verified ? "outline" : "default"}
-              size="sm"
-              onClick={handleVerifyToggle}
-              disabled={verifyAnswer.isPending || unverifyAnswer.isPending}
-              className={answer.verified ? "text-red-600 hover:bg-red-50" : "bg-green-600 hover:bg-green-700"}
-            >
-              <Shield className="w-3 h-3 mr-1" />
-              {answer.verified ? 'Unverify' : 'Verify'}
-            </Button>
-          )}
-        </div>
-      </div>
-
-      {/* Answer Content */}
-      <div className="prose max-w-none mb-4">
-        <p className="text-gray-700 whitespace-pre-wrap">{answer.content}</p>
-      </div>
-
-      {/* Answer Actions */}
-      <div className="flex items-center justify-between pt-4 border-t">
-        <VotingButtons 
-          itemId={answer.id} 
-          itemType="answer" 
-          votes={answer.votes} 
-          size="sm"
-        />
-        
-        <div className="flex items-center space-x-4">
-          {answerComments.length > 0 && (
-            <span className="text-sm text-gray-500 flex items-center">
+        {/* Comments section */}
+        {answerComments.length > 0 && (
+          <div className="mt-6 pt-4 border-t">
+            <h4 className="text-sm font-medium text-gray-900 mb-3 flex items-center">
               <MessageSquare className="w-4 h-4 mr-1" />
-              {answerComments.length} comment{answerComments.length !== 1 ? 's' : ''}
-            </span>
-          )}
-          
-          {user && (
+              Comments ({answerComments.length})
+            </h4>
+            <div className="space-y-3">
+              {answerComments.map((comment) => (
+                <CommentCard key={comment.id} comment={comment} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Add comment */}
+        <div className="mt-4 pt-4 border-t">
+          {!showCommentForm ? (
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setShowCommentForm(!showCommentForm)}
+              onClick={() => setShowCommentForm(true)}
+              className="text-blue-600 hover:text-blue-700"
             >
               <MessageSquare className="w-4 h-4 mr-1" />
-              Comment
+              Add comment
             </Button>
+          ) : (
+            <CommentForm
+              postId={postId}
+              answerId={answer.id}
+              onCancel={() => setShowCommentForm(false)}
+              placeholder="Comment on this answer..."
+            />
           )}
         </div>
-      </div>
-
-      {/* Comments */}
-      {answerComments.length > 0 && (
-        <div className="mt-6 space-y-3">
-          <h5 className="font-medium text-gray-900">Comments</h5>
-          {answerComments.map((comment) => (
-            <CommentCard key={comment.id} comment={comment} />
-          ))}
-        </div>
-      )}
-
-      {/* Comment Form */}
-      {showCommentForm && user && (
-        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-          <CommentForm
-            postId={postId}
-            answerId={answer.id}
-            onCancel={() => setShowCommentForm(false)}
-            placeholder="Write a comment on this answer..."
-          />
-        </div>
-      )}
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 

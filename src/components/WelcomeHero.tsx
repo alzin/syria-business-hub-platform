@@ -1,127 +1,59 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Rocket, Users, Globe, Star } from 'lucide-react';
-import LoginDialog from '@/components/auth/LoginDialog';
-import RegisterDialog from '@/components/auth/RegisterDialog';
+import { MessageSquare, Users, Globe, TrendingUp } from 'lucide-react';
 
 const WelcomeHero = () => {
   const { t } = useTranslation();
-  const { user, geolocation } = useAuth();
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
+  const { user } = useAuth();
 
-  const features = [
-    {
-      icon: Rocket,
-      title: "Startup Support",
-      description: "Get guidance for your business journey"
-    },
-    {
-      icon: Users,
-      title: "Expert Community",
-      description: "Connect with verified professionals"
-    },
-    {
-      icon: Globe,
-      title: "Global Network",
-      description: "Syrian entrepreneurs worldwide"
-    },
-    {
-      icon: Star,
-      title: "Quality Content",
-      description: "Curated insights and advice"
-    }
+  const stats = [
+    { icon: MessageSquare, label: 'Questions', value: '1,200+' },
+    { icon: Users, label: 'Experts', value: '350+' },
+    { icon: Globe, label: 'Countries', value: '25+' },
+    { icon: TrendingUp, label: 'Success Rate', value: '95%' },
   ];
 
   return (
-    <>
-      <div className="bg-gradient-to-br from-blue-50 via-purple-50 to-orange-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4">
-              {t('platformName')}
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              {t('platformTagline')}
-            </p>
-            
-            {/* Access Level Indicator */}
-            {geolocation && (
-              <Card className="max-w-md mx-auto mb-8">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-center space-x-3">
-                    <div className={`w-3 h-3 rounded-full ${
-                      geolocation.inSyria ? 'bg-green-500' : 'bg-orange-500'
-                    }`} />
-                    <span className="font-medium">
-                      {geolocation.inSyria ? t('syrianAccess') : t('internationalAccess')}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-            
-            {!user && (
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  size="lg" 
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
-                  onClick={() => setShowRegister(true)}
-                >
-                  {t('register')}
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg"
-                  onClick={() => setShowLogin(true)}
-                >
-                  {t('login')}
-                </Button>
-              </div>
-            )}
-          </div>
+    <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            {t('welcomeTitle', 'Welcome to Syrian Entrepreneurs Hub')}
+          </h1>
+          <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
+            {t('welcomeSubtitle', 'Connect with experts, ask questions, and grow your business in Syria and beyond')}
+          </p>
+          
+          {!user && (
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+                {t('getStarted', 'Get Started')}
+              </Button>
+              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600">
+                {t('learnMore', 'Learn More')}
+              </Button>
+            </div>
+          )}
 
-          {/* Features Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow duration-200">
-                <CardContent className="p-6">
-                  <feature.icon className="w-12 h-12 mx-auto mb-4 text-blue-600" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm">
-                    {feature.description}
-                  </p>
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
+            {stats.map((stat, index) => (
+              <Card key={index} className="bg-white/10 border-white/20 backdrop-blur-sm">
+                <CardContent className="p-6 text-center">
+                  <stat.icon className="w-8 h-8 mx-auto mb-2 text-blue-200" />
+                  <div className="text-2xl font-bold text-white">{stat.value}</div>
+                  <div className="text-blue-200 text-sm">{stat.label}</div>
                 </CardContent>
               </Card>
             ))}
           </div>
         </div>
       </div>
-
-      <LoginDialog 
-        open={showLogin} 
-        onOpenChange={setShowLogin}
-        onSwitchToRegister={() => {
-          setShowLogin(false);
-          setShowRegister(true);
-        }}
-      />
-      
-      <RegisterDialog 
-        open={showRegister} 
-        onOpenChange={setShowRegister}
-        onSwitchToLogin={() => {
-          setShowRegister(false);
-          setShowLogin(true);
-        }}
-      />
-    </>
+    </div>
   );
 };
 

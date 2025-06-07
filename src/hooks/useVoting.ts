@@ -10,35 +10,27 @@ export const useVoting = () => {
 
   const voteOnPost = useMutation({
     mutationFn: async ({ postId, voteType }: { postId: string; voteType: 'up' | 'down' }) => {
-      if (!user) throw new Error('Must be logged in to vote');
+      if (!user) throw new Error('User must be logged in');
 
-      // For now, we'll just update the votes count directly
-      // In a real app, you'd want to track individual votes in a separate table
-      const { data: currentPost } = await supabase
-        .from('posts')
-        .select('votes')
-        .eq('id', postId)
-        .single();
-
-      if (!currentPost) throw new Error('Post not found');
-
-      const newVotes = voteType === 'up' ? currentPost.votes + 1 : currentPost.votes - 1;
-
+      // For now, we'll just increment/decrement the votes directly
+      // In a real app, you'd want to track individual votes to prevent double voting
+      const increment = voteType === 'up' ? 1 : -1;
+      
       const { error } = await supabase
         .from('posts')
-        .update({ votes: newVotes })
+        .update({ 
+          votes: supabase.sql`votes + ${increment}` 
+        })
         .eq('id', postId);
 
       if (error) throw error;
-
-      return { postId, newVotes };
     },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['post', data.postId] });
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['post', variables.postId] });
       queryClient.invalidateQueries({ queryKey: ['posts'] });
       toast({
-        title: "Vote recorded",
-        description: "Your vote has been recorded successfully.",
+        title: "Vote recorded!",
+        description: "Your vote has been registered.",
       });
     },
     onError: (error: any) => {
@@ -52,32 +44,25 @@ export const useVoting = () => {
 
   const voteOnAnswer = useMutation({
     mutationFn: async ({ answerId, voteType }: { answerId: string; voteType: 'up' | 'down' }) => {
-      if (!user) throw new Error('Must be logged in to vote');
+      if (!user) throw new Error('User must be logged in');
 
-      const { data: currentAnswer } = await supabase
-        .from('answers')
-        .select('votes')
-        .eq('id', answerId)
-        .single();
-
-      if (!currentAnswer) throw new Error('Answer not found');
-
-      const newVotes = voteType === 'up' ? currentAnswer.votes + 1 : currentAnswer.votes - 1;
-
+      const increment = voteType === 'up' ? 1 : -1;
+      
       const { error } = await supabase
         .from('answers')
-        .update({ votes: newVotes })
+        .update({ 
+          votes: supabase.sql`votes + ${increment}` 
+        })
         .eq('id', answerId);
 
       if (error) throw error;
-
-      return { answerId, newVotes };
     },
-    onSuccess: (data) => {
+    onSuccess: (_, variables) => {
+      // We need to get the post ID to invalidate the right queries
       queryClient.invalidateQueries({ queryKey: ['post'] });
       toast({
-        title: "Vote recorded",
-        description: "Your vote has been recorded successfully.",
+        title: "Vote recorded!",
+        description: "Your vote has been registered.",
       });
     },
     onError: (error: any) => {
