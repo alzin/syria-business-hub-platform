@@ -102,6 +102,7 @@ const AnswerCard: React.FC<AnswerCardProps> = ({ answer, postId, comments = [] }
                 itemId={answer.id} 
                 itemType="answer" 
                 votes={answer.votes}
+                authorId={answer.author.id}
               />
               
               {canEditAnswer && (
