@@ -159,11 +159,11 @@ const PostDetail = () => {
   });
 
   if (isLoading) {
-    return <PostDetailLayout isLoading={true} />;
+    return <PostDetailLayout isLoading={true}>{null}</PostDetailLayout>;
   }
 
   if (!post) {
-    return <PostDetailLayout error="Post not found" />;
+    return <PostDetailLayout error="Post not found">{null}</PostDetailLayout>;
   }
 
   const postComments = post.comments?.filter(comment => !comment.answerId) || [];
