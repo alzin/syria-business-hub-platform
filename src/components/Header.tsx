@@ -35,7 +35,11 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (onSearch) {
+    
+    // If search term is empty, navigate to posts page
+    if (localSearchTerm.trim() === '') {
+      navigate('/?posts=true');
+    } else if (onSearch) {
       onSearch(localSearchTerm);
     }
   };
@@ -84,6 +88,14 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
                     onChange={handleSearchChange}
                     className="pl-10 pr-4 border-border focus:ring-primary"
                   />
+                  <Button
+                    type="submit"
+                    size="sm"
+                    variant="ghost"
+                    className="absolute right-1 top-1/2 transform -translate-y-1/2 h-8 w-8 p-0"
+                  >
+                    <Search className="w-4 h-4" />
+                  </Button>
                 </form>
               </div>
             )}
