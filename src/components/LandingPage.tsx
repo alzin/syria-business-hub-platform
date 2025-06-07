@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
@@ -211,7 +210,7 @@ const LandingPage = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Why Choose SyriaTech Rise for Syrian Knowledge?
+                Why Choose SyrVest for Syrian Knowledge?
               </h2>
               <p className="text-xl text-gray-600 mb-8">
                 We provide a trusted platform where Syrian experts and community members 

@@ -1,3 +1,4 @@
+
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -7,9 +8,9 @@ const resources = {
     translation: {
       // Navigation
       home: "Home",
-      questions: "Investment Q&A",
-      news: "Market News",
-      experts: "Investment Experts",
+      questions: "Q&A Forum",
+      news: "Syrian News",
+      experts: "Syrian Experts",
       profile: "Profile",
       admin: "Admin",
       
@@ -23,9 +24,9 @@ const resources = {
       forgotPassword: "Forgot Password?",
       
       // Platform
-      platformName: "SyriaTech Rise",
+      platformName: "SyrVest",
       platformTagline: "Where Syrian Expertise Meets Global Community",
-      appName: "SyriaTech Rise",
+      appName: "SyrVest",
       welcomeTitle: "Connecting Syrian Voices Worldwide",
       welcomeSubtitle: "Connect with Syrian experts, ask questions, share news, and engage in meaningful discussions about Syria",
       getStarted: "Ask a Question",
@@ -198,9 +199,9 @@ const resources = {
     translation: {
       // Navigation
       home: "الرئيسية",
-      questions: "أسئلة الاستثمار",
-      news: "أخبار السوق",
-      experts: "خبراء الاستثمار",
+      questions: "منتدى الأسئلة",
+      news: "الأخبار السورية",
+      experts: "الخبراء السوريون",
       profile: "الملف الشخصي",
       admin: "الإدارة",
       
@@ -214,9 +215,9 @@ const resources = {
       forgotPassword: "نسيت كلمة المرور؟",
       
       // Platform
-      platformName: "سوريا تك رايز",
+      platformName: "سير فيست",
       platformTagline: "حيث تلتقي الخبرة السورية بالمجتمع العالمي",
-      appName: "سوريا تك رايز",
+      appName: "سير فيست",
       welcomeTitle: "ربط الأصوات السورية حول العالم",
       welcomeSubtitle: "تواصل مع الخبراء السوريين، اطرح الأسئلة، شارك الأخبار، وشارك في نقاشات مهمة حول سوريا",
       getStarted: "اطرح سؤال",

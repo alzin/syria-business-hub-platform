@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
             <div className="flex items-center space-x-3 cursor-pointer" onClick={() => navigate('/')}>
               <Logo className="w-8 h-8" />
               <h1 className="text-xl font-bold bg-gradient-inspire bg-clip-text text-transparent">
-                {t('appName', 'Syrian Entrepreneurs Hub')}
+                {t('appName', 'SyrVest')}
               </h1>
             </div>
 
