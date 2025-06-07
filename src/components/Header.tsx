@@ -2,88 +2,119 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
-import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import LanguageToggle from './LanguageToggle';
-import ExpertiseBadge from './ExpertiseBadge';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import LanguageToggle from '@/components/LanguageToggle';
 import LoginDialog from '@/components/auth/LoginDialog';
 import RegisterDialog from '@/components/auth/RegisterDialog';
+import CreatePostDialog from '@/components/CreatePostDialog';
+import { Search, Plus, User, LogOut } from 'lucide-react';
 
-const Header = () => {
+interface HeaderProps {
+  onSearch?: (term: string) => void;
+  searchTerm?: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
   const { t } = useTranslation();
-  const { user, logout, geolocation } = useAuth();
-  const { isRTL } = useLanguage();
+  const { user, logout } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [showCreatePost, setShowCreatePost] = useState(false);
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (onSearch) {
+      onSearch(localSearchTerm);
+    }
+  };
+
+  const handleSwitchToRegister = () => {
+    setShowLogin(false);
+    setShowRegister(true);
+  };
+
+  const handleSwitchToLogin = () => {
+    setShowRegister(false);
+    setShowLogin(true);
+  };
 
   return (
     <>
-      <header className="bg-white border-b border-gray-200 shadow-sm">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <div className="flex-shrink-0">
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  {t('platformName')}
-                </h1>
-              </div>
+            <div className="flex items-center">
+              <h1 className="text-xl font-bold text-blue-600">
+                {t('appName', 'Syrian Entrepreneurs Hub')}
+              </h1>
             </div>
 
-            {/* Navigation */}
-            <nav className={`hidden md:flex space-x-8 ${isRTL ? 'space-x-reverse' : ''}`}>
-              <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
-                {t('home')}
-              </Button>
-              <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
-                {t('questions')}
-              </Button>
-              <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
-                {t('news')}
-              </Button>
-              <Button variant="ghost" className="text-gray-700 hover:text-blue-600">
-                {t('experts')}
-              </Button>
-            </nav>
+            {/* Search Bar */}
+            {onSearch && (
+              <div className="flex-1 max-w-lg mx-8">
+                <form onSubmit={handleSearch} className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Input
+                    type="text"
+                    placeholder={t('searchPlaceholder', 'Search questions and news...')}
+                    value={localSearchTerm}
+                    onChange={(e) => setLocalSearchTerm(e.target.value)}
+                    className="pl-10 pr-4"
+                  />
+                </form>
+              </div>
+            )}
 
-            {/* Right side */}
-            <div className={`flex items-center space-x-4 ${isRTL ? 'space-x-reverse' : ''}`}>
+            {/* Right side actions */}
+            <div className="flex items-center space-x-4">
               <LanguageToggle />
-              
-              {/* Location indicator */}
-              {geolocation && (
-                <div className="text-sm text-gray-600">
-                  <span className={`inline-block w-2 h-2 rounded-full mr-1 ${
-                    geolocation.inSyria ? 'bg-green-500' : 'bg-orange-500'
-                  }`} />
-                  {geolocation.country}
-                </div>
-              )}
 
               {user ? (
-                <div className={`flex items-center space-x-3 ${isRTL ? 'space-x-reverse' : ''}`}>
-                  <ExpertiseBadge 
-                    expertise={user.expertise} 
-                    verified={user.verified}
+                <div className="flex items-center space-x-4">
+                  <Button
+                    variant="default"
                     size="sm"
-                  />
-                  <Avatar className="w-8 h-8">
-                    <AvatarFallback className="bg-blue-100 text-blue-600">
-                      {user.name.charAt(0).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <span className="text-sm font-medium text-gray-700">{user.name}</span>
-                  <Button variant="outline" size="sm" onClick={logout}>
-                    {t('logout')}
+                    onClick={() => setShowCreatePost(true)}
+                    className="flex items-center space-x-1"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span className="hidden sm:inline">{t('createPost', 'Create Post')}</span>
                   </Button>
+
+                  <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-1">
+                      <User className="w-4 h-4 text-gray-500" />
+                      <span className="text-sm font-medium text-gray-700">{user.name}</span>
+                    </div>
+                    
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={logout}
+                      className="text-gray-500 hover:text-gray-700"
+                    >
+                      <LogOut className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
               ) : (
-                <div className={`flex space-x-2 ${isRTL ? 'space-x-reverse' : ''}`}>
-                  <Button variant="outline" size="sm" onClick={() => setShowLogin(true)}>
+                <div className="flex items-center space-x-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowLogin(true)}
+                  >
                     {t('login')}
                   </Button>
-                  <Button size="sm" onClick={() => setShowRegister(true)}>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    onClick={() => setShowRegister(true)}
+                  >
                     {t('register')}
                   </Button>
                 </div>
@@ -93,23 +124,25 @@ const Header = () => {
         </div>
       </header>
 
-      <LoginDialog 
-        open={showLogin} 
+      {/* Dialogs */}
+      <LoginDialog
+        open={showLogin}
         onOpenChange={setShowLogin}
-        onSwitchToRegister={() => {
-          setShowLogin(false);
-          setShowRegister(true);
-        }}
+        onSwitchToRegister={handleSwitchToRegister}
       />
-      
-      <RegisterDialog 
-        open={showRegister} 
+
+      <RegisterDialog
+        open={showRegister}
         onOpenChange={setShowRegister}
-        onSwitchToLogin={() => {
-          setShowRegister(false);
-          setShowLogin(true);
-        }}
+        onSwitchToLogin={handleSwitchToLogin}
       />
+
+      {user && (
+        <CreatePostDialog
+          open={showCreatePost}
+          onOpenChange={setShowCreatePost}
+        />
+      )}
     </>
   );
 };

@@ -1,44 +1,63 @@
 
 import React from 'react';
-import { MessageSquare, Calendar, TrendingUp } from 'lucide-react';
+import { MessageSquare, MessageCircle, ThumbsUp, Clock } from 'lucide-react';
 
 interface PostStatsProps {
   type: 'question' | 'news';
   answersCount?: number;
-  commentsCount: number;
+  commentsCount?: number;
   votes: number;
   createdAt: Date;
+  size?: 'sm' | 'default';
 }
 
-const PostStats: React.FC<PostStatsProps> = ({ 
-  type, 
-  answersCount = 0, 
-  commentsCount, 
-  votes, 
-  createdAt 
+const PostStats: React.FC<PostStatsProps> = ({
+  type,
+  answersCount = 0,
+  commentsCount = 0,
+  votes,
+  createdAt,
+  size = 'default'
 }) => {
+  const iconSize = size === 'sm' ? 'w-3 h-3' : 'w-4 h-4';
+  const textSize = size === 'sm' ? 'text-xs' : 'text-sm';
+
+  const formatDate = (date: Date) => {
+    const now = new Date();
+    const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
+    
+    if (diffInHours < 1) return 'Just now';
+    if (diffInHours < 24) return `${Math.floor(diffInHours)}h ago`;
+    if (diffInHours < 48) return 'Yesterday';
+    return date.toLocaleDateString();
+  };
+
   return (
-    <div className="flex items-center space-x-4 text-sm text-gray-500">
-      <div className="flex items-center space-x-1">
-        <Calendar className="w-4 h-4" />
-        <span>{createdAt.toLocaleDateString()}</span>
-      </div>
-      
-      <div className="flex items-center space-x-1">
-        <TrendingUp className="w-4 h-4" />
-        <span>{votes} votes</span>
-      </div>
-      
+    <div className={`flex items-center space-x-3 text-gray-500 ${textSize}`}>
+      {/* Answers (only for questions) */}
       {type === 'question' && (
         <div className="flex items-center space-x-1">
-          <MessageSquare className="w-4 h-4" />
-          <span>{answersCount} answers</span>
+          <MessageSquare className={iconSize} />
+          <span>{answersCount} {answersCount === 1 ? 'answer' : 'answers'}</span>
         </div>
       )}
-      
+
+      {/* Comments */}
       <div className="flex items-center space-x-1">
-        <MessageSquare className="w-4 h-4" />
-        <span>{commentsCount} comments</span>
+        <MessageCircle className={iconSize} />
+        <span>{commentsCount}</span>
+      </div>
+
+      {/* Votes */}
+      <div className="flex items-center space-x-1">
+        <ThumbsUp className={iconSize} />
+        <span>{votes}</span>
+      </div>
+
+      {/* Time */}
+      <div className="flex items-center space-x-1">
+        <Clock className={iconSize} />
+        <span>{formatDate(createdAt)}</span>
       </div>
     </div>
   );

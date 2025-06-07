@@ -1,19 +1,28 @@
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { Globe } from 'lucide-react';
 
-const LanguageToggle = () => {
-  const { language, setLanguage } = useLanguage();
+const LanguageToggle: React.FC = () => {
+  const { i18n } = useTranslation();
+
+  const toggleLanguage = () => {
+    const newLang = i18n.language === 'en' ? 'ar' : 'en';
+    i18n.changeLanguage(newLang);
+  };
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="sm"
-      onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-      className="font-medium"
+      onClick={toggleLanguage}
+      className="flex items-center space-x-1"
     >
-      {language === 'en' ? 'العربية' : 'English'}
+      <Globe className="w-4 h-4" />
+      <span className="text-xs uppercase">
+        {i18n.language === 'en' ? 'AR' : 'EN'}
+      </span>
     </Button>
   );
 };

@@ -1,9 +1,8 @@
 
 import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { ExpertiseType } from '@/types';
 import { Badge } from '@/components/ui/badge';
-import { Briefcase, Building, Computer, Gavel, Rocket } from 'lucide-react';
+import { Shield, Star, Code, Briefcase, Building } from 'lucide-react';
+import { ExpertiseType } from '@/types';
 
 interface ExpertiseBadgeProps {
   expertise: ExpertiseType;
@@ -16,59 +15,42 @@ const ExpertiseBadge: React.FC<ExpertiseBadgeProps> = ({
   verified = false, 
   size = 'md' 
 }) => {
-  const { t } = useTranslation();
-
-  const expertiseConfig = {
-    legal: {
-      label: t('legalExpert'),
-      icon: Gavel,
-      color: 'bg-blue-500 hover:bg-blue-600',
-      emoji: '👨‍⚖️'
-    },
-    investor: {
-      label: t('investor'),
-      icon: Briefcase,
-      color: 'bg-green-500 hover:bg-green-600',
-      emoji: '💼'
-    },
-    founder: {
-      label: t('startupFounder'),
-      icon: Rocket,
-      color: 'bg-purple-500 hover:bg-purple-600',
-      emoji: '🚀'
-    },
-    developer: {
-      label: t('developer'),
-      icon: Computer,
-      color: 'bg-orange-500 hover:bg-orange-600',
-      emoji: '💻'
-    },
-    government: {
-      label: t('governmentRep'),
-      icon: Building,
-      color: 'bg-gray-600 hover:bg-gray-700',
-      emoji: '🏛'
+  const getExpertiseConfig = (expertise: ExpertiseType) => {
+    switch (expertise) {
+      case 'legal':
+        return { icon: Shield, label: 'Legal Expert', color: 'bg-blue-100 text-blue-800' };
+      case 'investor':
+        return { icon: Star, label: 'Investor', color: 'bg-yellow-100 text-yellow-800' };
+      case 'founder':
+        return { icon: Briefcase, label: 'Founder', color: 'bg-purple-100 text-purple-800' };
+      case 'developer':
+        return { icon: Code, label: 'Developer', color: 'bg-green-100 text-green-800' };
+      case 'government':
+        return { icon: Building, label: 'Government', color: 'bg-gray-100 text-gray-800' };
+      default:
+        return { icon: Briefcase, label: 'Expert', color: 'bg-gray-100 text-gray-800' };
     }
   };
 
-  const config = expertiseConfig[expertise];
+  const config = getExpertiseConfig(expertise);
   const Icon = config.icon;
-
-  const sizeClasses = {
-    sm: 'text-xs px-2 py-1',
-    md: 'text-sm px-3 py-1',
-    lg: 'text-base px-4 py-2'
-  };
+  
+  const iconSize = size === 'sm' ? 'w-3 h-3' : size === 'lg' ? 'w-5 h-5' : 'w-4 h-4';
+  const textSize = size === 'sm' ? 'text-xs' : size === 'lg' ? 'text-sm' : 'text-xs';
 
   return (
-    <Badge 
-      className={`${config.color} text-white ${sizeClasses[size]} flex items-center gap-1 font-medium`}
-    >
-      <span className="text-xs">{config.emoji}</span>
-      <Icon className="w-3 h-3" />
-      <span>{config.label}</span>
-      {verified && <span className="text-yellow-300">✓</span>}
-    </Badge>
+    <div className="flex items-center space-x-1">
+      <Badge variant="outline" className={`${config.color} ${textSize} flex items-center space-x-1`}>
+        <Icon className={iconSize} />
+        <span>{config.label}</span>
+      </Badge>
+      
+      {verified && (
+        <Badge variant="default" className="bg-green-100 text-green-800 text-xs">
+          ✓ Verified
+        </Badge>
+      )}
+    </div>
   );
 };
 

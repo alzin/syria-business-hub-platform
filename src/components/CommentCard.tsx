@@ -1,7 +1,8 @@
 
 import React from 'react';
-import ExpertiseBadge from '@/components/ExpertiseBadge';
-import { Calendar, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import AuthorInfo from '@/components/AuthorInfo';
+import { Card, CardContent } from '@/components/ui/card';
 import { Comment } from '@/types';
 
 interface CommentCardProps {
@@ -9,31 +10,32 @@ interface CommentCardProps {
 }
 
 const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
+  const navigate = useNavigate();
+
+  const handleViewUser = () => {
+    navigate(`/user/${comment.author.id}`);
+  };
+
   return (
-    <div className="bg-gray-50 rounded-lg p-4">
-      <div className="flex items-start space-x-3">
-        <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0">
-          {comment.author.avatar ? (
-            <img src={comment.author.avatar} alt={comment.author.name} className="w-8 h-8 rounded-full" />
-          ) : (
-            <User className="w-4 h-4 text-gray-500" />
-          )}
+    <Card className="border-l-2 border-l-gray-200 bg-gray-50/50">
+      <CardContent className="pt-4 pb-3">
+        <div className="mb-3">
+          <p className="text-sm text-gray-700">{comment.content}</p>
         </div>
         
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center space-x-2 mb-2">
-            <p className="font-medium text-gray-900 text-sm">{comment.author.name}</p>
-            <ExpertiseBadge expertise={comment.author.expertise} verified={comment.author.verified} size="sm" />
-            <div className="flex items-center space-x-1 text-xs text-gray-500">
-              <Calendar className="w-3 h-3" />
-              <span>{comment.createdAt.toLocaleDateString()}</span>
-            </div>
-          </div>
+        <div className="flex items-center justify-between">
+          <AuthorInfo 
+            author={comment.author} 
+            size="sm" 
+            onClick={handleViewUser}
+          />
           
-          <p className="text-gray-700 text-sm whitespace-pre-wrap">{comment.content}</p>
+          <div className="text-xs text-gray-500">
+            {comment.createdAt.toLocaleDateString()}
+          </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 
