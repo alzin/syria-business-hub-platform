@@ -305,4 +305,172 @@ const PostDetail = () => {
           
           <CardContent>
             <div className="prose max-w-none mb-6">
-              <p className="text-gray-
+              <p className="text-gray-700 whitespace-pre-wrap">{post.content}</p>
+            </div>
+
+            {/* Tags */}
+            {post.tags && post.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-6">
+                {post.tags.map((tag, index) => (
+                  <Badge key={index} variant="outline" className="text-xs">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            )}
+
+            {/* Author info and voting */}
+            <div className="flex items-center justify-between pt-4 border-t">
+              <AuthorInfo author={post.author} />
+              
+              <div className="flex items-center space-x-4">
+                <PostStats
+                  type={post.type}
+                  answersCount={sortedAnswers.length}
+                  commentsCount={postComments.length}
+                  votes={post.votes}
+                  createdAt={post.createdAt}
+                />
+                
+                <VotingButtons 
+                  itemId={post.id} 
+                  itemType="post" 
+                  votes={post.votes}
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Comments section */}
+        {postComments.length > 0 && (
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold mb-4">Comments</h3>
+            <div className="space-y-4">
+              {postComments.map((comment) => (
+                <CommentCard key={comment.id} comment={comment} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Add comment form */}
+        {user && (
+          <div className="mb-8">
+            {showCommentForm ? (
+              <CommentForm
+                postId={post.id}
+                onCancel={() => setShowCommentForm(false)}
+                placeholder="Add a comment to this post..."
+              />
+            ) : (
+              <Button
+                variant="outline"
+                onClick={() => setShowCommentForm(true)}
+                className="w-full"
+              >
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Add Comment
+              </Button>
+            )}
+          </div>
+        )}
+
+        {/* Answers section (only for questions) */}
+        {post.type === 'question' && (
+          <>
+            {sortedAnswers.length > 0 && (
+              <div className="mb-8">
+                <h3 className="text-lg font-semibold mb-4">
+                  {sortedAnswers.length} {sortedAnswers.length === 1 ? 'Answer' : 'Answers'}
+                </h3>
+                <div className="space-y-6">
+                  {sortedAnswers.map((answer) => (
+                    <AnswerCard key={answer.id} answer={answer} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Add answer form */}
+            {user && (
+              <Card>
+                <CardHeader>
+                  <h3 className="text-lg font-semibold">Your Answer</h3>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handleSubmitAnswer} className="space-y-4">
+                    <Textarea
+                      placeholder="Write your answer here..."
+                      value={newAnswer}
+                      onChange={(e) => setNewAnswer(e.target.value)}
+                      rows={6}
+                      required
+                    />
+                    <div className="flex justify-end">
+                      <Button
+                        type="submit"
+                        disabled={addAnswerMutation.isPending || !newAnswer.trim()}
+                      >
+                        {addAnswerMutation.isPending ? 'Posting...' : 'Post Answer'}
+                      </Button>
+                    </div>
+                  </form>
+                </CardContent>
+              </Card>
+            )}
+          </>
+        )}
+
+        {!user && (
+          <Card>
+            <CardContent className="text-center py-8">
+              <p className="text-gray-500 mb-4">
+                {post.type === 'question' 
+                  ? 'Please log in to answer this question or add comments.'
+                  : 'Please log in to add comments.'
+                }
+              </p>
+              <Button onClick={() => navigate('/')}>
+                Go to Login
+              </Button>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+
+      {/* Edit Dialog */}
+      {canEditPost && (
+        <EditPostDialog
+          open={showEditDialog}
+          onOpenChange={setShowEditDialog}
+          post={post}
+        />
+      )}
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Post</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this {post.type}? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => deletePostMutation.mutate()}
+              disabled={deletePostMutation.isPending}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              {deletePostMutation.isPending ? 'Deleting...' : 'Delete'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  );
+};
+
+export default PostDetail;
