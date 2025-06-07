@@ -53,7 +53,7 @@ const CTASection: React.FC<CTASectionProps> = ({ onNavigateToMainPage }) => {
               onClick={handleAskQuestion}
             >
               <HelpCircle className="w-5 h-5 mr-2" />
-              Ask Your First Question
+              <span>Ask Your First Question</span>
             </Button>
             <Button 
               size="lg" 
@@ -62,7 +62,7 @@ const CTASection: React.FC<CTASectionProps> = ({ onNavigateToMainPage }) => {
               onClick={onNavigateToMainPage}
             >
               <Newspaper className="w-5 h-5 mr-2" />
-              Browse Community
+              <span>Browse Community</span>
             </Button>
           </div>
         </div>
