@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { useRealtimeNotifications } from "@/hooks/useRealtimeNotifications";
 import Index from "./pages/Index";
 import PostDetail from "./pages/PostDetail";
 import UserProfile from "./pages/UserProfile";
@@ -15,6 +16,20 @@ import "./i18n";
 
 const queryClient = new QueryClient();
 
+const AppContent = () => {
+  useRealtimeNotifications();
+  
+  return (
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/post/:id" element={<PostDetail />} />
+      <Route path="/user/:id" element={<UserProfile />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -23,13 +38,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/post/:id" element={<PostDetail />} />
-              <Route path="/user/:id" element={<UserProfile />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <AppContent />
           </BrowserRouter>
         </AuthProvider>
       </LanguageProvider>

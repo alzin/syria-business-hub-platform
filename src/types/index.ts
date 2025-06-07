@@ -51,6 +51,17 @@ export interface Comment {
   createdAt: Date;
 }
 
+export interface Notification {
+  id: string;
+  type: 'comment' | 'answer';
+  title: string;
+  message: string;
+  postId: string;
+  relatedId?: string;
+  read: boolean;
+  createdAt: Date;
+}
+
 export interface GeolocationData {
   country: string;
   countryCode: string;
