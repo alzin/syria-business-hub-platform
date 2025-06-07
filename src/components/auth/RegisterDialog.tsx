@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
@@ -34,11 +33,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
     setIsLoading(true);
 
     try {
-      await register(email, password, {
-        name,
-        expertise,
-        location,
-      });
+      await register(email, password, name, expertise, location);
       
       toast({
         title: "Welcome!",

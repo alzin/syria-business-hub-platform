@@ -141,6 +141,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
         <CreatePostDialog
           open={showCreatePost}
           onOpenChange={setShowCreatePost}
+          type="question"
         />
       )}
     </>
