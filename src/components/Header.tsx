@@ -9,7 +9,8 @@ import LanguageToggle from '@/components/LanguageToggle';
 import LoginDialog from '@/components/auth/LoginDialog';
 import RegisterDialog from '@/components/auth/RegisterDialog';
 import CreatePostDialog from '@/components/CreatePostDialog';
-import { Search, Plus, User, LogOut } from 'lucide-react';
+import { Search, Plus, User, LogOut, Settings } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   onSearch?: (term: string) => void;
@@ -19,6 +20,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showCreatePost, setShowCreatePost] = useState(false);
@@ -47,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center">
+            <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
               <h1 className="text-xl font-bold text-blue-600">
                 {t('appName', 'Syrian Entrepreneurs Hub')}
               </h1>
@@ -86,10 +88,19 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
                   </Button>
 
                   <div className="flex items-center space-x-2">
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center space-x-1 cursor-pointer" onClick={() => navigate('/profile')}>
                       <User className="w-4 h-4 text-gray-500" />
                       <span className="text-sm font-medium text-gray-700">{user.name}</span>
                     </div>
+                    
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => navigate('/profile')}
+                      className="text-gray-500 hover:text-gray-700"
+                    >
+                      <Settings className="w-4 h-4" />
+                    </Button>
                     
                     <Button
                       variant="ghost"

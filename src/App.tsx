@@ -9,6 +9,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
 import PostDetail from "./pages/PostDetail";
 import UserProfile from "./pages/UserProfile";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import "./i18n";
 
@@ -26,6 +27,7 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/post/:id" element={<PostDetail />} />
               <Route path="/user/:id" element={<UserProfile />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
