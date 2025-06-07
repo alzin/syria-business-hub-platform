@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
@@ -107,56 +108,71 @@ const LandingPage = () => {
         <section className="relative bg-gradient-inspire text-background overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20"></div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-            <div className="text-center">
-              <Badge className="mb-6 bg-background/20 text-background border-background/30 hover:bg-background/30">
-                🇸🇾 Connecting Syrian Voices Worldwide
-              </Badge>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-                Your Gateway to
-                <span className="block text-warning">Syrian Knowledge</span>
-              </h1>
-              <p className="text-xl md:text-2xl mb-4 text-background/90 max-w-4xl mx-auto leading-relaxed">
-                Connect with Syrian experts, ask questions, share news, and engage in meaningful 
-                discussions about Syria's present and future
-              </p>
-              <p className="text-lg mb-8 text-warning font-medium">
-                {t('platformTagline', 'Where Syrian Expertise Meets Global Community')}
-              </p>
-              
-              {!user && (
-                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                  <Button 
-                    size="lg" 
-                    className="bg-background text-primary hover:bg-background/90 font-semibold shadow-lg px-8"
-                    onClick={() => setShowRegister(true)}
-                  >
-                    <MessageSquare className="w-5 h-5 mr-2" />
-                    Ask a Question
-                  </Button>
-                  <Button 
-                    size="lg" 
-                    variant="outline" 
-                    className="border-background text-background hover:bg-background hover:text-primary font-semibold px-8"
-                    onClick={() => setShowRegister(true)}
-                  >
-                    <Users className="w-5 h-5 mr-2" />
-                    Join as Expert
-                  </Button>
-                </div>
-              )}
-
-              {/* Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
-                {stats.map((stat, index) => (
-                  <Card key={index} className="bg-background/10 border-background/20 backdrop-blur-sm hover:bg-background/20 transition-all duration-300">
-                    <CardContent className="p-6 text-center">
-                      <stat.icon className={`w-8 h-8 mx-auto mb-2 ${stat.color}`} />
-                      <div className="text-2xl font-bold text-background">{stat.value}</div>
-                      <div className="text-background/80 text-sm">{stat.label}</div>
-                    </CardContent>
-                  </Card>
-                ))}
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Text Content */}
+              <div className="text-center lg:text-left">
+                <Badge className="mb-6 bg-background/20 text-background border-background/30 hover:bg-background/30">
+                  🇸🇾 Connecting Syrian Voices Worldwide
+                </Badge>
+                <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
+                  Your Gateway to
+                  <span className="block text-warning">Syrian Knowledge</span>
+                </h1>
+                <p className="text-xl md:text-2xl mb-4 text-background/90 max-w-4xl mx-auto lg:mx-0 leading-relaxed">
+                  Connect with Syrian experts, ask questions, share news, and engage in meaningful 
+                  discussions about Syria's present and future
+                </p>
+                <p className="text-lg mb-8 text-warning font-medium">
+                  {t('platformTagline', 'Where Syrian Expertise Meets Global Community')}
+                </p>
+                
+                {!user && (
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
+                    <Button 
+                      size="lg" 
+                      className="bg-background text-primary hover:bg-background/90 font-semibold shadow-lg px-8"
+                      onClick={() => setShowRegister(true)}
+                    >
+                      <MessageSquare className="w-5 h-5 mr-2" />
+                      Ask a Question
+                    </Button>
+                    <Button 
+                      size="lg" 
+                      variant="outline" 
+                      className="border-background text-background hover:bg-background hover:text-primary font-semibold px-8"
+                      onClick={() => setShowRegister(true)}
+                    >
+                      <Users className="w-5 h-5 mr-2" />
+                      Join as Expert
+                    </Button>
+                  </div>
+                )}
               </div>
+
+              {/* Hero Image */}
+              <div className="flex justify-center lg:justify-end">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/7fc2f410-23bb-4f4a-bdcf-caae0d25e3bd.png" 
+                    alt="Syrian Knowledge Platform - Connect with experts worldwide"
+                    className="w-full max-w-lg h-auto rounded-lg shadow-2xl bg-background/10 backdrop-blur-sm"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent rounded-lg"></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+              {stats.map((stat, index) => (
+                <Card key={index} className="bg-background/10 border-background/20 backdrop-blur-sm hover:bg-background/20 transition-all duration-300">
+                  <CardContent className="p-6 text-center">
+                    <stat.icon className={`w-8 h-8 mx-auto mb-2 ${stat.color}`} />
+                    <div className="text-2xl font-bold text-background">{stat.value}</div>
+                    <div className="text-background/80 text-sm">{stat.label}</div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </section>
