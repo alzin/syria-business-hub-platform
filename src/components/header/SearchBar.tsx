@@ -38,17 +38,31 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, searchTerm = '' }) => {
     }
   };
 
+  const handleSearchButtonClick = () => {
+    navigate('/?posts=true');
+  };
+
   return (
     <div className="flex-1 max-w-lg mx-8">
-      <form onSubmit={handleSearch} className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-        <Input
-          type="text"
-          placeholder={t('searchPlaceholder', 'Search questions and news...')}
-          value={localSearchTerm}
-          onChange={handleSearchChange}
-          className="pl-10 pr-4 border-border focus:ring-primary"
-        />
+      <form onSubmit={handleSearch} className="relative flex">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+          <Input
+            type="text"
+            placeholder={t('searchPlaceholder', 'Search questions and news...')}
+            value={localSearchTerm}
+            onChange={handleSearchChange}
+            className="pl-10 pr-4 border-border focus:ring-primary rounded-r-none"
+          />
+        </div>
+        <Button 
+          type="button"
+          onClick={handleSearchButtonClick}
+          className="rounded-l-none border-l-0"
+          size="sm"
+        >
+          Search
+        </Button>
       </form>
     </div>
   );
