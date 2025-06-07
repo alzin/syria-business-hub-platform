@@ -35,6 +35,10 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
     navigate('/');
   };
 
+  const handleProfileClick = () => {
+    navigate(`/user/${user.id}`);
+  };
+
   const getInitials = (name: string) => {
     return name
       .split(' ')
@@ -78,7 +82,7 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate('/profile')}>
+          <DropdownMenuItem onClick={handleProfileClick}>
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>

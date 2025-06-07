@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -88,11 +89,6 @@ const Profile = () => {
       location: user.location,
     });
     setIsEditing(false);
-  };
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/');
   };
 
   const handleAvatarUpdate = (avatarUrl: string | null) => {
@@ -240,7 +236,7 @@ const Profile = () => {
         </Card>
 
         {/* Account Information */}
-        <Card className="mb-8">
+        <Card>
           <CardHeader>
             <CardTitle>{t('accountInformation')}</CardTitle>
           </CardHeader>
@@ -263,34 +259,6 @@ const Profile = () => {
                   </Badge>
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Account Actions */}
-        <Card>
-          <CardHeader>
-            <CardTitle>{t('accountActions')}</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center justify-between p-4 border rounded-lg">
-              <div>
-                <h3 className="font-medium">{t('signOut')}</h3>
-                <p className="text-sm text-gray-500">{t('signOutDesc')}</p>
-              </div>
-              <Button variant="outline" onClick={handleLogout}>
-                {t('signOut')}
-              </Button>
-            </div>
-            
-            <div className="flex items-center justify-between p-4 border rounded-lg">
-              <div>
-                <h3 className="font-medium">{t('viewPublicProfile')}</h3>
-                <p className="text-sm text-gray-500">{t('viewPublicProfileDesc')}</p>
-              </div>
-              <Button variant="outline" onClick={() => navigate(`/user/${user.id}`)}>
-                {t('viewProfile')}
-              </Button>
             </div>
           </CardContent>
         </Card>
