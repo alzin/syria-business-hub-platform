@@ -34,11 +34,11 @@ const Profile = () => {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
-        <div className="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8">
           <Card>
             <CardContent className="text-center py-8 sm:py-12">
-              <p className="text-gray-500 mb-4">{t('userMustBeLoggedIn')}</p>
-              <Button onClick={() => navigate('/')}>
+              <p className="text-gray-500 mb-4 text-sm sm:text-base">{t('userMustBeLoggedIn')}</p>
+              <Button onClick={() => navigate('/')} size={isMobile ? "sm" : "default"}>
                 {t('goBackHome')}
               </Button>
             </CardContent>
@@ -98,38 +98,88 @@ const Profile = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      <div className="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
-        {/* Back button */}
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8">
+        {/* Back button - responsive size and spacing */}
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
-          className="mb-4 sm:mb-6"
+          className="mb-4 sm:mb-6 p-2 sm:p-3"
           size={isMobile ? "sm" : "default"}
         >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          {t('backToHome')}
+          <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
+          <span className="text-sm sm:text-base">{t('backToHome')}</span>
         </Button>
 
-        {/* Profile Header */}
+        {/* Profile Header Card - responsive padding */}
         <Card className="mb-6 sm:mb-8">
-          <CardHeader className="p-4 sm:p-6">
-            <ProfileHeader
-              user={user}
-              currentAvatar={currentAvatar}
-              isEditing={isEditing}
-              isLoading={isLoading}
-              onAvatarUpdate={handleAvatarUpdate}
-              onEdit={() => setIsEditing(true)}
-              onSave={handleSave}
-              onCancel={handleCancel}
-            >
-              <ProfileForm
-                formData={formData}
-                onFormDataChange={setFormData}
-              />
-            </ProfileHeader>
+          <CardHeader className="p-3 sm:p-4 lg:p-6">
+            <div className={`${isMobile ? 'space-y-4' : 'flex items-start justify-between'}`}>
+              {/* Avatar and basic info - responsive layout */}
+              <div className={`${isMobile ? 'flex flex-col items-center text-center space-y-4' : 'flex items-start space-x-4 lg:space-x-6'}`}>
+                {/* Avatar Upload Section - responsive size */}
+                <div className="flex-shrink-0">
+                  <ProfileHeader
+                    user={user}
+                    currentAvatar={currentAvatar}
+                    isEditing={isEditing}
+                    isLoading={isLoading}
+                    onAvatarUpdate={handleAvatarUpdate}
+                    onEdit={() => setIsEditing(true)}
+                    onSave={handleSave}
+                    onCancel={handleCancel}
+                  >
+                    {/* Form content when editing - responsive */}
+                    <div className={`${isMobile ? 'w-full' : 'max-w-md'}`}>
+                      <ProfileForm
+                        formData={formData}
+                        onFormDataChange={setFormData}
+                      />
+                    </div>
+                  </ProfileHeader>
+                </div>
+              </div>
+
+              {/* Action buttons - responsive positioning */}
+              {isMobile && (
+                <div className="flex justify-center space-x-2 mt-4">
+                  {isEditing ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleCancel}
+                        disabled={isLoading}
+                        className="text-xs"
+                      >
+                        {t('cancel')}
+                      </Button>
+                      <Button
+                        size="sm"
+                        onClick={handleSave}
+                        disabled={isLoading}
+                        className="text-xs"
+                      >
+                        {isLoading ? t('saving') : t('save')}
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setIsEditing(true)}
+                      className="text-xs"
+                    >
+                      {t('editProfile')}
+                    </Button>
+                  )}
+                </div>
+              )}
+            </div>
           </CardHeader>
         </Card>
+
+        {/* Additional profile sections can be added here */}
+        {/* Future: Activity, Posts, Settings, etc. */}
       </div>
     </div>
   );
