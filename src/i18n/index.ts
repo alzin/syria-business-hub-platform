@@ -26,6 +26,7 @@ const resources = {
       password: 'Password',
       confirmPassword: 'Confirm Password',
       name: 'Full Name',
+      fullName: 'Full Name',
       forgotPassword: 'Forgot Password?',
       rememberMe: 'Remember me',
       
@@ -33,12 +34,16 @@ const resources = {
       submit: 'Submit',
       cancel: 'Cancel',
       save: 'Save',
+      saving: 'Saving...',
       edit: 'Edit',
+      'edit profile': 'Edit Profile',
       delete: 'Delete',
       reply: 'Reply',
       vote: 'Vote',
       share: 'Share',
       report: 'Report',
+      'back to posts': 'Back to Posts',
+      'goBackHome': 'Go Back Home',
       
       // Posts and Questions
       askQuestion: 'Ask Question',
@@ -80,8 +85,10 @@ const resources = {
       expertise: 'Expertise',
       location: 'Location',
       joinedDate: 'Joined',
+      joined: 'Joined',
       userPosts: 'Posts',
       answers: 'Answers',
+      verified: 'Verified',
       
       // Filters
       filterByCategory: 'Filter by Category',
@@ -94,6 +101,8 @@ const resources = {
       welcomeMessage: 'Welcome to SyrVest',
       noPostsFound: 'No posts found',
       recentPosts: 'Recent Posts',
+      userMustBeLoggedIn: 'You must be logged in to view this page',
+      userNotFound: 'User not found',
       
       // Landing Page
       welcomeTitle: 'Connecting Syrian Voices Worldwide',
@@ -101,11 +110,21 @@ const resources = {
       getStarted: 'Get Started',
       learnMore: 'Learn More',
       
+      // Profile Updates
+      profileUpdated: 'Profile Updated',
+      profileUpdatedDesc: 'Your profile has been successfully updated',
+      failedToUpdate: 'Failed to update {{item}}',
+      
       // Errors
       invalidEmail: 'Please enter a valid email address',
       passwordTooShort: 'Password must be at least 8 characters',
       passwordMismatch: 'Passwords do not match',
       requiredField: 'This field is required',
+      
+      // Additional translations
+      postedBy: 'by',
+      viewPublicProfile: 'View Public Profile',
+      createPost: 'Create Post',
     }
   },
   ar: {
@@ -130,6 +149,7 @@ const resources = {
       password: 'كلمة المرور',
       confirmPassword: 'تأكيد كلمة المرور',
       name: 'الاسم الكامل',
+      fullName: 'الاسم الكامل',
       forgotPassword: 'نسيت كلمة المرور؟',
       rememberMe: 'تذكرني',
       
@@ -137,12 +157,16 @@ const resources = {
       submit: 'إرسال',
       cancel: 'إلغاء',
       save: 'حفظ',
+      saving: 'جاري الحفظ...',
       edit: 'تعديل',
+      'edit profile': 'تعديل الملف الشخصي',
       delete: 'حذف',
       reply: 'رد',
       vote: 'تصويت',
       share: 'مشاركة',
       report: 'إبلاغ',
+      'back to posts': 'العودة للمنشورات',
+      'goBackHome': 'العودة للرئيسية',
       
       // Posts and Questions
       askQuestion: 'اطرح سؤالاً',
@@ -184,8 +208,10 @@ const resources = {
       expertise: 'الخبرة',
       location: 'الموقع',
       joinedDate: 'تاريخ الانضمام',
+      joined: 'انضم في',
       userPosts: 'المنشورات',
       answers: 'الإجابات',
+      verified: 'موثق',
       
       // Filters
       filterByCategory: 'تصفية حسب الفئة',
@@ -198,6 +224,8 @@ const resources = {
       welcomeMessage: 'مرحباً بك في سير فيست',
       noPostsFound: 'لم يتم العثور على منشورات',
       recentPosts: 'المنشورات الأخيرة',
+      userMustBeLoggedIn: 'يجب أن تكون مسجل الدخول لعرض هذه الصفحة',
+      userNotFound: 'المستخدم غير موجود',
       
       // Landing Page
       welcomeTitle: 'ربط الأصوات السورية عالمياً',
@@ -205,11 +233,21 @@ const resources = {
       getStarted: 'ابدأ الآن',
       learnMore: 'اعرف المزيد',
       
+      // Profile Updates
+      profileUpdated: 'تم تحديث الملف الشخصي',
+      profileUpdatedDesc: 'تم تحديث ملفك الشخصي بنجاح',
+      failedToUpdate: 'فشل في تحديث {{item}}',
+      
       // Errors
       invalidEmail: 'يرجى إدخال عنوان بريد إلكتروني صحيح',
       passwordTooShort: 'يجب أن تكون كلمة المرور 8 أحرف على الأقل',
       passwordMismatch: 'كلمات المرور غير متطابقة',
       requiredField: 'هذا الحقل مطلوب',
+      
+      // Additional translations
+      postedBy: 'بواسطة',
+      viewPublicProfile: 'عرض الملف العام',
+      createPost: 'إنشاء منشور',
     }
   }
 };

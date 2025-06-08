@@ -1,7 +1,9 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -24,6 +26,8 @@ interface UserActionsProps {
 
 const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArticle }) => {
   const { user, logout } = useAuth();
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [showCreatePost, setShowCreatePost] = React.useState(false);
@@ -62,12 +66,12 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
           onClick={onCreateQuestion}
           className="bg-primary hover:bg-primary/90 text-primary-foreground w-full justify-start"
         >
-          <Plus className="w-4 h-4 mr-2" />
-          Create Post
+          <Plus className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+          {t('createPost')}
         </Button>
 
         {/* User Info */}
-        <div className="flex items-center space-x-3 py-3 border-y">
+        <div className={`flex items-center space-x-3 py-3 border-y ${isRTL ? 'space-x-reverse' : ''}`}>
           <Avatar className="h-10 w-10">
             <AvatarImage src={user.avatar} alt={user.name} />
             <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
@@ -81,16 +85,16 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
         {/* Menu Items */}
         <div className="flex flex-col space-y-2">
           <Button variant="ghost" onClick={handleProfileClick} className="justify-start">
-            <User className="mr-2 h-4 w-4" />
-            Profile
+            <User className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            {t('profile')}
           </Button>
           <Button variant="ghost" onClick={handleViewPublicProfileClick} className="justify-start">
-            <Eye className="mr-2 h-4 w-4" />
-            View Public Profile
+            <Eye className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            {t('viewPublicProfile')}
           </Button>
           <Button variant="ghost" onClick={handleSignOut} className="justify-start text-destructive hover:text-destructive">
-            <LogOut className="mr-2 h-4 w-4" />
-            Log out
+            <LogOut className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            {t('logout')}
           </Button>
         </div>
 
@@ -104,15 +108,15 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
   }
 
   return (
-    <div className="flex items-center space-x-3 lg:space-x-4">
+    <div className={`flex items-center space-x-3 lg:space-x-4 ${isRTL ? 'space-x-reverse' : ''}`}>
       {/* Create Post Button */}
       <Button
         onClick={onCreateQuestion}
         size={isMobile ? "sm" : "default"}
         className="bg-primary hover:bg-primary/90 text-primary-foreground"
       >
-        <Plus className="w-4 h-4 mr-2" />
-        <span className="hidden sm:inline">Create Post</span>
+        <Plus className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+        <span className="hidden sm:inline">{t('createPost')}</span>
       </Button>
 
       {/* Notifications */}
@@ -139,17 +143,17 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleProfileClick}>
-            <User className="mr-2 h-4 w-4" />
-            <span>Profile</span>
+            <User className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            <span>{t('profile')}</span>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleViewPublicProfileClick}>
-            <Eye className="mr-2 h-4 w-4" />
-            <span>View Public Profile</span>
+            <Eye className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            <span>{t('viewPublicProfile')}</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleSignOut}>
-            <LogOut className="mr-2 h-4 w-4" />
-            <span>Log out</span>
+            <LogOut className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+            <span>{t('logout')}</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

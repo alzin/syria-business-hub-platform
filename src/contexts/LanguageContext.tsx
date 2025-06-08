@@ -37,8 +37,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     // Apply RTL class to body for better styling control
     if (lang === 'ar') {
       document.body.classList.add('rtl');
+      document.body.style.fontFamily = "'Amiri', serif";
     } else {
       document.body.classList.remove('rtl');
+      document.body.style.fontFamily = "'Inter', sans-serif";
     }
   };
 
@@ -55,7 +57,9 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setLanguage,
       isRTL,
     }}>
-      {children}
+      <div className={isRTL ? 'rtl' : 'ltr'} dir={isRTL ? 'rtl' : 'ltr'}>
+        {children}
+      </div>
     </LanguageContext.Provider>
   );
 };

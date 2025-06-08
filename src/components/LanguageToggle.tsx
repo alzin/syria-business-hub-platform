@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Globe } from 'lucide-react';
 
 const LanguageToggle: React.FC = () => {
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, isRTL } = useLanguage();
 
   const toggleLanguage = () => {
     const newLang = language === 'en' ? 'ar' : 'en';
@@ -17,11 +17,11 @@ const LanguageToggle: React.FC = () => {
       variant="ghost"
       size="sm"
       onClick={toggleLanguage}
-      className="flex items-center space-x-1"
+      className={`flex items-center space-x-1 ${isRTL ? 'space-x-reverse' : ''}`}
     >
       <Globe className="w-4 h-4" />
-      <span className="text-xs uppercase">
-        {language === 'en' ? 'AR' : 'EN'}
+      <span className="text-xs uppercase font-medium">
+        {language === 'en' ? 'عربي' : 'EN'}
       </span>
     </Button>
   );
