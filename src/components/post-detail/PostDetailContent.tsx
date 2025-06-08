@@ -6,6 +6,7 @@ import AuthorInfo from '@/components/AuthorInfo';
 import PostStats from '@/components/PostStats';
 import VotingButtons from '@/components/VotingButtons';
 import { Post } from '@/types';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface PostDetailContentProps {
   post: Post;
@@ -19,6 +20,7 @@ const PostDetailContent: React.FC<PostDetailContentProps> = ({
   commentsCount,
 }) => {
   const queryClient = useQueryClient();
+  const isMobile = useIsMobile();
 
   // Get fresh vote count from query cache
   const getFreshVoteCount = () => {
@@ -33,17 +35,21 @@ const PostDetailContent: React.FC<PostDetailContentProps> = ({
 
   return (
     <>
-      <h1 className="text-2xl font-bold text-gray-900 mt-4">{post.title}</h1>
+      <h1 className={`${isMobile ? 'text-xl' : 'text-2xl'} font-bold text-gray-900 mt-4 leading-tight`}>
+        {post.title}
+      </h1>
       
-      <div className="prose max-w-none mb-6">
-        <p className="text-gray-700 whitespace-pre-wrap">{post.content}</p>
+      <div className={`prose max-w-none ${isMobile ? 'mb-4' : 'mb-6'}`}>
+        <p className={`text-gray-700 whitespace-pre-wrap ${isMobile ? 'text-sm leading-relaxed' : ''}`}>
+          {post.content}
+        </p>
       </div>
 
       {/* Tags */}
       {post.tags && post.tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className={`flex flex-wrap gap-2 ${isMobile ? 'mb-4' : 'mb-6'}`}>
           {post.tags.map((tag, index) => (
-            <Badge key={index} variant="outline" className="text-xs">
+            <Badge key={index} variant="outline" className={isMobile ? 'text-xs' : 'text-xs'}>
               {tag}
             </Badge>
           ))}
@@ -51,10 +57,10 @@ const PostDetailContent: React.FC<PostDetailContentProps> = ({
       )}
 
       {/* Author info and voting */}
-      <div className="flex items-center justify-between pt-4 border-t">
+      <div className={`${isMobile ? 'flex flex-col space-y-3' : 'flex items-center justify-between'} pt-4 border-t`}>
         <AuthorInfo author={post.author} />
         
-        <div className="flex items-center space-x-4">
+        <div className={`flex items-center ${isMobile ? 'justify-between' : 'space-x-4'}`}>
           <PostStats
             type={post.type}
             answersCount={answersCount}
@@ -68,6 +74,7 @@ const PostDetailContent: React.FC<PostDetailContentProps> = ({
             itemType="post" 
             votes={currentVotes}
             authorId={post.author.id}
+            size={isMobile ? "sm" : "default"}
           />
         </div>
       </div>

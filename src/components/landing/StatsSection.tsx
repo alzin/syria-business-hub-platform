@@ -2,8 +2,11 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { MessageSquare, Users, Globe, BookOpen } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const StatsSection = () => {
+  const isMobile = useIsMobile();
+
   const stats = [
     { 
       icon: MessageSquare, 
@@ -40,20 +43,20 @@ const StatsSection = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+    <div className={`grid ${isMobile ? 'grid-cols-2 gap-3' : 'grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6'} mt-12 sm:mt-16`}>
       {stats.map((stat, index) => (
         <Card 
           key={index} 
           className={`bg-background/15 border-background/30 backdrop-blur-sm hover:bg-background/25 hover:scale-105 transition-all duration-300 group cursor-pointer animate-fade-in ${stat.delay}`}
         >
-          <CardContent className="p-6 text-center relative overflow-hidden">
+          <CardContent className={`${isMobile ? 'p-3' : 'p-4 sm:p-6'} text-center relative overflow-hidden`}>
             <div className={`absolute inset-0 ${stat.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
             <div className="relative z-10">
-              <stat.icon className={`w-8 h-8 mx-auto mb-3 ${stat.color} group-hover:animate-bounce transition-colors duration-300`} />
-              <div className="text-2xl font-bold text-background mb-1 group-hover:scale-110 transition-transform duration-300">
+              <stat.icon className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6 sm:w-8 sm:h-8'} mx-auto ${isMobile ? 'mb-2' : 'mb-3'} ${stat.color} group-hover:animate-bounce transition-colors duration-300`} />
+              <div className={`${isMobile ? 'text-lg' : 'text-xl sm:text-2xl'} font-bold text-background ${isMobile ? 'mb-0.5' : 'mb-1'} group-hover:scale-110 transition-transform duration-300`}>
                 {stat.value}
               </div>
-              <div className="text-background/80 text-sm font-medium">{stat.label}</div>
+              <div className={`text-background/80 ${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>{stat.label}</div>
             </div>
           </CardContent>
         </Card>

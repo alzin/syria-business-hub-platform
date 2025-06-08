@@ -12,11 +12,13 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
 import { ArrowLeft } from 'lucide-react';
 import { ExpertiseType } from '@/types';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Profile = () => {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [currentAvatar, setCurrentAvatar] = useState(user?.avatar || null);
@@ -32,11 +34,11 @@ const Profile = () => {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
           <Card>
-            <CardContent className="text-center py-12">
-              <p className="text-gray-500">{t('userMustBeLoggedIn')}</p>
-              <Button className="mt-4" onClick={() => navigate('/')}>
+            <CardContent className="text-center py-8 sm:py-12">
+              <p className="text-gray-500 mb-4">{t('userMustBeLoggedIn')}</p>
+              <Button onClick={() => navigate('/')}>
                 {t('goBackHome')}
               </Button>
             </CardContent>
@@ -96,20 +98,21 @@ const Profile = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
         {/* Back button */}
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
-          className="mb-6"
+          className="mb-4 sm:mb-6"
+          size={isMobile ? "sm" : "default"}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           {t('backToHome')}
         </Button>
 
         {/* Profile Header */}
-        <Card className="mb-8">
-          <CardHeader>
+        <Card className="mb-6 sm:mb-8">
+          <CardHeader className="p-4 sm:p-6">
             <ProfileHeader
               user={user}
               currentAvatar={currentAvatar}

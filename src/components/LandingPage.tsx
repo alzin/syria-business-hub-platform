@@ -23,7 +23,7 @@ const LandingPage = () => {
       {/* Hero Section with Stats */}
       <div className="relative bg-gradient-inspire text-background overflow-hidden">
         <HeroSection onNavigateToMainPage={handleNavigateToMainPage} />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
           <StatsSection />
         </div>
       </div>

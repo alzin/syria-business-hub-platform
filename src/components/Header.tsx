@@ -11,6 +11,14 @@ import SearchBar from '@/components/header/SearchBar';
 import UserActions from '@/components/header/UserActions';
 import AuthButtons from '@/components/header/AuthButtons';
 import { useNavigate } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Button } from '@/components/ui/button';
+import { Menu, X } from 'lucide-react';
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 
 interface HeaderProps {
   onSearch?: (term: string) => void;
@@ -21,10 +29,12 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showCreateQuestion, setShowCreateQuestion] = useState(false);
   const [showCreateArticle, setShowCreateArticle] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleSwitchToRegister = () => {
     setShowLogin(false);
@@ -36,41 +46,94 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
     setShowLogin(true);
   };
 
+  const MobileActions = () => (
+    <div className="flex flex-col space-y-4 p-4">
+      <LanguageToggle />
+      {user ? (
+        <UserActions 
+          onCreateQuestion={() => {
+            setShowCreateQuestion(true);
+            setMobileMenuOpen(false);
+          }}
+          onCreateArticle={() => {
+            setShowCreateArticle(true);
+            setMobileMenuOpen(false);
+          }}
+        />
+      ) : (
+        <AuthButtons 
+          onLogin={() => {
+            setShowLogin(true);
+            setMobileMenuOpen(false);
+          }}
+          onRegister={() => {
+            setShowRegister(true);
+            setMobileMenuOpen(false);
+          }}
+        />
+      )}
+    </div>
+  );
+
   return (
     <>
       <header className="bg-background border-b border-border sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+          <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo */}
-            <div className="flex items-center space-x-3 cursor-pointer" onClick={() => navigate('/')}>
-              <Logo className="w-8 h-8" />
-              <h1 className="text-xl font-bold bg-gradient-inspire bg-clip-text text-transparent">
+            <div className="flex items-center space-x-2 sm:space-x-3 cursor-pointer" onClick={() => navigate('/')}>
+              <Logo className="w-6 h-6 sm:w-8 sm:h-8" />
+              <h1 className="text-lg sm:text-xl font-bold bg-gradient-inspire bg-clip-text text-transparent">
                 {t('appName', 'SyrVest')}
               </h1>
             </div>
 
-            {/* Search Bar */}
-            {onSearch && (
-              <SearchBar onSearch={onSearch} searchTerm={searchTerm} />
+            {/* Desktop Search Bar */}
+            {onSearch && !isMobile && (
+              <div className="hidden md:block flex-1 max-w-md mx-8">
+                <SearchBar onSearch={onSearch} searchTerm={searchTerm} />
+              </div>
             )}
 
-            {/* Right side actions */}
-            <div className="flex items-center space-x-4">
-              <LanguageToggle />
+            {/* Desktop Actions */}
+            {!isMobile && (
+              <div className="flex items-center space-x-4">
+                <LanguageToggle />
+                {user ? (
+                  <UserActions 
+                    onCreateQuestion={() => setShowCreateQuestion(true)}
+                    onCreateArticle={() => setShowCreateArticle(true)}
+                  />
+                ) : (
+                  <AuthButtons 
+                    onLogin={() => setShowLogin(true)}
+                    onRegister={() => setShowRegister(true)}
+                  />
+                )}
+              </div>
+            )}
 
-              {user ? (
-                <UserActions 
-                  onCreateQuestion={() => setShowCreateQuestion(true)}
-                  onCreateArticle={() => setShowCreateArticle(true)}
-                />
-              ) : (
-                <AuthButtons 
-                  onLogin={() => setShowLogin(true)}
-                  onRegister={() => setShowRegister(true)}
-                />
-              )}
-            </div>
+            {/* Mobile Menu Button */}
+            {isMobile && (
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="sm" className="p-2">
+                    <Menu className="w-5 h-5" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-80">
+                  <MobileActions />
+                </SheetContent>
+              </Sheet>
+            )}
           </div>
+
+          {/* Mobile Search Bar */}
+          {onSearch && isMobile && (
+            <div className="pb-3 pt-1">
+              <SearchBar onSearch={onSearch} searchTerm={searchTerm} />
+            </div>
+          )}
         </div>
       </header>
 
