@@ -182,8 +182,8 @@ const UserProfile = () => {
 
                 <div className="flex items-center space-x-6 text-sm text-gray-600">
                   <span>{userPosts?.length || 0} {t('posts')}</span>
-                  <span>{questions.length} {t('questionsLower')}</span>
-                  <span>{news.length} {t('newsLower')}</span>
+                  <span>{questions.length} {t('questions')}</span>
+                  <span>{news.length} {t('news')}</span>
                 </div>
               </div>
             </div>
@@ -198,7 +198,7 @@ const UserProfile = () => {
           <CardContent>
             <Tabs defaultValue="all" className="w-full">
               <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="all">{t('allPosts')} ({userPosts?.length || 0})</TabsTrigger>
+                <TabsTrigger value="all">{t('posts')} ({userPosts?.length || 0})</TabsTrigger>
                 <TabsTrigger value="questions">{t('questions')} ({questions.length})</TabsTrigger>
                 <TabsTrigger value="news">{t('news')} ({news.length})</TabsTrigger>
               </TabsList>

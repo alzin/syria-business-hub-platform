@@ -64,7 +64,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
             <div className="text-center lg:text-left animate-fade-in">
               <Badge className="mb-6 bg-warning/20 text-warning border-warning/40 hover:bg-warning/30 transition-all duration-300 animate-bounce">
                 <Globe className="w-4 h-4 mr-2" />
-                🇸🇾 Connecting Syrian Voices Worldwide
+                Connecting Syrian Voices Worldwide
               </Badge>
               
               <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in leading-tight">
