@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -11,25 +12,26 @@ interface ExpertiseAreasSectionProps {
 }
 
 const ExpertiseAreasSection: React.FC<ExpertiseAreasSectionProps> = ({ onNavigateToMainPage }) => {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
 
   const expertiseAreas = [
     {
-      title: 'Legal & Compliance',
-      description: 'Get guidance on Syrian laws, regulations, and legal procedures from practicing attorneys',
-      experts: '45+ Legal Experts',
+      title: t('legal'),
+      description: t('Get guidance on Syrian laws, regulations, and legal procedures from practicing attorneys'),
+      experts: `45+ ${t('Legal Experts')}`,
       icon: Shield
     },
     {
-      title: 'Technology & Innovation',
-      description: 'Discuss tech developments, startup ecosystem, and digital transformation in Syria',
-      experts: '80+ Tech Professionals',
+      title: t('technology'),
+      description: t('Discuss tech developments, startup ecosystem, and digital transformation in Syria'),
+      experts: `80+ ${t('Tech Professionals')}`,
       icon: Lightbulb
     },
     {
-      title: 'Business & Economy',
-      description: 'Insights on Syrian market conditions, business opportunities, and economic developments',
-      experts: '60+ Business Leaders',
+      title: t('investment'),
+      description: t('Insights on Syrian market conditions, business opportunities, and economic developments'),
+      experts: `60+ ${t('Business Leaders')}`,
       icon: Building2
     }
   ];
@@ -39,10 +41,10 @@ const ExpertiseAreasSection: React.FC<ExpertiseAreasSectionProps> = ({ onNavigat
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className={`text-center ${isMobile ? 'mb-8' : 'mb-12 lg:mb-16'}`}>
           <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-bold text-foreground mb-4`}>
-            Expertise Areas & Discussions
+            {t('Expertise Areas & Discussions')}
           </h2>
           <p className={`${isMobile ? 'text-base' : 'text-lg lg:text-xl'} text-muted-foreground max-w-3xl mx-auto leading-relaxed`}>
-            Get expert insights and engage in discussions across various topics relevant to Syria
+            {t('Get expert insights and engage in discussions across various topics relevant to Syria')}
           </p>
         </div>
 
@@ -70,7 +72,7 @@ const ExpertiseAreasSection: React.FC<ExpertiseAreasSectionProps> = ({ onNavigat
                   onClick={onNavigateToMainPage}
                   size={isMobile ? "sm" : "default"}
                 >
-                  Browse Questions
+                  {t('Browse Questions')}
                   <ArrowRight className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'} ml-2`} />
                 </Button>
               </CardContent>

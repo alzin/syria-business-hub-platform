@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
@@ -64,25 +63,24 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
             <div className="text-center lg:text-left animate-fade-in">
               <Badge className="mb-6 bg-warning/20 text-warning border-warning/40 hover:bg-warning/30 transition-all duration-300 animate-bounce">
                 <Globe className="w-4 h-4 mr-2" />
-                Connecting Syrian Voices Worldwide
+                {t('Connecting Syrian Voices Worldwide')}
               </Badge>
               
               <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in leading-tight">
-                Your Gateway to
+                {t('Your Gateway to')}
                 <span className="block text-warning relative">
-                  <span className="relative z-10">Syrian Knowledge</span>
+                  <span className="relative z-10">{t('Syrian Knowledge')}</span>
                   <div className="absolute inset-0 bg-warning/20 blur-lg transform scale-110 animate-pulse"></div>
                 </span>
               </h1>
               
               <p className="text-xl md:text-2xl mb-4 text-background/90 max-w-4xl mx-auto lg:mx-0 leading-relaxed animate-slide-in-right">
-                Connect with Syrian experts, ask questions, share news, and engage in meaningful 
-                discussions about Syria's present and future
+                {t('Connect with Syrian experts, ask questions, share news, and engage in meaningful discussions about Syria\'s present and future')}
               </p>
               
               <p className="text-lg mb-8 text-warning font-medium flex items-center justify-center lg:justify-start animate-fade-in delay-300">
                 <Sparkles className="w-5 h-5 mr-2 animate-spin" />
-                {t('platformTagline', 'Where Syrian Expertise Meets Global Community')}
+                {t('platformTagline')}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12 animate-fade-in delay-500">
@@ -92,7 +90,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
                   onClick={handleAskQuestion}
                 >
                   <MessageSquare className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                  Ask a Question
+                  {t('Ask a Question')}
                 </Button>
                 <Button 
                   size="lg" 
@@ -101,7 +99,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
                   onClick={handleJoinAsExpert}
                 >
                   <Users className="w-5 h-5 mr-2 group-hover:animate-pulse" />
-                  Join as Expert
+                  {t('Join as Expert')}
                 </Button>
               </div>
             </div>

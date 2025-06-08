@@ -1,22 +1,25 @@
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, TrendingUp, Users, Globe } from 'lucide-react';
 
 const BenefitsSection = () => {
+  const { t } = useTranslation();
+
   const benefits = [
-    'Direct access to Syrian experts and professionals',
-    'Real-time updates on Syrian news and developments',
-    'Verified answers from trusted community members',
-    'Multi-language support (Arabic and English)',
-    'Safe space for diaspora and local discussions',
-    'Educational resources about Syrian affairs'
+    t('Direct access to Syrian experts and professionals'),
+    t('Real-time updates on Syrian news and developments'),
+    t('Verified answers from trusted community members'),
+    t('Multi-language support (Arabic and English)'),
+    t('Safe space for diaspora and local discussions'),
+    t('Educational resources about Syrian affairs')
   ];
 
   const stats = [
-    { icon: Users, value: '10K+', label: 'Questions Answered', color: 'text-blue-500' },
-    { icon: Globe, value: '500+', label: 'News Articles', color: 'text-green-500' },
-    { icon: TrendingUp, value: '25+', label: 'Countries', color: 'text-purple-500' }
+    { icon: Users, value: '10K+', label: t('Questions Answered'), color: 'text-blue-500' },
+    { icon: Globe, value: '500+', label: t('News Articles'), color: 'text-green-500' },
+    { icon: TrendingUp, value: '25+', label: t('Countries'), color: 'text-purple-500' }
   ];
 
   return (
@@ -25,12 +28,11 @@ const BenefitsSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 relative">
-              Why Choose Syrian Knowledge?
+              {t('Why Choose Syrian Knowledge?')}
               <div className="absolute -bottom-2 left-0 w-20 h-1 bg-gradient-inspire rounded-full"></div>
             </h2>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              We provide a trusted platform where Syrian experts and community members 
-              can share knowledge, discuss important topics, and stay connected.
+              {t('We provide a trusted platform where Syrian experts and community members can share knowledge, discuss important topics, and stay connected.')}
             </p>
             <div className="space-y-4">
               {benefits.map((benefit, index) => (
@@ -52,9 +54,9 @@ const BenefitsSection = () => {
               <CardContent>
                 <div className="text-center mb-8">
                   <div className="text-5xl font-bold bg-gradient-inspire bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">
-                    Growing Fast
+                    {t('Growing Fast')}
                   </div>
-                  <div className="text-muted-foreground font-medium">Join our thriving community</div>
+                  <div className="text-muted-foreground font-medium">{t('Join our thriving community')}</div>
                 </div>
                 
                 <div className="grid grid-cols-1 gap-6">

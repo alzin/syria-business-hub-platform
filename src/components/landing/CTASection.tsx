@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import LoginDialog from '@/components/auth/LoginDialog';
@@ -12,6 +13,7 @@ interface CTASectionProps {
 }
 
 const CTASection: React.FC<CTASectionProps> = ({ onNavigateToMainPage }) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
@@ -50,13 +52,13 @@ const CTASection: React.FC<CTASectionProps> = ({ onNavigateToMainPage }) => {
             <div className="flex items-center justify-center mb-6">
               <Sparkles className="w-8 h-8 mr-3 text-warning animate-spin" />
               <h2 className="text-3xl md:text-4xl font-bold">
-                Ready to Connect with Syrian Experts?
+                {t('Ready to Connect with Syrian Experts?')}
               </h2>
               <Sparkles className="w-8 h-8 ml-3 text-warning animate-spin" />
             </div>
             
             <p className="text-xl mb-8 text-background/90 max-w-3xl mx-auto leading-relaxed animate-slide-in-right delay-200">
-              Join thousands of Syrians and friends of Syria who are sharing knowledge and building community
+              {t('Join thousands of Syrians and friends of Syria who are sharing knowledge and building community')}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in delay-500">
@@ -66,7 +68,7 @@ const CTASection: React.FC<CTASectionProps> = ({ onNavigateToMainPage }) => {
                 onClick={handleAskQuestion}
               >
                 <HelpCircle className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-                Ask Your First Question
+                {t('Ask Your First Question')}
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
               </Button>
               <Button 
@@ -76,7 +78,7 @@ const CTASection: React.FC<CTASectionProps> = ({ onNavigateToMainPage }) => {
                 onClick={onNavigateToMainPage}
               >
                 <Newspaper className="w-5 h-5 mr-2 group-hover:animate-pulse" />
-                Browse Community
+                {t('Browse Community')}
               </Button>
             </div>
 
@@ -84,15 +86,15 @@ const CTASection: React.FC<CTASectionProps> = ({ onNavigateToMainPage }) => {
             <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-background/80 animate-fade-in delay-700">
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-warning rounded-full animate-pulse"></div>
-                <span className="text-sm font-medium">250+ Verified Experts</span>
+                <span className="text-sm font-medium">250+ {t('Verified Experts')}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-background rounded-full animate-pulse delay-300"></div>
-                <span className="text-sm font-medium">10K+ Questions Answered</span>
+                <span className="text-sm font-medium">10K+ {t('Questions Answered')}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-3 h-3 bg-warning rounded-full animate-pulse delay-500"></div>
-                <span className="text-sm font-medium">35+ Countries Connected</span>
+                <span className="text-sm font-medium">35+ {t('Countries Connected')}</span>
               </div>
             </div>
           </div>

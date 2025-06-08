@@ -1,16 +1,18 @@
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from '@/components/ui/card';
 import { MessageSquare, Users, Globe, BookOpen } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const StatsSection = () => {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
 
   const stats = [
     { 
       icon: MessageSquare, 
-      label: 'Active Discussions', 
+      label: t('Active Discussions'), 
       value: '1,200+', 
       color: 'text-blue-400',
       bgColor: 'bg-blue-500/20',
@@ -18,7 +20,7 @@ const StatsSection = () => {
     },
     { 
       icon: Users, 
-      label: 'Syrian Experts', 
+      label: t('Syrian Experts'), 
       value: '250+', 
       color: 'text-purple-400',
       bgColor: 'bg-purple-500/20',
@@ -26,7 +28,7 @@ const StatsSection = () => {
     },
     { 
       icon: Globe, 
-      label: 'Countries Connected', 
+      label: t('Countries Connected'), 
       value: '35+', 
       color: 'text-green-400',
       bgColor: 'bg-green-500/20',
@@ -34,7 +36,7 @@ const StatsSection = () => {
     },
     { 
       icon: BookOpen, 
-      label: 'Knowledge Articles', 
+      label: t('Knowledge Articles'), 
       value: '500+', 
       color: 'text-orange-400',
       bgColor: 'bg-orange-500/20',

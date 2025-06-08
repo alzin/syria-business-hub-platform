@@ -1,32 +1,35 @@
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from '@/components/ui/card';
 import { HelpCircle, Newspaper, Shield, Network } from 'lucide-react';
 
 const FeaturesSection = () => {
+  const { t } = useTranslation();
+
   const features = [
     {
       icon: HelpCircle,
-      title: 'Expert Q&A Forum',
-      description: 'Ask questions and get answers from verified Syrian experts across various fields including legal, technology, business, and more.',
+      title: t('Expert Q&A Forum'),
+      description: t('Ask questions and get answers from verified Syrian experts across various fields including legal, technology, business, and more.'),
       gradient: 'from-blue-500 to-purple-600'
     },
     {
       icon: Newspaper,
-      title: 'Syrian News Hub',
-      description: 'Stay updated with the latest news, developments, and insights about Syria from trusted sources and community members.',
+      title: t('Syrian News Hub'),
+      description: t('Stay updated with the latest news, developments, and insights about Syria from trusted sources and community members.'),
       gradient: 'from-purple-500 to-pink-600'
     },
     {
       icon: Shield,
-      title: 'Verified Expertise',
-      description: 'Connect with verified professionals including lawyers, doctors, engineers, entrepreneurs, and government representatives.',
+      title: t('Verified Expertise'),
+      description: t('Connect with verified professionals including lawyers, doctors, engineers, entrepreneurs, and government representatives.'),
       gradient: 'from-green-500 to-teal-600'
     },
     {
       icon: Network,
-      title: 'Community Discussions',
-      description: 'Engage in meaningful discussions about Syrian affairs, share experiences, and build connections with the diaspora.',
+      title: t('Community Discussions'),
+      description: t('Engage in meaningful discussions about Syrian affairs, share experiences, and build connections with the diaspora.'),
       gradient: 'from-orange-500 to-red-600'
     }
   ];
@@ -36,11 +39,11 @@ const FeaturesSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 relative">
-            How Our Platform Works
+            {t('How Our Platform Works')}
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-inspire rounded-full"></div>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mt-6">
-            A comprehensive hub for Syrian knowledge sharing and community discussions
+            {t('A comprehensive hub for Syrian knowledge sharing and community discussions')}
           </p>
         </div>
 
