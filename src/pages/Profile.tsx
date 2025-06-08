@@ -185,7 +185,7 @@ const Profile = () => {
                       onClick={() => setIsEditing(true)}
                       className="text-xs"
                     >
-                      {t('editProfile')}
+                      {t('edit profile')}
                     </Button>
                   )}
                 </div>

@@ -122,7 +122,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
               onClick={onEdit}
             >
               <Edit2 className="w-4 h-4 mr-2" />
-              {t('editProfile')}
+              {t('edit profile')}
             </Button>
           )}
         </div>
