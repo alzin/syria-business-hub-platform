@@ -145,7 +145,7 @@ const UserProfile = () => {
           className="mb-6"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          {t('backToPosts')}
+          {t('back to posts')}
         </Button>
 
         {/* User profile header */}

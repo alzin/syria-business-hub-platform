@@ -112,7 +112,7 @@ const Profile = () => {
             size={isMobile ? "sm" : "default"}
           >
             <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
-            <span className="text-sm sm:text-base">{t('backToHome')}</span>
+            <span className="text-sm sm:text-base">{t('back to posts')}</span>
           </Button>
 
           <Button
