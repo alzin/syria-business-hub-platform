@@ -10,7 +10,7 @@ import ProfileForm from '@/components/profile/ProfileForm';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { toast } from '@/hooks/use-toast';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Eye } from 'lucide-react';
 import { ExpertiseType } from '@/types';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -94,21 +94,37 @@ const Profile = () => {
     setCurrentAvatar(avatarUrl);
   };
 
+  const handleViewPublicProfile = () => {
+    navigate(`/user/${user.id}`);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
       
       <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8">
-        {/* Back button - responsive size and spacing */}
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/')}
-          className="mb-4 sm:mb-6 p-2 sm:p-3"
-          size={isMobile ? "sm" : "default"}
-        >
-          <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
-          <span className="text-sm sm:text-base">{t('backToHome')}</span>
-        </Button>
+        {/* Header with back button and view public profile button */}
+        <div className={`${isMobile ? 'flex flex-col space-y-3' : 'flex items-center justify-between'} mb-4 sm:mb-6`}>
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/')}
+            className="p-2 sm:p-3"
+            size={isMobile ? "sm" : "default"}
+          >
+            <ArrowLeft className="w-4 h-4 mr-1 sm:mr-2" />
+            <span className="text-sm sm:text-base">{t('backToHome')}</span>
+          </Button>
+
+          <Button
+            variant="outline"
+            onClick={handleViewPublicProfile}
+            size={isMobile ? "sm" : "default"}
+            className={isMobile ? 'w-full' : ''}
+          >
+            <Eye className="w-4 h-4 mr-2" />
+            <span className="text-sm sm:text-base">View Public Profile</span>
+          </Button>
+        </div>
 
         {/* Profile Header Card - responsive padding */}
         <Card className="mb-6 sm:mb-8">

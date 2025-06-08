@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { User, Settings, LogOut, Plus } from 'lucide-react';
+import { User, Eye, LogOut, Plus } from 'lucide-react';
 import CreatePostDialog from '@/components/CreatePostDialog';
 import NotificationsDropdown from '@/components/NotificationsDropdown';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -38,11 +38,11 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
   };
 
   const handleProfileClick = () => {
-    navigate(`/user/${user.id}`);
+    navigate('/profile');
   };
 
-  const handleSettingsClick = () => {
-    navigate('/profile');
+  const handleViewPublicProfileClick = () => {
+    navigate(`/user/${user.id}`);
   };
 
   const getInitials = (name: string) => {
@@ -84,9 +84,9 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
             <User className="mr-2 h-4 w-4" />
             Profile
           </Button>
-          <Button variant="ghost" onClick={handleSettingsClick} className="justify-start">
-            <Settings className="mr-2 h-4 w-4" />
-            Settings
+          <Button variant="ghost" onClick={handleViewPublicProfileClick} className="justify-start">
+            <Eye className="mr-2 h-4 w-4" />
+            View Public Profile
           </Button>
           <Button variant="ghost" onClick={handleSignOut} className="justify-start text-destructive hover:text-destructive">
             <LogOut className="mr-2 h-4 w-4" />
@@ -142,9 +142,9 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleSettingsClick}>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
+          <DropdownMenuItem onClick={handleViewPublicProfileClick}>
+            <Eye className="mr-2 h-4 w-4" />
+            <span>View Public Profile</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleSignOut}>
