@@ -160,13 +160,11 @@ const resources = {
       'Ask Your First Question': 'Ask Your First Question',
       'Browse Community': 'Browse Community',
       'Verified Experts': 'Verified Experts',
-      'Countries Connected': 'Countries Connected',
       
       // Landing Page - Community Section
       'Join the Community Discussion': 'Join the Community Discussion',
       'Connect with investors and entrepreneurs in our active Q&A community': 'Connect with investors and entrepreneurs in our active Q&A community',
       'Browse Community Posts': 'Browse Community Posts',
-      'Active Discussions': 'Active Discussions',
       'Expert Members': 'Expert Members',
       
       // Landing Page - Hero Section
@@ -350,13 +348,11 @@ const resources = {
       'Ask Your First Question': 'اطرح سؤالك الأول',
       'Browse Community': 'تصفح المجتمع',
       'Verified Experts': 'خبراء موثقون',
-      'Countries Connected': 'بلدان متصلة',
       
       // Landing Page - Community Section
       'Join the Community Discussion': 'انضم لنقاش المجتمع',
       'Connect with investors and entrepreneurs in our active Q&A community': 'تواصل مع المستثمرين ورجال الأعمال في مجتمع الأسئلة والأجوبة النشط',
       'Browse Community Posts': 'تصفح منشورات المجتمع',
-      'Active Discussions': 'النقاشات النشطة',
       'Expert Members': 'الأعضاء الخبراء',
       
       // Landing Page - Hero Section
