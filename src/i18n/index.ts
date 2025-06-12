@@ -10,6 +10,53 @@ const resources = {
       appName: 'SyrVest',
       platformTagline: 'Where Syrian Expertise Meets Global Community',
       
+      // Footer
+      footer: {
+        brandName: 'Syrian Knowledge',
+        mission: 'Connecting Syrian experts worldwide to share knowledge, answer questions, and build a stronger community for Syria\'s future.',
+        social: {
+          facebook: 'Facebook',
+          twitter: 'Twitter',
+          instagram: 'Instagram',
+          linkedin: 'LinkedIn'
+        },
+        quickLinks: {
+          title: 'Quick Links',
+          askQuestion: 'Ask a Question',
+          joinAsExpert: 'Join as Expert',
+          browseCommunity: 'Browse Community',
+          aboutUs: 'About Us',
+          howItWorks: 'How It Works'
+        },
+        expertiseAreas: {
+          title: 'Expertise Areas',
+          legal: 'Legal & Compliance',
+          technology: 'Technology',
+          investment: 'Investment',
+          marketing: 'Marketing',
+          operations: 'Operations'
+        },
+        contactSupport: {
+          title: 'Contact & Support',
+          phone: '+1 (555) 123-4567',
+          location: 'Serving the global Syrian community'
+        },
+        support: {
+          title: 'Support',
+          helpCenter: 'Help Center',
+          communityGuidelines: 'Community Guidelines',
+          reportIssue: 'Report Issue'
+        },
+        copyright: '© {{year}} Syrian Knowledge Platform. Made with',
+        tagline: 'for the Syrian community.',
+        policies: {
+          privacyPolicy: 'Privacy Policy',
+          termsOfService: 'Terms of Service',
+          cookiePolicy: 'Cookie Policy',
+          accessibility: 'Accessibility'
+        }
+      },
+      
       // Navigation
       home: 'Home',
       posts: 'Posts',
@@ -197,6 +244,53 @@ const resources = {
       // App name and branding
       appName: 'سير فيست',
       platformTagline: 'حيث تلتقي الخبرة السورية بالمجتمع العالمي',
+      
+      // Footer
+      footer: {
+        brandName: 'المعرفة السورية',
+        mission: 'ربط الخبراء السوريين حول العالم لتبادل المعرفة، والإجابة على الأسئلة، وبناء مجتمع أقوى لمستقبل سوريا.',
+        social: {
+          facebook: 'فيسبوك',
+          twitter: 'تويتر',
+          instagram: 'انستغرام',
+          linkedin: 'لينكد إن'
+        },
+        quickLinks: {
+          title: 'روابط سريعة',
+          askQuestion: 'اطرح سؤالاً',
+          joinAsExpert: 'انضم كخبير',
+          browseCommunity: 'تصفح المجتمع',
+          aboutUs: 'من نحن',
+          howItWorks: 'كيف يعمل'
+        },
+        expertiseAreas: {
+          title: 'مجالات الخبرة',
+          legal: 'القانونية والامتثال',
+          technology: 'التكنولوجيا',
+          investment: 'الاستثمار',
+          marketing: 'التسويق',
+          operations: 'العمليات'
+        },
+        contactSupport: {
+          title: 'الاتصال والدعم',
+          phone: '+1 (555) 123-4567',
+          location: 'نخدم المجتمع السوري العالمي'
+        },
+        support: {
+          title: 'الدعم',
+          helpCenter: 'مركز المساعدة',
+          communityGuidelines: 'إرشادات المجتمع',
+          reportIssue: 'الإبلاغ عن مشكلة'
+        },
+        copyright: '© {{year}} منصة المعرفة السورية. صنع بـ',
+        tagline: 'للمجتمع السوري.',
+        policies: {
+          privacyPolicy: 'سياسة الخصوصية',
+          termsOfService: 'شروط الخدمة',
+          cookiePolicy: 'سياسة ملفات تعريف الارتباط',
+          accessibility: 'إمكانية الوصول'
+        }
+      },
       
       // Navigation
       home: 'الرئيسية',
