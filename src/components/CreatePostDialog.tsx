@@ -204,7 +204,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
               disabled={createPostMutation.isPending || !title.trim() || !content.trim()}
               className="flex-1"
             >
-              {createPostMutation.isPending ? t('posting') : (type === 'question' ? t('postQuestion') : t('postNews'))}
+              {createPostMutation.isPending ? t('posting') : (type === 'question' ? t('post question') : t('postNews'))}
             </Button>
             <Button 
               type="button" 
