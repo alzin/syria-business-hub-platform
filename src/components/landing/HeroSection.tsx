@@ -8,6 +8,7 @@ import LoginDialog from '@/components/auth/LoginDialog';
 import RegisterDialog from '@/components/auth/RegisterDialog';
 import CreatePostDialog from '@/components/CreatePostDialog';
 import { MessageSquare, Users, Sparkles, Globe } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface HeroSectionProps {
   onNavigateToMainPage: () => void;
@@ -16,6 +17,7 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const { isRTL } = useLanguage();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showCreateQuestion, setShowCreateQuestion] = useState(false);
@@ -60,9 +62,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Text Content */}
-            <div className="text-center lg:text-left animate-fade-in">
+            <div className={`text-center lg:${isRTL ? 'text-right' : 'text-left'} animate-fade-in`}>
               <Badge className="mb-6 bg-warning/20 text-warning border-warning/40 hover:bg-warning/30 transition-all duration-300 animate-bounce">
-                <Globe className="w-4 h-4 mr-2" />
+                <Globe className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
                 {t('Connecting Syrian Voices Worldwide')}
               </Badge>
               
@@ -74,22 +76,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
                 </span>
               </h1>
               
-              <p className="text-xl md:text-2xl mb-4 text-background/90 max-w-4xl mx-auto lg:mx-0 leading-relaxed animate-slide-in-right">
+              <p className={`text-xl md:text-2xl mb-4 text-background/90 max-w-4xl mx-auto lg:${isRTL ? 'ml-0 mr-0' : 'mx-0'} leading-relaxed animate-slide-in-right`}>
                 {t('Connect with Syrian experts, ask questions, share news, and engage in meaningful discussions about Syria\'s present and future')}
               </p>
               
-              <p className="text-lg mb-8 text-warning font-medium flex items-center justify-center lg:justify-start animate-fade-in delay-300">
-                <Sparkles className="w-5 h-5 mr-2 animate-spin" />
+              <p className="text-lg mb-8 text-warning font-medium flex items-center justify-center animate-fade-in delay-300">
+                <Sparkles className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'} animate-spin`} />
                 {t('platformTagline')}
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12 animate-fade-in delay-500">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in delay-500">
                 <Button 
                   size="lg" 
                   className="bg-background text-primary hover:bg-background/90 hover:scale-105 font-semibold shadow-2xl px-8 text-base transition-all duration-300 group"
                   onClick={handleAskQuestion}
                 >
-                  <MessageSquare className="w-5 h-5 mr-2 group-hover:animate-bounce" />
+                  <MessageSquare className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'} group-hover:animate-bounce`} />
                   {t('Ask a Question')}
                 </Button>
                 <Button 
@@ -98,7 +100,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
                   className="border-2 border-background text-background bg-transparent hover:bg-background hover:text-primary hover:scale-105 font-semibold px-8 text-base transition-all duration-300 group"
                   onClick={handleJoinAsExpert}
                 >
-                  <Users className="w-5 h-5 mr-2 group-hover:animate-pulse" />
+                  <Users className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'} group-hover:animate-pulse`} />
                   {t('Join as Expert')}
                 </Button>
               </div>
