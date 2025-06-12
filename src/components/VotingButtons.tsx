@@ -61,6 +61,10 @@ const VotingButtons: React.FC<VotingButtonsProps> = ({
         <ThumbsUp className={iconSize} />
       </Button>
       
+      <span className={`font-medium ${size === 'sm' ? 'text-sm' : 'text-base'} min-w-[24px] text-center`}>
+        {votes}
+      </span>
+      
       <Button
         variant="ghost"
         size={buttonSize}
