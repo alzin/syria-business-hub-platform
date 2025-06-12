@@ -48,7 +48,7 @@ export const useVoting = () => {
       
       if (existingVote) {
         if (existingVote.vote_type === voteType) {
-          // Same vote type - remove the vote
+          // Same vote type - remove the vote (this will trigger the database function)
           const { error } = await supabase
             .from('votes')
             .delete()
@@ -57,7 +57,7 @@ export const useVoting = () => {
           
           if (error) throw error;
         } else {
-          // Different vote type - update the vote
+          // Different vote type - update the vote (this will trigger the database function)
           const { error } = await supabase
             .from('votes')
             .update({ vote_type: voteType })
@@ -67,7 +67,7 @@ export const useVoting = () => {
           if (error) throw error;
         }
       } else {
-        // No existing vote - create new vote
+        // No existing vote - create new vote (this will trigger the database function)
         const { error } = await supabase
           .from('votes')
           .insert({
@@ -99,7 +99,7 @@ export const useVoting = () => {
     },
   });
 
-  // Vote on answer
+  // Vote on answer - same logic as posts
   const voteOnAnswer = useMutation({
     mutationFn: async ({ answerId, voteType }: { answerId: string; voteType: 'up' | 'down' }) => {
       if (!user) throw new Error('User must be logged in');
@@ -122,7 +122,7 @@ export const useVoting = () => {
       
       if (existingVote) {
         if (existingVote.vote_type === voteType) {
-          // Same vote type - remove the vote
+          // Same vote type - remove the vote (this will trigger the database function)
           const { error } = await supabase
             .from('votes')
             .delete()
@@ -131,7 +131,7 @@ export const useVoting = () => {
           
           if (error) throw error;
         } else {
-          // Different vote type - update the vote
+          // Different vote type - update the vote (this will trigger the database function)
           const { error } = await supabase
             .from('votes')
             .update({ vote_type: voteType })
@@ -141,7 +141,7 @@ export const useVoting = () => {
           if (error) throw error;
         }
       } else {
-        // No existing vote - create new vote
+        // No existing vote - create new vote (this will trigger the database function)
         const { error } = await supabase
           .from('votes')
           .insert({
