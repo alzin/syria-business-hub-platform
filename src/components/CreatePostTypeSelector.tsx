@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -21,6 +22,7 @@ interface CreatePostTypeSelectorProps {
 
 const CreatePostTypeSelector: React.FC<CreatePostTypeSelectorProps> = ({ onSelectType, onCancel }) => {
   const { t } = useTranslation();
+  const { isRTL } = useLanguage();
 
   const postTypes = [
     {
@@ -83,7 +85,7 @@ const CreatePostTypeSelector: React.FC<CreatePostTypeSelectorProps> = ({ onSelec
               onClick={() => onSelectType(postType.type)}
             >
               <CardHeader className="pb-3">
-                <div className="flex items-center space-x-3">
+                <div className={`flex items-center space-x-3 ${isRTL ? 'space-x-reverse' : ''}`}>
                   <div className={`p-2 rounded-lg bg-white/50`}>
                     <Icon className={`w-6 h-6 ${postType.iconColor}`} />
                   </div>
@@ -102,8 +104,8 @@ const CreatePostTypeSelector: React.FC<CreatePostTypeSelectorProps> = ({ onSelec
                     {postType.features.map((feature, index) => {
                       const FeatureIcon = feature.icon;
                       return (
-                        <Badge key={index} variant="secondary" className="text-xs">
-                          <FeatureIcon className="w-3 h-3 mr-1" />
+                        <Badge key={index} variant="secondary" className={`text-xs ${isRTL ? 'flex-row-reverse' : ''}`}>
+                          <FeatureIcon className={`w-3 h-3 ${isRTL ? 'ml-1' : 'mr-1'}`} />
                           {feature.label}
                         </Badge>
                       );
