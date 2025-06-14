@@ -68,7 +68,7 @@ const PostDetail = () => {
       // Transform the data
       const transformedPost: Post = {
         id: data.id,
-        type: data.type as 'question' | 'news',
+        type: data.type as 'question' | 'news' | 'article' | 'business_idea',
         title: data.title,
         content: data.content,
         author: {
@@ -124,6 +124,10 @@ const PostDetail = () => {
           answerId: comment.answer_id,
           createdAt: new Date(comment.created_at),
         })) as Comment[],
+        investmentNeeded: data.investment_needed,
+        timeline: data.timeline,
+        lookingForPartners: data.looking_for_partners,
+        contactInfo: data.contact_info,
       };
 
       return transformedPost;

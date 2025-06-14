@@ -5,17 +5,14 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from '@/components/ui/use-toast';
-import { X, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { CategoryType } from '@/types';
 import CreatePostTypeSelector from '@/components/CreatePostTypeSelector';
+import PostFormFields from '@/components/post-creation/PostFormFields';
+import BusinessIdeaFields from '@/components/post-creation/BusinessIdeaFields';
+import TagsManager from '@/components/post-creation/TagsManager';
 
 interface CreatePostDialogProps {
   open: boolean;
@@ -40,14 +37,6 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
   const [timeline, setTimeline] = useState('');
   const [lookingForPartners, setLookingForPartners] = useState(false);
   const [contactInfo, setContactInfo] = useState('');
-
-  const categories: { value: CategoryType; label: string }[] = [
-    { value: 'legal', label: t('legal') },
-    { value: 'technology', label: t('technology') },
-    { value: 'investment', label: t('investment') },
-    { value: 'marketing', label: t('marketing') },
-    { value: 'operations', label: t('operations') },
-  ];
 
   const createPostMutation = useMutation({
     mutationFn: async () => {
@@ -122,17 +111,6 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
     setContactInfo('');
   };
 
-  const handleAddTag = () => {
-    if (newTag.trim() && !tags.includes(newTag.trim())) {
-      setTags([...tags, newTag.trim()]);
-      setNewTag('');
-    }
-  };
-
-  const handleRemoveTag = (tagToRemove: string) => {
-    setTags(tags.filter(tag => tag !== tagToRemove));
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !content.trim()) {
@@ -146,33 +124,30 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
     createPostMutation.mutate();
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      handleAddTag();
-    }
+  const getDialogTitle = () => {
+    if (!selectedType) return t('Create New Post');
+    
+    const titles = {
+      question: t('askQuestion'),
+      article: t('Write Article'),
+      business_idea: t('Propose Business Idea'),
+      news: t('postNews')
+    };
+    
+    return titles[selectedType];
   };
 
-  const getPlaceholders = () => {
-    const placeholders = {
-      question: {
-        title: t('questionPlaceholder'),
-        content: t('questionContentPlaceholder')
-      },
-      news: {
-        title: t('newsPlaceholder'),
-        content: t('newsContentPlaceholder')
-      },
-      article: {
-        title: t('Enter article title...'),
-        content: t('Write your article content here...')
-      },
-      business_idea: {
-        title: t('Enter your business idea title...'),
-        content: t('Describe your business idea, market opportunity, and vision...')
-      }
+  const getSubmitButtonText = () => {
+    if (createPostMutation.isPending) return t('posting');
+    
+    const buttonTexts = {
+      question: t('POST QUESTION'),
+      article: t('Publish Article'),
+      business_idea: t('Post Business Idea'),
+      news: t('postNews')
     };
-    return placeholders[selectedType!] || placeholders.question;
+    
+    return buttonTexts[selectedType!];
   };
 
   return (
@@ -190,13 +165,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
                 <ArrowLeft className="w-4 h-4" />
               </Button>
             )}
-            <span>
-              {!selectedType ? t('Create New Post') : 
-               selectedType === 'question' ? t('askQuestion') :
-               selectedType === 'article' ? t('Write Article') :
-               selectedType === 'business_idea' ? t('Propose Business Idea') :
-               t('postNews')}
-            </span>
+            <span>{getDialogTitle()}</span>
           </DialogTitle>
         </DialogHeader>
 
@@ -207,125 +176,36 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
           />
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Title */}
-            <div>
-              <Label htmlFor="title">{t('title')}</Label>
-              <Input
-                id="title"
-                placeholder={getPlaceholders().title}
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-              />
-            </div>
-
-            {/* Category */}
-            <div>
-              <Label htmlFor="category">{t('category')}</Label>
-              <Select value={category} onValueChange={(value: CategoryType) => setCategory(value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder={t('selectCategory')} />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((cat) => (
-                    <SelectItem key={cat.value} value={cat.value}>
-                      {cat.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Content */}
-            <div>
-              <Label htmlFor="content">{t('content')}</Label>
-              <Textarea
-                id="content"
-                placeholder={getPlaceholders().content}
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                rows={8}
-                required
-              />
-            </div>
+            <PostFormFields
+              postType={selectedType}
+              title={title}
+              setTitle={setTitle}
+              content={content}
+              setContent={setContent}
+              category={category}
+              setCategory={setCategory}
+            />
 
             {/* Business Idea Specific Fields */}
             {selectedType === 'business_idea' && (
-              <>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="investment">{t('Investment Needed')}</Label>
-                    <Input
-                      id="investment"
-                      placeholder={t('e.g., $50,000 - $100,000')}
-                      value={investmentNeeded}
-                      onChange={(e) => setInvestmentNeeded(e.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="timeline">{t('Timeline')}</Label>
-                    <Input
-                      id="timeline"
-                      placeholder={t('e.g., 6-12 months')}
-                      value={timeline}
-                      onChange={(e) => setTimeline(e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="partners"
-                    checked={lookingForPartners}
-                    onCheckedChange={(checked) => setLookingForPartners(checked as boolean)}
-                  />
-                  <Label htmlFor="partners">{t('Looking for business partners')}</Label>
-                </div>
-
-                {lookingForPartners && (
-                  <div>
-                    <Label htmlFor="contact">{t('Contact Information')}</Label>
-                    <Input
-                      id="contact"
-                      placeholder={t('Email, LinkedIn, or preferred contact method')}
-                      value={contactInfo}
-                      onChange={(e) => setContactInfo(e.target.value)}
-                    />
-                  </div>
-                )}
-              </>
+              <BusinessIdeaFields
+                investmentNeeded={investmentNeeded}
+                setInvestmentNeeded={setInvestmentNeeded}
+                timeline={timeline}
+                setTimeline={setTimeline}
+                lookingForPartners={lookingForPartners}
+                setLookingForPartners={setLookingForPartners}
+                contactInfo={contactInfo}
+                setContactInfo={setContactInfo}
+              />
             )}
 
-            {/* Tags */}
-            <div>
-              <Label htmlFor="tags">{t('tags')}</Label>
-              <div className="flex space-x-2 mb-2">
-                <Input
-                  id="tags"
-                  placeholder={t('addTagPlaceholder')}
-                  value={newTag}
-                  onChange={(e) => setNewTag(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                />
-                <Button type="button" onClick={handleAddTag} variant="outline">
-                  {t('Add Tag')}
-                </Button>
-              </div>
-              
-              {tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {tags.map((tag) => (
-                    <Badge key={tag} variant="outline" className="flex items-center gap-1">
-                      {tag}
-                      <X 
-                        className="w-3 h-3 cursor-pointer" 
-                        onClick={() => handleRemoveTag(tag)}
-                      />
-                    </Badge>
-                  ))}
-                </div>
-              )}
-            </div>
+            <TagsManager
+              tags={tags}
+              setTags={setTags}
+              newTag={newTag}
+              setNewTag={setNewTag}
+            />
 
             {/* Submit buttons */}
             <div className="flex space-x-2 pt-4">
@@ -334,11 +214,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
                 disabled={createPostMutation.isPending || !title.trim() || !content.trim()}
                 className="flex-1"
               >
-                {createPostMutation.isPending ? t('posting') : 
-                 selectedType === 'question' ? t('POST QUESTION') :
-                 selectedType === 'article' ? t('Publish Article') :
-                 selectedType === 'business_idea' ? t('Post Business Idea') :
-                 t('postNews')}
+                {getSubmitButtonText()}
               </Button>
               <Button 
                 type="button" 

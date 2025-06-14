@@ -1,12 +1,9 @@
 
 import React from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
-import AuthorInfo from '@/components/AuthorInfo';
-import PostStats from '@/components/PostStats';
-import VotingButtons from '@/components/VotingButtons';
+import { MessageCircle, ThumbsUp, DollarSign, Clock, Users, Mail } from 'lucide-react';
 import { Post } from '@/types';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 interface PostDetailContentProps {
   post: Post;
@@ -14,71 +11,136 @@ interface PostDetailContentProps {
   commentsCount: number;
 }
 
-const PostDetailContent: React.FC<PostDetailContentProps> = ({
-  post,
-  answersCount,
-  commentsCount,
-}) => {
-  const queryClient = useQueryClient();
-  const isMobile = useIsMobile();
+const PostDetailContent: React.FC<PostDetailContentProps> = ({ post, answersCount, commentsCount }) => {
+  const { t } = useTranslation();
 
-  // Get fresh vote count from query cache
-  const getFreshVoteCount = () => {
-    const postData = queryClient.getQueryData(['post', post.id]);
-    if (postData && typeof postData === 'object' && 'votes' in postData) {
-      return postData.votes as number;
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'legal':
+        return 'bg-red-50 text-red-700 border-red-200';
+      case 'technology':
+        return 'bg-blue-50 text-blue-700 border-blue-200';
+      case 'investment':
+        return 'bg-green-50 text-green-700 border-green-200';
+      case 'marketing':
+        return 'bg-purple-50 text-purple-700 border-purple-200';
+      case 'operations':
+        return 'bg-yellow-50 text-yellow-700 border-yellow-200';
+      default:
+        return 'bg-gray-50 text-gray-700 border-gray-200';
     }
-    return post.votes;
   };
 
-  const currentVotes = getFreshVoteCount();
+  const getCategoryLabel = (category: string) => {
+    switch (category) {
+      case 'legal':
+        return t('legal');
+      case 'technology':
+        return t('technology');
+      case 'investment':
+        return t('investment');
+      case 'marketing':
+        return t('marketing');
+      case 'operations':
+        return t('operations');
+      default:
+        return category;
+    }
+  };
 
   return (
-    <>
-      <h1 className={`${isMobile ? 'text-xl' : 'text-2xl'} font-bold text-gray-900 mt-4 leading-tight`}>
-        {post.title}
-      </h1>
-      
-      <div className={`prose max-w-none ${isMobile ? 'mb-4' : 'mb-6'}`}>
-        <p className={`text-gray-700 whitespace-pre-wrap ${isMobile ? 'text-sm leading-relaxed' : ''}`}>
-          {post.content}
-        </p>
+    <div className="space-y-6">
+      {/* Category Badge */}
+      <div>
+        <Badge 
+          variant="outline"
+          className={`text-sm ${getCategoryColor(post.category)}`}
+        >
+          {getCategoryLabel(post.category)}
+        </Badge>
       </div>
 
-      {/* Tags */}
-      {post.tags && post.tags.length > 0 && (
-        <div className={`flex flex-wrap gap-2 ${isMobile ? 'mb-4' : 'mb-6'}`}>
-          {post.tags.map((tag, index) => (
-            <Badge key={index} variant="outline" className={isMobile ? 'text-xs' : 'text-xs'}>
-              {tag}
-            </Badge>
-          ))}
+      {/* Content */}
+      <div className="prose prose-gray max-w-none">
+        <div className="whitespace-pre-wrap text-gray-700 leading-relaxed">
+          {post.content}
+        </div>
+      </div>
+
+      {/* Business Idea specific information */}
+      {post.type === 'business_idea' && (
+        <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+          <h3 className="text-lg font-semibold text-purple-900 mb-3">{t('Business Details')}</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {post.investmentNeeded && (
+              <div className="flex items-center text-purple-700">
+                <DollarSign className="w-4 h-4 mr-2" />
+                <div>
+                  <span className="font-medium">{t('Investment Needed')}:</span>
+                  <p className="text-sm">{post.investmentNeeded}</p>
+                </div>
+              </div>
+            )}
+            {post.timeline && (
+              <div className="flex items-center text-purple-700">
+                <Clock className="w-4 h-4 mr-2" />
+                <div>
+                  <span className="font-medium">{t('Timeline')}:</span>
+                  <p className="text-sm">{post.timeline}</p>
+                </div>
+              </div>
+            )}
+            {post.lookingForPartners && (
+              <div className="flex items-center text-purple-700 md:col-span-2">
+                <Users className="w-4 h-4 mr-2" />
+                <span className="font-medium">{t('Looking for business partners')}</span>
+              </div>
+            )}
+            {post.contactInfo && post.lookingForPartners && (
+              <div className="flex items-center text-purple-700 md:col-span-2">
+                <Mail className="w-4 h-4 mr-2" />
+                <div>
+                  <span className="font-medium">{t('Contact Information')}:</span>
+                  <p className="text-sm">{post.contactInfo}</p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
-      {/* Author info and voting */}
-      <div className={`${isMobile ? 'flex flex-col space-y-3' : 'flex items-center justify-between'} pt-4 border-t`}>
-        <AuthorInfo author={post.author} />
-        
-        <div className={`flex items-center ${isMobile ? 'justify-between' : 'space-x-4'}`}>
-          <PostStats
-            type={post.type}
-            answersCount={answersCount}
-            commentsCount={commentsCount}
-            votes={currentVotes}
-            createdAt={post.createdAt}
-          />
-          
-          <VotingButtons 
-            itemId={post.id} 
-            itemType="post" 
-            votes={currentVotes}
-            authorId={post.author.id}
-            size={isMobile ? "sm" : "default"}
-          />
+      {/* Tags */}
+      {post.tags && post.tags.length > 0 && (
+        <div className="space-y-2">
+          <h4 className="text-sm font-medium text-gray-700">{t('tags')}</h4>
+          <div className="flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <Badge key={tag} variant="secondary" className="text-sm">
+                {tag}
+              </Badge>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Stats */}
+      <div className="flex items-center space-x-6 pt-4 border-t border-gray-200">
+        <div className="flex items-center text-gray-600">
+          <ThumbsUp className="w-4 h-4 mr-2" />
+          <span>{post.votes} {t('votes')}</span>
+        </div>
+        {post.type === 'question' && (
+          <div className="flex items-center text-gray-600">
+            <MessageCircle className="w-4 h-4 mr-2" />
+            <span>{answersCount} {t('answers')}</span>
+          </div>
+        )}
+        <div className="flex items-center text-gray-600">
+          <MessageCircle className="w-4 h-4 mr-2" />
+          <span>{commentsCount} {t('comments')}</span>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
