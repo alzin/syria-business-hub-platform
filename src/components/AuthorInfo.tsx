@@ -5,14 +5,23 @@ import ExpertiseBadge from '@/components/ExpertiseBadge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Calendar, User as UserIcon } from 'lucide-react';
 import { User } from '@/types';
+import { formatDistanceToNow } from 'date-fns';
 
 interface AuthorInfoProps {
   author: User;
   size?: 'sm' | 'default';
+  showDate?: boolean;
+  createdAt?: Date;
   onClick?: () => void;
 }
 
-const AuthorInfo: React.FC<AuthorInfoProps> = ({ author, size = 'default', onClick }) => {
+const AuthorInfo: React.FC<AuthorInfoProps> = ({ 
+  author, 
+  size = 'default', 
+  showDate = true,
+  createdAt,
+  onClick 
+}) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -51,10 +60,15 @@ const AuthorInfo: React.FC<AuthorInfoProps> = ({ author, size = 'default', onCli
           />
         </div>
         
-        {size === 'default' && (
+        {showDate && size === 'default' && (
           <div className="flex items-center space-x-1 text-xs text-gray-500">
             <Calendar className="w-3 h-3" />
-            <span>Joined {author.joinedAt.toLocaleDateString()}</span>
+            <span>
+              {createdAt 
+                ? formatDistanceToNow(createdAt, { addSuffix: true })
+                : `Joined ${author.joinedAt.toLocaleDateString()}`
+              }
+            </span>
           </div>
         )}
       </div>
