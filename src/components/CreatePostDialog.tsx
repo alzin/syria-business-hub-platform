@@ -178,7 +178,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
                 onKeyPress={handleKeyPress}
               />
               <Button type="button" onClick={handleAddTag} variant="outline">
-                {t('addTag')}
+                {t('Add Tag')}
               </Button>
             </div>
             
@@ -204,7 +204,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
               disabled={createPostMutation.isPending || !title.trim() || !content.trim()}
               className="flex-1"
             >
-              {createPostMutation.isPending ? t('posting') : (type === 'question' ? t('post question') : t('postNews'))}
+              {createPostMutation.isPending ? t('posting') : (type === 'question' ? t('POST QUESTION') : t('postNews'))}
             </Button>
             <Button 
               type="button" 

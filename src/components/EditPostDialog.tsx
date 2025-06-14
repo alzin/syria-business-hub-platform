@@ -71,8 +71,7 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
       queryClient.invalidateQueries({ queryKey: ['user-posts'] });
       onOpenChange(false);
       toast({
-        title: t('postUpdated'),
-        description: t('postUpdatedDesc'),
+        title: t('Your post has been updated'),
       });
     },
     onError: (error: any) => {
@@ -120,7 +119,7 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {post.type === 'question' ? t('editPost') + ' - ' + t('question') : t('editPost') + ' - ' + t('article')}
+            {post.type === 'question' ? t('Edit Post') : t('Edit Post') + ' - ' + t('Article')}
           </DialogTitle>
         </DialogHeader>
 
@@ -188,7 +187,7 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
                 onKeyPress={handleKeyPress}
               />
               <Button type="button" variant="outline" onClick={addTag}>
-                {t('addTag')}
+                {t('Add Tag')}
               </Button>
             </div>
           </div>
@@ -198,7 +197,7 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
               {t('cancel')}
             </Button>
             <Button type="submit" disabled={updatePostMutation.isPending}>
-              {updatePostMutation.isPending ? t('updating') : t('updatePost')}
+              {updatePostMutation.isPending ? t('updating') : t('Update Post')}
             </Button>
           </div>
         </form>

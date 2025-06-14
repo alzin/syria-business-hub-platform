@@ -237,6 +237,10 @@ const resources = {
       postedBy: 'by',
       viewPublicProfile: 'View Public Profile',
       createPost: 'Create Post',
+
+      questionPlaceholder: 'How can I register a company in Syria as an expat?',
+      questionContentPlaceholder: 'I\'m living abroad and planning to start a business in Damascus next year. What legal steps, permits, and fees should I be aware of?',
+      addTagPlaceholder: 'Add relevant tags, e.g., legal, business, registration',
     }
   },
   ar: {
