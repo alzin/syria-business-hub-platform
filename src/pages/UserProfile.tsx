@@ -1,22 +1,23 @@
-
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import PostCard from '@/components/PostCard';
 import ExpertiseBadge from '@/components/ExpertiseBadge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowLeft, Calendar, MapPin, User, Mail } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Calendar, MapPin, User, Mail } from 'lucide-react';
 import { User as UserType, Post, ExpertiseType, CategoryType } from '@/types';
 
 const UserProfile = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { isRTL } = useLanguage();
 
   // Fetch user profile
   const { data: userProfile, isLoading: isLoadingProfile } = useQuery({
@@ -141,6 +142,11 @@ const UserProfile = () => {
   const articles = userPosts?.filter(post => post.type === 'article') || [];
   const businessIdeas = userPosts?.filter(post => post.type === 'business_idea') || [];
 
+  // RTL-aware spacing classes
+  const horizontalSpacing = isRTL ? 'space-x-reverse' : '';
+  const iconMargin = isRTL ? 'ml-2' : 'mr-2';
+  const BackIcon = isRTL ? ArrowRight : ArrowLeft;
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -152,14 +158,14 @@ const UserProfile = () => {
           onClick={() => navigate('/')}
           className="mb-6"
         >
-          <ArrowLeft className="w-4 h-4 mr-2" />
+          <BackIcon className={`w-4 h-4 ${iconMargin}`} />
           {t('back to posts')}
         </Button>
 
         {/* User profile header */}
         <Card className="mb-8">
           <CardHeader>
-            <div className="flex items-start space-x-6">
+            <div className={`flex items-start space-x-6 ${horizontalSpacing}`}>
               <div className="w-24 h-24 bg-gray-300 rounded-full flex items-center justify-center">
                 {userProfile.avatar ? (
                   <img src={userProfile.avatar} alt={userProfile.name} className="w-24 h-24 rounded-full" />
@@ -169,20 +175,20 @@ const UserProfile = () => {
               </div>
               
               <div className="flex-1">
-                <div className="flex items-center space-x-3 mb-2">
+                <div className={`flex items-center space-x-3 mb-2 ${horizontalSpacing}`}>
                   <h1 className="text-2xl font-bold text-gray-900">{userProfile.name}</h1>
                   {userProfile.verified && (
                     <span className="text-blue-500 text-sm">✓ {t('verified')}</span>
                   )}
                 </div>
                 
-                <div className="flex items-center space-x-4 mb-4">
+                <div className={`flex items-center space-x-4 mb-4 ${horizontalSpacing}`}>
                   <ExpertiseBadge expertise={userProfile.expertise} verified={userProfile.verified} />
-                  <div className="flex items-center space-x-1 text-sm text-gray-500">
+                  <div className={`flex items-center space-x-1 text-sm text-gray-500 ${horizontalSpacing}`}>
                     <MapPin className="w-4 h-4" />
                     <span>{userProfile.location === 'syria' ? 'Syria' : 'International'}</span>
                   </div>
-                  <div className="flex items-center space-x-1 text-sm text-gray-500">
+                  <div className={`flex items-center space-x-1 text-sm text-gray-500 ${horizontalSpacing}`}>
                     <Calendar className="w-4 h-4" />
                     <span>{t('joined')} {userProfile.joinedAt.toLocaleDateString()}</span>
                   </div>
