@@ -7,7 +7,7 @@ import { MessageCircle, ThumbsUp, Calendar, MapPin, Users, DollarSign, Clock } f
 import { formatDistanceToNow } from 'date-fns';
 import { Post } from '@/types';
 import AuthorInfo from '@/components/AuthorInfo';
-// ExpertiseBadge is no longer directly used here, it's handled by AuthorInfo
+// ExpertiseBadge import remains commented out/removed as it's handled by AuthorInfo
 // import ExpertiseBadge from '@/components/ExpertiseBadge'; 
 
 interface PostCardProps {
@@ -114,25 +114,23 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           {post.title}
         </h3>
         
-        {/* Updated AuthorInfo to show location */}
         <AuthorInfo 
           author={post.author} 
           createdAt={post.createdAt}
           showDate={false} 
-          showLocation={true} 
+          // showLocation prop removed from AuthorInfo call
         />
-        {/* 
-          The following section was removed as ExpertiseBadge and Location are now part of AuthorInfo
-          <div className="flex items-center space-x-1">
-            <ExpertiseBadge expertise={post.author.expertise} />
-            {post.author.location === 'syria' && (
-              <Badge variant="outline" className="text-xs bg-green-50 text-green-700">
-                <MapPin className="w-3 h-3 mr-1" />
-                {t('syria')}
-              </Badge>
-            )}
+
+        {/* Display location badge if author is from Syria, placed after AuthorInfo */}
+        {post.author.location === 'syria' && (
+          <div className="mt-1"> {/* Added a div with margin-top for spacing */}
+            <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
+              <MapPin className="w-3 h-3 mr-1" />
+              {t('syria')}
+            </Badge>
           </div>
-        */}
+        )}
+        
       </CardHeader>
       
       <CardContent className="pt-0">
