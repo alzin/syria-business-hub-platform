@@ -246,11 +246,9 @@ const resources = {
       'Create New Post': 'Create New Post',
       'What would you like to create?': 'What would you like to create?',
       'Choose the type of content you want to share with the community': 'Choose the type of content you want to share with the community',
-      'Ask a Question': 'Ask a Question',
       'Write an Article': 'Write an Article',
       'Propose Business Idea': 'Propose Business Idea',
       'Share News': 'Share News',
-      'Get expert advice and community insights': 'Get expert advice and community insights',
       'Share insights, guides, and expertise': 'Share insights, guides, and expertise',
       'Share your business concept and find collaborators': 'Share your business concept and find collaborators',
       'Post updates and news relevant to the community': 'Post updates and news relevant to the community',
@@ -288,7 +286,8 @@ const resources = {
       // Additional UI Labels
       all: 'All',
       articles: 'Articles',
-      ideas: 'Ideas'
+      ideas: 'Ideas',
+      'Get expert advice and community insights': 'Get expert advice and community insights'
     }
   },
   ar: {
@@ -533,11 +532,9 @@ const resources = {
       'Create New Post': 'إنشاء منشور جديد',
       'What would you like to create?': 'ماذا تريد إنشاء؟',
       'Choose the type of content you want to share with the community': 'اختر نوع المحتوى الذي تريد مشاركته مع المجتمع',
-      'Ask a Question': 'اطرح سؤالاً',
       'Write an Article': 'اكتب مقالاً',
       'Propose Business Idea': 'اقترح فكرة تجارية',
       'Share News': 'شارك الأخبار',
-      'Get expert advice and community insights': 'احصل على مشورة الخبراء ورؤى المجتمع',
       'Share insights, guides, and expertise': 'شارك الرؤى والأدلة والخبرات',
       'Share your business concept and find collaborators': 'شارك مفهومك التجاري وابحث عن متعاونين',
       'Post updates and news relevant to the community': 'انشر التحديثات والأخبار ذات الصلة بالمجتمع',
@@ -575,7 +572,8 @@ const resources = {
       // Additional UI Labels
       all: 'الكل',
       articles: 'المقالات',
-      ideas: 'الأفكار'
+      ideas: 'الأفكار',
+      'Get expert advice and community insights': 'احصل على مشورة الخبراء ورؤى المجتمع'
     }
   }
 };
