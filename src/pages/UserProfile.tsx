@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -68,7 +69,7 @@ const UserProfile = () => {
 
       const posts: Post[] = data.map((post: any) => ({
         id: post.id,
-        type: post.type as 'question' | 'news',
+        type: post.type as 'question' | 'news' | 'article' | 'business_idea',
         title: post.title,
         content: post.content,
         author: {
@@ -89,6 +90,11 @@ const UserProfile = () => {
         votes: post.votes,
         answers: [],
         comments: [],
+        // Business idea specific fields
+        investmentNeeded: post.investment_needed,
+        timeline: post.timeline,
+        lookingForPartners: post.looking_for_partners,
+        contactInfo: post.contact_info,
       }));
 
       return posts;
@@ -132,6 +138,8 @@ const UserProfile = () => {
 
   const questions = userPosts?.filter(post => post.type === 'question') || [];
   const news = userPosts?.filter(post => post.type === 'news') || [];
+  const articles = userPosts?.filter(post => post.type === 'article') || [];
+  const businessIdeas = userPosts?.filter(post => post.type === 'business_idea') || [];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -180,10 +188,12 @@ const UserProfile = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-6 text-sm text-gray-600">
+                <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 text-sm text-gray-600">
                   <span>{userPosts?.length || 0} {t('posts')}</span>
                   <span>{questions.length} {t('questions')}</span>
                   <span>{news.length} {t('news')}</span>
+                  <span>{articles.length} {t('articles')}</span>
+                  <span>{businessIdeas.length} {t('ideas')}</span>
                 </div>
               </div>
             </div>
@@ -197,10 +207,12 @@ const UserProfile = () => {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="all" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="all">{t('posts')} ({userPosts?.length || 0})</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-5">
+                <TabsTrigger value="all">{t('all')} ({userPosts?.length || 0})</TabsTrigger>
                 <TabsTrigger value="questions">{t('questions')} ({questions.length})</TabsTrigger>
                 <TabsTrigger value="news">{t('news')} ({news.length})</TabsTrigger>
+                <TabsTrigger value="articles">{t('articles')} ({articles.length})</TabsTrigger>
+                <TabsTrigger value="ideas">{t('ideas')} ({businessIdeas.length})</TabsTrigger>
               </TabsList>
               
               <TabsContent value="all" className="mt-6">
@@ -235,6 +247,34 @@ const UserProfile = () => {
                 {news.length > 0 ? (
                   <div className="space-y-6">
                     {news.map((post) => (
+                      <PostCard key={post.id} post={post} />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-500 text-center py-8">
+                    {t('noPostsFound')}
+                  </p>
+                )}
+              </TabsContent>
+              
+              <TabsContent value="articles" className="mt-6">
+                {articles.length > 0 ? (
+                  <div className="space-y-6">
+                    {articles.map((post) => (
+                      <PostCard key={post.id} post={post} />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-500 text-center py-8">
+                    {t('noPostsFound')}
+                  </p>
+                )}
+              </TabsContent>
+              
+              <TabsContent value="ideas" className="mt-6">
+                {businessIdeas.length > 0 ? (
+                  <div className="space-y-6">
+                    {businessIdeas.map((post) => (
                       <PostCard key={post.id} post={post} />
                     ))}
                   </div>
