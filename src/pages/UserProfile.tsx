@@ -108,7 +108,7 @@ const UserProfile = () => {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto px-4 py-4 sm:py-8">
           <Card>
             <CardContent className="text-center py-12">
               <p className="text-gray-500">{t('loading')}</p>
@@ -123,7 +123,7 @@ const UserProfile = () => {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto px-4 py-4 sm:py-8">
           <Card>
             <CardContent className="text-center py-12">
               <p className="text-gray-500">{t('userNotFound')}</p>
@@ -151,12 +151,12 @@ const UserProfile = () => {
     <div className="min-h-screen bg-gray-50">
       <Header />
       
-      <div className="max-w-4xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-4 sm:py-8">
         {/* Back button */}
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
-          className="mb-6"
+          className="mb-4 sm:mb-6 text-sm"
         >
           <BackIcon className={`w-4 h-4 ${iconMargin}`} />
           {t('back to posts')}
