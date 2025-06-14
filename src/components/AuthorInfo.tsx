@@ -3,9 +3,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import ExpertiseBadge from '@/components/ExpertiseBadge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Calendar, User as UserIcon } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Calendar, User as UserIcon, MapPin } from 'lucide-react';
 import { User } from '@/types';
 import { formatDistanceToNow } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 interface AuthorInfoProps {
   author: User;
@@ -13,6 +15,7 @@ interface AuthorInfoProps {
   showDate?: boolean;
   createdAt?: Date;
   onClick?: () => void;
+  showLocation?: boolean; // New prop
 }
 
 const AuthorInfo: React.FC<AuthorInfoProps> = ({ 
@@ -20,9 +23,11 @@ const AuthorInfo: React.FC<AuthorInfoProps> = ({
   size = 'default', 
   showDate = true,
   createdAt,
-  onClick 
+  onClick,
+  showLocation = false // Default to false
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleClick = () => {
     if (onClick) {
@@ -58,10 +63,16 @@ const AuthorInfo: React.FC<AuthorInfoProps> = ({
             verified={author.verified} 
             size={size === 'sm' ? 'sm' : 'md'}
           />
+           {showLocation && author.location === 'syria' && size === 'default' && (
+            <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
+              <MapPin className="w-3 h-3 mr-1" />
+              {t('syria')}
+            </Badge>
+          )}
         </div>
         
         {showDate && size === 'default' && (
-          <div className="flex items-center space-x-1 text-xs text-gray-500">
+          <div className="flex items-center space-x-1 text-xs text-gray-500 mt-1">
             <Calendar className="w-3 h-3" />
             <span>
               {createdAt 

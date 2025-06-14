@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +7,8 @@ import { MessageCircle, ThumbsUp, Calendar, MapPin, Users, DollarSign, Clock } f
 import { formatDistanceToNow } from 'date-fns';
 import { Post } from '@/types';
 import AuthorInfo from '@/components/AuthorInfo';
-import ExpertiseBadge from '@/components/ExpertiseBadge';
+// ExpertiseBadge is no longer directly used here, it's handled by AuthorInfo
+// import ExpertiseBadge from '@/components/ExpertiseBadge'; 
 
 interface PostCardProps {
   post: Post;
@@ -114,12 +114,15 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           {post.title}
         </h3>
         
-        <div className="flex items-center justify-between">
-          <AuthorInfo 
-            author={post.author} 
-            createdAt={post.createdAt}
-            showDate={false}
-          />
+        {/* Updated AuthorInfo to show location */}
+        <AuthorInfo 
+          author={post.author} 
+          createdAt={post.createdAt}
+          showDate={false} 
+          showLocation={true} 
+        />
+        {/* 
+          The following section was removed as ExpertiseBadge and Location are now part of AuthorInfo
           <div className="flex items-center space-x-1">
             <ExpertiseBadge expertise={post.author.expertise} />
             {post.author.location === 'syria' && (
@@ -129,7 +132,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
               </Badge>
             )}
           </div>
-        </div>
+        */}
       </CardHeader>
       
       <CardContent className="pt-0">
