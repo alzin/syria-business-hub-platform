@@ -5,7 +5,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import LanguageToggle from '@/components/LanguageToggle';
 import LoginDialog from '@/components/auth/LoginDialog';
 import RegisterDialog from '@/components/auth/RegisterDialog';
-import CreatePostDialog from '@/components/CreatePostDialog';
 import Logo from '@/components/Logo';
 import SearchBar from '@/components/header/SearchBar';
 import UserActions from '@/components/header/UserActions';
@@ -32,8 +31,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
   const isMobile = useIsMobile();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [showCreateQuestion, setShowCreateQuestion] = useState(false);
-  const [showCreateArticle, setShowCreateArticle] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleSwitchToRegister = () => {
@@ -50,16 +47,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
     <div className="flex flex-col space-y-4 p-4">
       <LanguageToggle />
       {user ? (
-        <UserActions 
-          onCreateQuestion={() => {
-            setShowCreateQuestion(true);
-            setMobileMenuOpen(false);
-          }}
-          onCreateArticle={() => {
-            setShowCreateArticle(true);
-            setMobileMenuOpen(false);
-          }}
-        />
+        <UserActions />
       ) : (
         <AuthButtons 
           onLogin={() => {
@@ -100,10 +88,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
               <div className="flex items-center space-x-4">
                 <LanguageToggle />
                 {user ? (
-                  <UserActions 
-                    onCreateQuestion={() => setShowCreateQuestion(true)}
-                    onCreateArticle={() => setShowCreateArticle(true)}
-                  />
+                  <UserActions />
                 ) : (
                   <AuthButtons 
                     onLogin={() => setShowLogin(true)}
@@ -149,22 +134,6 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
         onOpenChange={setShowRegister}
         onSwitchToLogin={handleSwitchToLogin}
       />
-
-      {user && (
-        <>
-          <CreatePostDialog
-            open={showCreateQuestion}
-            onOpenChange={setShowCreateQuestion}
-            type="question"
-          />
-
-          <CreatePostDialog
-            open={showCreateArticle}
-            onOpenChange={setShowCreateArticle}
-            type="news"
-          />
-        </>
-      )}
     </>
   );
 };

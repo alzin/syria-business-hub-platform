@@ -15,7 +15,7 @@ export type ExpertiseType = 'legal' | 'investor' | 'founder' | 'developer' | 'go
 
 export interface Post {
   id: string;
-  type: 'question' | 'news';
+  type: 'question' | 'news' | 'article' | 'business_idea';
   title: string;
   content: string;
   author: User;
@@ -28,6 +28,11 @@ export interface Post {
   votes: number;
   answersCount?: number;
   commentsCount?: number;
+  // Business idea specific fields
+  investmentNeeded?: string;
+  timeline?: string;
+  lookingForPartners?: boolean;
+  contactInfo?: string;
 }
 
 export type CategoryType = 'legal' | 'technology' | 'investment' | 'marketing' | 'operations';

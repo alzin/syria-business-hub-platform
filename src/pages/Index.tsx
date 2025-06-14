@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
@@ -16,12 +17,20 @@ const Index = () => {
   const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | 'all'>('all');
+  const [selectedContentType, setSelectedContentType] = useState<'all' | 'question' | 'article' | 'business_idea' | 'news'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   
   // Authenticated users should always see posts, plus check for URL params or search
   const shouldShowPosts = user || searchParams.get('posts') === 'true' || searchTerm.length > 0;
   
-  const { data: posts, isLoading, error } = usePosts(selectedCategory, searchTerm);
+  const { data: allPosts, isLoading, error } = usePosts(selectedCategory, searchTerm);
+
+  // Filter posts by content type
+  const posts = React.useMemo(() => {
+    if (!allPosts) return [];
+    if (selectedContentType === 'all') return allPosts;
+    return allPosts.filter(post => post.type === selectedContentType);
+  }, [allPosts, selectedContentType]);
 
   // Handle search term changes with real-time navigation
   const handleSearchChange = (term: string) => {
@@ -61,6 +70,14 @@ const Index = () => {
     { key: 'investment', label: 'Investment' },
     { key: 'marketing', label: 'Marketing' },
     { key: 'operations', label: 'Operations' },
+  ];
+
+  const contentTypes: { key: 'all' | 'question' | 'article' | 'business_idea' | 'news'; label: string; color: string }[] = [
+    { key: 'all', label: t('All Content'), color: 'border-gray-300' },
+    { key: 'question', label: t('Questions'), color: 'border-blue-300 text-blue-700' },
+    { key: 'article', label: t('Articles'), color: 'border-green-300 text-green-700' },
+    { key: 'business_idea', label: t('Business Ideas'), color: 'border-purple-300 text-purple-700' },
+    { key: 'news', label: t('News'), color: 'border-orange-300 text-orange-700' },
   ];
 
   if (error) {
@@ -118,6 +135,27 @@ const Index = () => {
       )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Content type filters */}
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            {t('Content Type')}
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {contentTypes.map((contentType) => (
+              <Badge
+                key={contentType.key}
+                variant={selectedContentType === contentType.key ? 'default' : 'outline'}
+                className={`cursor-pointer hover:bg-syrian-green/10 ${contentType.color} ${
+                  selectedContentType === contentType.key ? 'bg-syrian-green text-white border-syrian-green' : ''
+                }`}
+                onClick={() => setSelectedContentType(contentType.key)}
+              >
+                {contentType.label}
+              </Badge>
+            ))}
+          </div>
+        </div>
+
         {/* Category filters */}
         <div className="mb-8">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">

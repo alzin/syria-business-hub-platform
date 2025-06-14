@@ -20,8 +20,8 @@ import NotificationsDropdown from '@/components/NotificationsDropdown';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface UserActionsProps {
-  onCreateQuestion: () => void;
-  onCreateArticle: () => void;
+  onCreateQuestion?: () => void;
+  onCreateArticle?: () => void;
 }
 
 const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArticle }) => {
@@ -63,7 +63,7 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
       <div className="flex flex-col space-y-3 w-full">
         {/* Create Post Button */}
         <Button
-          onClick={onCreateQuestion}
+          onClick={() => setShowCreatePost(true)}
           className="bg-primary hover:bg-primary/90 text-primary-foreground w-full justify-start"
         >
           <Plus className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
@@ -101,7 +101,6 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
         <CreatePostDialog 
           open={showCreatePost} 
           onOpenChange={setShowCreatePost}
-          type="question"
         />
       </div>
     );
@@ -111,7 +110,7 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
     <div className={`flex items-center space-x-3 lg:space-x-4 ${isRTL ? 'space-x-reverse' : ''}`}>
       {/* Create Post Button */}
       <Button
-        onClick={onCreateQuestion}
+        onClick={() => setShowCreatePost(true)}
         size={isMobile ? "sm" : "default"}
         className="bg-primary hover:bg-primary/90 text-primary-foreground"
       >
@@ -161,7 +160,6 @@ const UserActions: React.FC<UserActionsProps> = ({ onCreateQuestion, onCreateArt
       <CreatePostDialog 
         open={showCreatePost} 
         onOpenChange={setShowCreatePost}
-        type="question"
       />
     </div>
   );

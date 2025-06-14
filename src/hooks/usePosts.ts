@@ -69,6 +69,11 @@ export const usePosts = (category?: CategoryType | 'all', searchTerm?: string) =
         comments: [], // We'll populate this when needed in individual post views
         answersCount: post.answers?.[0]?.count || 0,
         commentsCount: post.comments?.[0]?.count || 0,
+        // Business idea specific fields
+        investmentNeeded: post.investment_needed,
+        timeline: post.timeline,
+        lookingForPartners: post.looking_for_partners,
+        contactInfo: post.contact_info,
       }));
 
       return posts;

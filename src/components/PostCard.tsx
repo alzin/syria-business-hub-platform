@@ -10,7 +10,7 @@ import PostActions from '@/components/PostActions';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Users, DollarSign, Clock, Mail } from 'lucide-react';
 import { Post } from '@/types';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -60,17 +60,34 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const commentsCount = post.commentsCount || post.comments?.length || 0;
   const currentVotes = getFreshVoteCount();
 
+  const getPostTypeInfo = () => {
+    switch (post.type) {
+      case 'question':
+        return { label: t('question'), variant: 'default' as const, color: 'bg-blue-50 border-blue-200' };
+      case 'article':
+        return { label: t('Article'), variant: 'secondary' as const, color: 'bg-green-50 border-green-200' };
+      case 'business_idea':
+        return { label: t('Business Idea'), variant: 'outline' as const, color: 'bg-purple-50 border-purple-200' };
+      case 'news':
+        return { label: t('news'), variant: 'secondary' as const, color: 'bg-orange-50 border-orange-200' };
+      default:
+        return { label: t('question'), variant: 'default' as const, color: 'bg-blue-50 border-blue-200' };
+    }
+  };
+
+  const typeInfo = getPostTypeInfo();
+
   return (
     <PostActions post={post}>
-      <Card className="hover:shadow-md transition-shadow cursor-pointer" onClick={handleViewPost}>
+      <Card className={`hover:shadow-md transition-shadow cursor-pointer ${typeInfo.color}`} onClick={handleViewPost}>
         <CardHeader className={isMobile ? 'p-3' : 'p-4 sm:p-6'}>
           <div className="flex items-center justify-between">
             <div className={`flex items-center ${isMobile ? 'space-x-1' : 'space-x-2'}`}>
               <Badge 
-                variant={post.type === 'question' ? 'default' : 'secondary'}
+                variant={typeInfo.variant}
                 className={isMobile ? 'text-xs px-1.5 py-0.5' : 'text-sm'}
               >
-                {post.type === 'question' ? t('question') : t('news')}
+                {typeInfo.label}
               </Badge>
               <Badge 
                 variant="outline" 
@@ -94,6 +111,32 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
               {truncateContent(post.content)}
             </p>
           </div>
+
+          {/* Business Idea Specific Info */}
+          {post.type === 'business_idea' && (
+            <div className={`bg-white/50 rounded-lg p-3 ${isMobile ? 'mb-3' : 'mb-4'}`}>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                {post.investmentNeeded && (
+                  <div className="flex items-center space-x-1">
+                    <DollarSign className="w-3 h-3 text-purple-600" />
+                    <span className="text-gray-600">{post.investmentNeeded}</span>
+                  </div>
+                )}
+                {post.timeline && (
+                  <div className="flex items-center space-x-1">
+                    <Clock className="w-3 h-3 text-purple-600" />
+                    <span className="text-gray-600">{post.timeline}</span>
+                  </div>
+                )}
+                {post.lookingForPartners && (
+                  <div className="flex items-center space-x-1">
+                    <Users className="w-3 h-3 text-purple-600" />
+                    <span className="text-gray-600">{t('Seeking Partners')}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Tags */}
           {post.tags && post.tags.length > 0 && (

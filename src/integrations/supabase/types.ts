@@ -143,10 +143,14 @@ export type Database = {
         Row: {
           author_id: string
           category: string
+          contact_info: string | null
           content: string
           created_at: string
           id: string
+          investment_needed: string | null
+          looking_for_partners: boolean | null
           tags: string[] | null
+          timeline: string | null
           title: string
           type: string
           updated_at: string
@@ -155,10 +159,14 @@ export type Database = {
         Insert: {
           author_id: string
           category: string
+          contact_info?: string | null
           content: string
           created_at?: string
           id?: string
+          investment_needed?: string | null
+          looking_for_partners?: boolean | null
           tags?: string[] | null
+          timeline?: string | null
           title: string
           type: string
           updated_at?: string
@@ -167,10 +175,14 @@ export type Database = {
         Update: {
           author_id?: string
           category?: string
+          contact_info?: string | null
           content?: string
           created_at?: string
           id?: string
+          investment_needed?: string | null
+          looking_for_partners?: boolean | null
           tags?: string[] | null
+          timeline?: string | null
           title?: string
           type?: string
           updated_at?: string

@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
@@ -46,20 +47,36 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
   const [category, setCategory] = useState<CategoryType>(post.category);
   const [tags, setTags] = useState<string[]>(post.tags || []);
   const [tagInput, setTagInput] = useState('');
+  
+  // Business idea specific fields
+  const [investmentNeeded, setInvestmentNeeded] = useState(post.investmentNeeded || '');
+  const [timeline, setTimeline] = useState(post.timeline || '');
+  const [lookingForPartners, setLookingForPartners] = useState(post.lookingForPartners || false);
+  const [contactInfo, setContactInfo] = useState(post.contactInfo || '');
 
   const updatePostMutation = useMutation({
     mutationFn: async () => {
       if (!user) throw new Error(t('userMustBeLoggedIn'));
 
+      const updateData: any = {
+        title,
+        content,
+        category,
+        tags,
+        updated_at: new Date().toISOString(),
+      };
+
+      // Add business idea specific fields
+      if (post.type === 'business_idea') {
+        updateData.investment_needed = investmentNeeded || null;
+        updateData.timeline = timeline || null;
+        updateData.looking_for_partners = lookingForPartners;
+        updateData.contact_info = contactInfo || null;
+      }
+
       const { error } = await supabase
         .from('posts')
-        .update({
-          title,
-          content,
-          category,
-          tags,
-          updated_at: new Date().toISOString(),
-        })
+        .update(updateData)
         .eq('id', post.id)
         .eq('author_id', user.id);
 
@@ -114,12 +131,22 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
     }
   };
 
+  const getPostTypeLabel = () => {
+    switch (post.type) {
+      case 'question': return t('Question');
+      case 'article': return t('Article');
+      case 'business_idea': return t('Business Idea');
+      case 'news': return t('News');
+      default: return t('Post');
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {post.type === 'question' ? t('Edit Post') : t('Edit Post') + ' - ' + t('Article')}
+            {t('Edit Post')} - {getPostTypeLabel()}
           </DialogTitle>
         </DialogHeader>
 
@@ -129,7 +156,10 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
             <Input
               id="title"
               type="text"
-              placeholder={post.type === 'question' ? t('questionPlaceholder') : t('articlePlaceholder')}
+              placeholder={post.type === 'question' ? t('questionPlaceholder') : 
+                           post.type === 'article' ? t('Enter article title...') :
+                           post.type === 'business_idea' ? t('Enter your business idea title...') :
+                           t('articlePlaceholder')}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -156,13 +186,63 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
             <Label htmlFor="content">{t('content')} *</Label>
             <Textarea
               id="content"
-              placeholder={post.type === 'question' ? t('questionContentPlaceholder') : t('articleContentPlaceholder')}
+              placeholder={post.type === 'question' ? t('questionContentPlaceholder') : 
+                          post.type === 'article' ? t('Write your article content here...') :
+                          post.type === 'business_idea' ? t('Describe your business idea, market opportunity, and vision...') :
+                          t('articleContentPlaceholder')}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={8}
               required
             />
           </div>
+
+          {/* Business Idea Specific Fields */}
+          {post.type === 'business_idea' && (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="investment">{t('Investment Needed')}</Label>
+                  <Input
+                    id="investment"
+                    placeholder={t('e.g., $50,000 - $100,000')}
+                    value={investmentNeeded}
+                    onChange={(e) => setInvestmentNeeded(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="timeline">{t('Timeline')}</Label>
+                  <Input
+                    id="timeline"
+                    placeholder={t('e.g., 6-12 months')}
+                    value={timeline}
+                    onChange={(e) => setTimeline(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="partners"
+                  checked={lookingForPartners}
+                  onCheckedChange={(checked) => setLookingForPartners(checked as boolean)}
+                />
+                <Label htmlFor="partners">{t('Looking for business partners')}</Label>
+              </div>
+
+              {lookingForPartners && (
+                <div>
+                  <Label htmlFor="contact">{t('Contact Information')}</Label>
+                  <Input
+                    id="contact"
+                    placeholder={t('Email, LinkedIn, or preferred contact method')}
+                    value={contactInfo}
+                    onChange={(e) => setContactInfo(e.target.value)}
+                  />
+                </div>
+              )}
+            </>
+          )}
 
           <div className="space-y-2">
             <Label htmlFor="tags">{t('tags')}</Label>
