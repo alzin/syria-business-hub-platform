@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
@@ -63,7 +62,7 @@ const Index = () => {
     }
   }, [searchParams, user, setSearchParams]);
 
-  const categories: { key: CategoryType | 'all'; label: string }[] = [
+  const categories: { key: CategoryType | 'all'; label:string }[] = [
     { key: 'all', label: 'All Categories' },
     { key: 'legal', label: 'Legal & Compliance' },
     { key: 'technology', label: 'Technology' },
@@ -145,9 +144,11 @@ const Index = () => {
               <Badge
                 key={contentType.key}
                 variant={selectedContentType === contentType.key ? 'default' : 'outline'}
-                className={`cursor-pointer hover:bg-syrian-green/10 ${contentType.color} ${
-                  selectedContentType === contentType.key ? 'bg-syrian-green text-white border-syrian-green' : ''
-                }`}
+                className={
+                  selectedContentType === contentType.key
+                    ? 'cursor-pointer bg-syrian-green text-white border-syrian-green hover:bg-syrian-green/90'
+                    : `cursor-pointer hover:bg-syrian-green/10 ${contentType.color}`
+                }
                 onClick={() => setSelectedContentType(contentType.key)}
               >
                 {contentType.label}
@@ -166,7 +167,11 @@ const Index = () => {
               <Badge
                 key={category.key}
                 variant={selectedCategory === category.key ? 'default' : 'outline'}
-                className="cursor-pointer hover:bg-syrian-green/10 border-syrian-green text-syrian-green data-[state=selected]:bg-syrian-green data-[state=selected]:text-white"
+                className={
+                  selectedCategory === category.key
+                    ? 'cursor-pointer bg-syrian-green text-white border-syrian-green hover:bg-syrian-green/90'
+                    : 'cursor-pointer hover:bg-syrian-green/10'
+                }
                 onClick={() => setSelectedCategory(category.key)}
               >
                 {category.label}
