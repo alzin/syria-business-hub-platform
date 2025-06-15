@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -86,7 +85,6 @@ const PostDetail = () => {
         tags: data.tags || [],
         createdAt: new Date(data.created_at),
         updatedAt: new Date(data.updated_at),
-        votes: data.votes,
         answers: data.answers.map((answer: any) => ({
           id: answer.id,
           content: answer.content,
@@ -103,7 +101,6 @@ const PostDetail = () => {
           } as UserType,
           postId: answer.post_id,
           createdAt: new Date(answer.created_at),
-          votes: answer.votes,
           verified: answer.verified,
         })) as Answer[],
         comments: data.comments.map((comment: any) => ({

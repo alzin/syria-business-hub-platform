@@ -20,6 +20,8 @@ const AnswerCard: React.FC<AnswerCardProps> = ({ answer, postId, comments = [] }
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const canEditAnswer = user && user.id === answer.author.id;
+  
+  const answerComments = comments.filter(comment => comment.answerId === answer.id);
 
   return (
     <>
@@ -32,7 +34,7 @@ const AnswerCard: React.FC<AnswerCardProps> = ({ answer, postId, comments = [] }
             onDelete={() => setShowDeleteDialog(true)}
           />
 
-          <AnswerContent answer={answer} />
+          <AnswerContent answer={answer} commentsCount={answerComments.length} />
 
           <AnswerComments
             answerId={answer.id}

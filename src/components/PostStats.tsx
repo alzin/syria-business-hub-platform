@@ -3,7 +3,7 @@ import React from 'react';
 import { MessageSquare, MessageCircle, Clock } from 'lucide-react';
 
 interface PostStatsProps {
-  type: 'question' | 'news';
+  type: 'question' | 'news' | 'answer';
   answersCount?: number;
   commentsCount?: number;
   createdAt: Date;
