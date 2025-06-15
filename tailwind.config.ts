@@ -77,7 +77,8 @@ export default {
 					purple: '#8b5cf6', // Inspiring purple
 					green: '#059669', // Growth green
 					orange: '#ea580c', // Energetic orange
-				}
+				},
+				'syrian-green': '#007844',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
