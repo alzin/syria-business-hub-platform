@@ -47,7 +47,7 @@ const VotingButtons: React.FC<VotingButtonsProps> = ({
   const isLoading = voteOnPost.isPending || voteOnAnswer.isPending;
 
   return (
-    <div className="flex items-center space-x-1">
+    <div className="flex items-center space-x-1" onClick={(e) => e.stopPropagation()}>
       <Button
         variant="ghost"
         size={buttonSize}
