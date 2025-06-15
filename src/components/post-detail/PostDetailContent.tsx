@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { MessageCircle, DollarSign, Clock, Users, Mail } from 'lucide-react';
 import { Post } from '@/types';
+import SanitizedContent from '@/components/SanitizedContent';
 
 interface PostDetailContentProps {
   post: Post;
@@ -61,9 +62,10 @@ const PostDetailContent: React.FC<PostDetailContentProps> = ({ post, answersCoun
 
       {/* Content */}
       <div className="prose prose-gray max-w-none">
-        <div className="whitespace-pre-wrap text-gray-700 leading-relaxed">
-          {post.content}
-        </div>
+        <SanitizedContent
+          html={post.content}
+          className="whitespace-pre-wrap text-gray-700 leading-relaxed"
+        />
       </div>
 
       {/* Business Idea specific information */}

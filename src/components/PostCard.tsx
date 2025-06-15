@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -10,6 +9,7 @@ import PostCardSyriaLocationBadge from './post-card/PostCardSyriaLocationBadge';
 import PostCardBusinessIdeaDetails from './post-card/PostCardBusinessIdeaDetails';
 import PostCardTagsList from './post-card/PostCardTagsList';
 import PostCardInteractionMetrics from './post-card/PostCardInteractionMetrics';
+import SanitizedContent from './SanitizedContent';
 
 interface PostCardProps {
   post: Post;
@@ -45,9 +45,10 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       </CardHeader>
       
       <CardContent className="pt-0">
-        <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-          {post.content}
-        </p>
+        <SanitizedContent
+          html={post.content}
+          className="text-gray-600 text-sm mb-4 line-clamp-3"
+        />
 
         {post.type === 'business_idea' && (
           <PostCardBusinessIdeaDetails

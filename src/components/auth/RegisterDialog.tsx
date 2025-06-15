@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
@@ -8,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from '@/components/ui/use-toast';
 import { ExpertiseType } from '@/types';
+import DOMPurify from 'dompurify';
 
 interface RegisterDialogProps {
   open: boolean;
@@ -53,7 +53,18 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
     setIsLoading(true);
 
     try {
-      await register(email, password, name, expertise, location);
+      const sanitizedName = DOMPurify.sanitize(name);
+      if (!sanitizedName) {
+        toast({
+          title: "Invalid name",
+          description: "Please enter a valid name.",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      await register(email, password, sanitizedName, expertise, location);
       
       toast({
         title: "Welcome!",

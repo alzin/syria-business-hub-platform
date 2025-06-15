@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -28,6 +27,7 @@ import {
 import { toast } from '@/components/ui/use-toast';
 import { MoreVertical } from 'lucide-react';
 import { Comment } from '@/types';
+import SanitizedContent from './SanitizedContent';
 
 interface CommentCardProps {
   comment: Comment;
@@ -81,7 +81,10 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment }) => {
       <Card className="border-l-2 border-l-gray-200 bg-gray-50/50">
         <CardContent className="pt-4 pb-3">
           <div className="mb-3">
-            <p className="text-sm text-gray-700">{comment.content}</p>
+            <SanitizedContent
+              html={comment.content}
+              className="text-sm text-gray-700"
+            />
           </div>
           
           <div className="flex items-center justify-between">

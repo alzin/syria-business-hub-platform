@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthorInfo from '@/components/AuthorInfo';
 import PostStats from '@/components/PostStats';
 import { Answer } from '@/types';
+import SanitizedContent from '@/components/SanitizedContent';
 
 interface AnswerContentProps {
   answer: Answer;
@@ -21,7 +22,10 @@ const AnswerContent: React.FC<AnswerContentProps> = ({ answer, commentsCount }) 
     <>
       {/* Answer content */}
       <div className="prose max-w-none mb-6">
-        <p className="text-gray-700 whitespace-pre-wrap">{answer.content}</p>
+        <SanitizedContent
+          html={answer.content}
+          className="text-gray-700 whitespace-pre-wrap"
+        />
       </div>
 
       {/* Author info and stats */}
