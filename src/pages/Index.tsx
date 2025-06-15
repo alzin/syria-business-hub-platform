@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 import { usePosts } from '@/hooks/usePosts';
 import { useAuth } from '@/contexts/AuthContext';
 import Header from '@/components/Header';
-import PostCard from '@/components/PostCard';
 import LandingPage from '@/components/LandingPage';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import { CategoryType } from '@/types';
+import ContentTypeFilters from '@/components/index/ContentTypeFilters';
+import CategoryFilters from '@/components/index/CategoryFilters';
+import PostsSection from '@/components/index/PostsSection';
+import NavigationControls from '@/components/index/NavigationControls';
 
 const Index = () => {
-  const { t } = useTranslation();
   const { user } = useAuth();
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | 'all'>('all');
@@ -62,23 +60,6 @@ const Index = () => {
     }
   }, [searchParams, user, setSearchParams]);
 
-  const categories: { key: CategoryType | 'all'; label:string }[] = [
-    { key: 'all', label: 'All Categories' },
-    { key: 'legal', label: 'Legal & Compliance' },
-    { key: 'technology', label: 'Technology' },
-    { key: 'investment', label: 'Investment' },
-    { key: 'marketing', label: 'Marketing' },
-    { key: 'operations', label: 'Operations' },
-  ];
-
-  const contentTypes: { key: 'all' | 'question' | 'article' | 'business_idea' | 'news'; label: string; color: string }[] = [
-    { key: 'all', label: t('All Content'), color: 'border-gray-300' },
-    { key: 'question', label: t('Questions'), color: 'border-blue-300 text-blue-700' },
-    { key: 'article', label: t('Articles'), color: 'border-green-300 text-green-700' },
-    { key: 'business_idea', label: t('Business Ideas'), color: 'border-purple-300 text-purple-700' },
-    { key: 'news', label: t('News'), color: 'border-orange-300 text-orange-700' },
-  ];
-
   if (error) {
     console.error('Error loading posts:', error);
   }
@@ -97,135 +78,31 @@ const Index = () => {
     <div className="min-h-screen bg-gray-50">
       <Header onSearch={handleSearchChange} searchTerm={searchTerm} />
       
-      {/* Back to posts option - only show if there's a search term */}
-      {searchTerm && (
-        <div className="bg-white border-b border-gray-200 py-4">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Button 
-              variant="ghost" 
-              onClick={() => {
-                setSearchTerm('');
-                setSearchParams({ posts: 'true' });
-              }}
-              className="text-syrian-green hover:bg-syrian-green/10"
-            >
-              ← Back to Posts
-            </Button>
-          </div>
-        </div>
-      )}
-
-      {/* Show back to home only for non-authenticated users when not searching */}
-      {!searchTerm && !user && (
-        <div className="bg-white border-b border-gray-200 py-4">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <Button 
-              variant="ghost" 
-              onClick={() => {
-                setSearchParams({});
-                setSearchTerm('');
-              }}
-              className="text-syrian-green hover:bg-syrian-green/10"
-            >
-              ← Back to Home
-            </Button>
-          </div>
-        </div>
-      )}
+      <NavigationControls
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        setSearchParams={setSearchParams}
+        user={user}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Content type filters */}
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            {t('Content Type')}
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {contentTypes.map((contentType) => (
-              <Badge
-                key={contentType.key}
-                variant={selectedContentType === contentType.key ? 'default' : 'outline'}
-                className={
-                  selectedContentType === contentType.key
-                    ? 'cursor-pointer bg-syrian-green text-white border-syrian-green hover:bg-syrian-green/90'
-                    : `cursor-pointer hover:bg-syrian-green/10 ${contentType.color}`
-                }
-                onClick={() => setSelectedContentType(contentType.key)}
-              >
-                {contentType.label}
-              </Badge>
-            ))}
-          </div>
-        </div>
+        <ContentTypeFilters
+          selectedContentType={selectedContentType}
+          setSelectedContentType={setSelectedContentType}
+        />
 
-        {/* Category filters */}
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            {t('filterByCategory', 'Filter by Category')}
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <Badge
-                key={category.key}
-                variant={selectedCategory === category.key ? 'default' : 'outline'}
-                className={
-                  selectedCategory === category.key
-                    ? 'cursor-pointer bg-syrian-green text-white border-syrian-green hover:bg-syrian-green/90'
-                    : 'cursor-pointer hover:bg-syrian-green/10'
-                }
-                onClick={() => setSelectedCategory(category.key)}
-              >
-                {category.label}
-              </Badge>
-            ))}
-          </div>
-        </div>
+        <CategoryFilters
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
 
-        {/* Posts section */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-gray-900">
-              {selectedCategory === 'all' ? t('recentPosts', 'Recent Posts') : `${selectedCategory} Posts`}
-              {searchTerm && ` - Search: "${searchTerm}"`}
-            </h2>
-            {posts && (
-              <span className="text-sm text-gray-500">
-                {posts.length} {posts.length === 1 ? 'post' : 'posts'}
-              </span>
-            )}
-          </div>
-
-          {isLoading ? (
-            <Card>
-              <CardContent className="text-center py-12">
-                <p className="text-gray-500">{t('loading')}</p>
-              </CardContent>
-            </Card>
-          ) : posts && posts.length > 0 ? (
-            <div className="space-y-6">
-              {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
-              ))}
-            </div>
-          ) : (
-            <Card>
-              <CardContent className="text-center py-12">
-                <p className="text-gray-500 mb-4">
-                  {searchTerm 
-                    ? `No posts found for "${searchTerm}"`
-                    : selectedCategory === 'all'
-                    ? t('noPostsFound', 'No posts available yet.')
-                    : `No posts in ${selectedCategory} category yet.`
-                  }
-                </p>
-                {searchTerm && (
-                  <Button onClick={() => handleSearchChange('')} variant="outline">
-                    Clear search
-                  </Button>
-                )}
-              </CardContent>
-            </Card>
-          )}
-        </div>
+        <PostsSection
+          isLoading={isLoading}
+          posts={posts}
+          selectedCategory={selectedCategory}
+          searchTerm={searchTerm}
+          handleSearchChange={handleSearchChange}
+        />
       </div>
     </div>
   );
