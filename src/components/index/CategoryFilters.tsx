@@ -30,7 +30,7 @@ const CategoryFilters: React.FC<CategoryFiltersProps> = ({ selectedCategory, set
         {categories.map((category) => (
           <Badge
             key={category.key}
-            variant={selectedCategory === category.key ? 'default' : 'outline'}
+            variant={'outline'}
             className={
               selectedCategory === category.key
                 ? 'cursor-pointer bg-syrian-green text-white border-syrian-green hover:bg-syrian-green/90'

@@ -30,7 +30,7 @@ const ContentTypeFilters: React.FC<ContentTypeFiltersProps> = ({ selectedContent
         {contentTypes.map((contentType) => (
           <Badge
             key={contentType.key}
-            variant={selectedContentType === contentType.key ? 'default' : 'outline'}
+            variant={'outline'}
             className={
               selectedContentType === contentType.key
                 ? 'cursor-pointer bg-syrian-green text-white border-syrian-green hover:bg-syrian-green/90'
