@@ -1,4 +1,3 @@
-
 export interface User {
   id: string;
   email: string;
@@ -25,7 +24,6 @@ export interface Post {
   updatedAt: Date;
   answers?: Answer[];
   comments?: Comment[];
-  votes: number;
   answersCount?: number;
   commentsCount?: number;
   // Business idea specific fields
@@ -43,7 +41,6 @@ export interface Answer {
   author: User;
   postId: string;
   createdAt: Date;
-  votes: number;
   verified: boolean;
 }
 

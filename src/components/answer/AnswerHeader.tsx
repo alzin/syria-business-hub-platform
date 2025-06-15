@@ -8,7 +8,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import VotingButtons from '@/components/VotingButtons';
 import { CheckCircle, MoreVertical } from 'lucide-react';
 import { Answer } from '@/types';
 
@@ -36,35 +35,26 @@ const AnswerHeader: React.FC<AnswerHeaderProps> = ({
         )}
       </div>
       
-      <div className="flex items-center space-x-2">
-        <VotingButtons 
-          itemId={answer.id} 
-          itemType="answer" 
-          votes={answer.votes}
-          authorId={answer.author.id}
-        />
-        
-        {canEditAnswer && (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm">
-                <MoreVertical className="w-4 h-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={onEdit}>
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem 
-                onClick={onDelete}
-                className="text-red-600"
-              >
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
-      </div>
+      {canEditAnswer && (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm">
+              <MoreVertical className="w-4 h-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={onEdit}>
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              onClick={onDelete}
+              className="text-red-600"
+            >
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
     </div>
   );
 };

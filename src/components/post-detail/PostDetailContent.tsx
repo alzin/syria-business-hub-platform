@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { MessageCircle, DollarSign, Clock, Users, Mail } from 'lucide-react';
 import { Post } from '@/types';
-import VotingButtons from '@/components/VotingButtons';
 
 interface PostDetailContentProps {
   post: Post;
@@ -126,15 +125,6 @@ const PostDetailContent: React.FC<PostDetailContentProps> = ({ post, answersCoun
 
       {/* Stats */}
       <div className="flex items-center space-x-6 pt-4 border-t border-gray-200">
-        <div className="flex items-center text-gray-600">
-          <VotingButtons
-            itemId={post.id}
-            itemType="post"
-            votes={post.votes}
-            authorId={post.author.id}
-          />
-          <span className="ml-2">{post.votes} {t('votes')}</span>
-        </div>
         {post.type === 'question' && (
           <div className="flex items-center text-gray-600">
             <MessageCircle className="w-4 h-4 mr-2" />

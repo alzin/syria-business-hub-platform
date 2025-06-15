@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -60,11 +61,8 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         
         <PostCardInteractionMetrics
           type={post.type}
-          votes={post.votes}
           answersCount={post.answersCount}
           commentsCount={post.commentsCount}
-          postId={post.id}
-          authorId={post.author.id}
         />
       </CardContent>
     </Card>

@@ -1,12 +1,11 @@
 
 import React from 'react';
-import { MessageSquare, MessageCircle, ThumbsUp, Clock } from 'lucide-react';
+import { MessageSquare, MessageCircle, Clock } from 'lucide-react';
 
 interface PostStatsProps {
   type: 'question' | 'news';
   answersCount?: number;
   commentsCount?: number;
-  votes: number;
   createdAt: Date;
   size?: 'sm' | 'default';
 }
@@ -15,7 +14,6 @@ const PostStats: React.FC<PostStatsProps> = ({
   type,
   answersCount = 0,
   commentsCount = 0,
-  votes,
   createdAt,
   size = 'default'
 }) => {
@@ -46,12 +44,6 @@ const PostStats: React.FC<PostStatsProps> = ({
       <div className="flex items-center space-x-1">
         <MessageCircle className={iconSize} />
         <span>{commentsCount}</span>
-      </div>
-
-      {/* Likes/Votes */}
-      <div className="flex items-center space-x-1">
-        <ThumbsUp className={iconSize} />
-        <span>{votes}</span>
       </div>
 
       {/* Time */}

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
@@ -63,10 +62,9 @@ const PostAnswers: React.FC<PostAnswersProps> = ({
   };
 
   const sortedAnswers = answers ? [...answers].sort((a, b) => {
-    // Sort verified answers first, then by votes, then by date
+    // Sort verified answers first, then by date
     if (a.verified && !b.verified) return -1;
     if (!a.verified && b.verified) return 1;
-    if (a.votes !== b.votes) return b.votes - a.votes;
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
   }) : [];
 
