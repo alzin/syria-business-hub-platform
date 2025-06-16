@@ -70,7 +70,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
           <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo */}
             <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
-              <Logo className="w-6 h-6 sm:w-8 sm:h-8" />
+              <Logo className="w-10 h-10 sm:w-12 sm:h-12" />
             </div>
 
             {/* Desktop Search Bar */}
