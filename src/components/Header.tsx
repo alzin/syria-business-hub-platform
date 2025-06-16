@@ -69,11 +69,8 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo */}
-            <div className="flex items-center space-x-2 sm:space-x-3 cursor-pointer" onClick={() => navigate('/')}>
+            <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
               <Logo className="w-6 h-6 sm:w-8 sm:h-8" />
-              <h1 className="text-lg sm:text-xl font-bold bg-gradient-inspire bg-clip-text text-transparent">
-                {t('appName', 'SyriGo')}
-              </h1>
             </div>
 
             {/* Desktop Search Bar */}
