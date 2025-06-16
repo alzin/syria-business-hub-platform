@@ -72,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
             <div className="flex items-center space-x-2 sm:space-x-3 cursor-pointer" onClick={() => navigate('/')}>
               <Logo className="w-6 h-6 sm:w-8 sm:h-8" />
               <h1 className="text-lg sm:text-xl font-bold bg-gradient-inspire bg-clip-text text-transparent">
-                {t('appName', 'SyrVest')}
+                {t('appName', 'SyriGo')}
               </h1>
             </div>
 
