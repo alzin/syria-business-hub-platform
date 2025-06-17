@@ -204,10 +204,7 @@ export type Database = {
           name: string
           phone_country_code: string | null
           phone_number: string | null
-          phone_verification_code: string | null
-          phone_verified: boolean | null
           updated_at: string
-          verification_expires_at: string | null
           verified: boolean
         }
         Insert: {
@@ -221,10 +218,7 @@ export type Database = {
           name: string
           phone_country_code?: string | null
           phone_number?: string | null
-          phone_verification_code?: string | null
-          phone_verified?: boolean | null
           updated_at?: string
-          verification_expires_at?: string | null
           verified?: boolean
         }
         Update: {
@@ -238,10 +232,7 @@ export type Database = {
           name?: string
           phone_country_code?: string | null
           phone_number?: string | null
-          phone_verification_code?: string | null
-          phone_verified?: boolean | null
           updated_at?: string
-          verification_expires_at?: string | null
           verified?: boolean
         }
         Relationships: []
@@ -251,18 +242,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      generate_verification_code: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
-      request_phone_verification: {
-        Args: { user_id: string; phone_number: string }
-        Returns: Json
-      }
-      verify_phone_code: {
-        Args: { user_id: string; code: string }
-        Returns: Json
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never

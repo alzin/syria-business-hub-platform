@@ -7,7 +7,6 @@ import Header from '@/components/Header';
 import ProfileActions from '@/components/profile/ProfileActions';
 import ProfileContent from '@/components/profile/ProfileContent';
 import ProfileNotLoggedIn from '@/components/profile/ProfileNotLoggedIn';
-import PhoneVerification from '@/components/auth/PhoneVerification';
 import { toast } from '@/hooks/use-toast';
 import { ExpertiseType } from '@/types';
 import { useTranslation } from 'react-i18next';
@@ -87,11 +86,6 @@ const Profile = () => {
     navigate(`/user/${user.id}`);
   };
 
-  const handleVerificationComplete = () => {
-    // Refresh the page to get updated verification status
-    window.location.reload();
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -114,19 +108,6 @@ const Profile = () => {
           onCancel={handleCancel}
           onFormDataChange={setFormData}
         />
-
-        {/* Phone Verification Section */}
-        {user.phoneNumber && (
-          <div className="mb-6">
-            <PhoneVerification
-              userId={user.id}
-              phoneNumber={user.phoneNumber}
-              phoneCountryCode={user.phoneCountryCode || '+963'}
-              isVerified={user.phoneVerified || false}
-              onVerificationComplete={handleVerificationComplete}
-            />
-          </div>
-        )}
 
         {/* Additional profile sections can be added here */}
         {/* Future: Activity, Posts, Settings, etc. */}
