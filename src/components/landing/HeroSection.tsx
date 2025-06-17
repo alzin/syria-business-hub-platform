@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
@@ -7,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import LoginDialog from '@/components/auth/LoginDialog';
 import RegisterDialog from '@/components/auth/RegisterDialog';
 import CreatePostDialog from '@/components/CreatePostDialog';
+import HeroCarousel from '@/components/landing/HeroCarousel';
 import { MessageSquare, Users, Sparkles, Globe } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
@@ -106,16 +108,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
               </div>
             </div>
 
-            {/* Hero Image */}
+            {/* Hero Carousel */}
             <div className="flex justify-center lg:justify-end animate-slide-in-right delay-300">
               <div className="relative group">
                 <div className="absolute -inset-4 bg-gradient-to-r from-warning via-background/30 to-secondary rounded-2xl blur-2xl opacity-70 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
-                <img 
-                  src="/lovable-uploads/7fc2f410-23bb-4f4a-bdcf-caae0d25e3bd.png" 
-                  alt="Syrian Knowledge Platform - Connect with experts worldwide"
-                  className="relative w-full max-w-lg h-auto rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm transform group-hover:scale-105 transition-all duration-500 border border-background/20"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/30 via-transparent to-warning/20 rounded-2xl group-hover:from-primary/40 transition-all duration-500"></div>
+                <div className="relative transform group-hover:scale-105 transition-all duration-500">
+                  <HeroCarousel />
+                </div>
               </div>
             </div>
           </div>
