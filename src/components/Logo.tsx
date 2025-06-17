@@ -13,44 +13,37 @@ const Logo = ({ className = "w-8 h-8" }: { className?: string }) => {
     >
       <title id="syrigoLogoTitle">SyriGo Logo</title>
       
-      {/* Modern circular background with subtle gradient */}
-      <circle 
-        cx="24" 
-        cy="24" 
-        r="20" 
-        fill="url(#modernGradient)" 
-        className="drop-shadow-sm"
+      {/* Modern hexagonal background */}
+      <path
+        d="M24 4L36 12V28L24 36L12 28V12L24 4Z"
+        fill="url(#hexGradient)"
+        className="drop-shadow-lg"
       />
       
-      {/* Stylized "SG" monogram */}
+      {/* Inner geometric pattern */}
       <g transform="translate(24, 24)">
-        {/* Letter S - modern curved design */}
+        {/* Stylized arrow pointing up-right (representing growth/progress) */}
         <path
-          d="M-8,-6 C-8,-8 -6,-10 -4,-10 L-1,-10 C1,-10 3,-8 3,-6 C3,-4 1,-2 -1,-2 L-4,-2 C-6,-2 -8,0 -8,2 C-8,4 -6,6 -4,6 L-1,6 C1,6 3,4 3,2"
-          stroke="white"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          fill="none"
+          d="M-6,-2 L6,-2 L6,-6 L10,0 L6,6 L6,2 L-6,2 L-6,-2 Z"
+          fill="white"
           className="drop-shadow-sm"
         />
         
-        {/* Letter G - clean geometric design */}
-        <path
-          d="M5,-6 C5,-8 7,-10 9,-10 L12,-10 C14,-10 16,-8 16,-6 L16,2 C16,4 14,6 12,6 L9,6 C7,6 5,4 5,2 L5,-1 L12,-1"
-          stroke="white"
-          strokeWidth="1.8"
-          strokeLinecap="round"
-          fill="none"
-          className="drop-shadow-sm"
+        {/* Small accent dot */}
+        <circle
+          cx="-8"
+          cy="-8"
+          r="1.5"
+          fill="rgba(255,255,255,0.8)"
         />
       </g>
       
-      {/* Modern gradient definition */}
+      {/* Gradient definitions */}
       <defs>
-        <linearGradient id="modernGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#4F46E5" />
-          <stop offset="50%" stopColor="#7C3AED" />
-          <stop offset="100%" stopColor="#2563EB" />
+        <linearGradient id="hexGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#059669" />
+          <stop offset="50%" stopColor="#0891b2" />
+          <stop offset="100%" stopColor="#3b82f6" />
         </linearGradient>
       </defs>
     </svg>
