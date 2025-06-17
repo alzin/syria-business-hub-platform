@@ -3,13 +3,16 @@ import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CountrySelector } from '@/components/ui/country-selector';
+import { PhoneInput } from '@/components/ui/phone-input';
 import { ExpertiseType } from '@/types';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ProfileFormData {
   name: string;
   expertise: ExpertiseType;
-  location: string; // Changed from 'syria' | 'international' to string
+  location: string;
+  phoneNumber?: string;
+  phoneCountryCode?: string;
 }
 
 interface ProfileFormProps {
@@ -58,6 +61,19 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange })
             className="w-full"
           />
         </div>
+      </div>
+
+      <div>
+        <div className="text-sm text-gray-600 mb-2">Phone Number</div>
+        <PhoneInput
+          value={formData.phoneNumber || ''}
+          onValueChange={(value: string) => onFormDataChange({ ...formData, phoneNumber: value })}
+          countryCode={formData.phoneCountryCode || '+1'}
+          onCountryCodeChange={(code: string) => onFormDataChange({ ...formData, phoneCountryCode: code })}
+          selectedCountry={formData.location}
+          placeholder="Enter your phone number"
+          className="w-full"
+        />
       </div>
     </div>
   );

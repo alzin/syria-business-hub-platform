@@ -1,4 +1,3 @@
-
 export interface User {
   id: string;
   email: string;
@@ -9,6 +8,8 @@ export interface User {
   avatar?: string;
   verified: boolean;
   joinedAt: Date;
+  phoneNumber?: string;
+  phoneCountryCode?: string;
 }
 
 export type ExpertiseType = 'legal' | 'investor' | 'founder' | 'developer' | 'government';

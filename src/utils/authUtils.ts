@@ -21,7 +21,9 @@ export const registerUser = async (
   password: string, 
   name: string, 
   expertise: ExpertiseType, 
-  location: string
+  location: string,
+  phoneNumber?: string,
+  phoneCountryCode?: string
 ) => {
   console.log('Attempting registration for:', email);
   const { error } = await supabase.auth.signUp({
@@ -33,6 +35,8 @@ export const registerUser = async (
         name,
         expertise,
         location,
+        phone_number: phoneNumber,
+        phone_country_code: phoneCountryCode,
       },
     },
   });

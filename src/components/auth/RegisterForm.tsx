@@ -1,10 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { ExpertiseType } from '@/types';
+import { getCountryByName } from '@/data/phoneCountries';
 import DOMPurify from 'dompurify';
 import RegisterFormFields from './RegisterFormFields';
 
@@ -21,7 +22,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
   const [name, setName] = useState('');
   const [expertise, setExpertise] = useState<ExpertiseType>('founder');
   const [location, setLocation] = useState<string>('Syria');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [phoneCountryCode, setPhoneCountryCode] = useState<string>('+963');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Update phone country code when location changes
+  useEffect(() => {
+    const country = getCountryByName(location);
+    if (country) {
+      setPhoneCountryCode(country.dialCode);
+    }
+  }, [location]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +69,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
         return;
       }
 
-      await register(email, password, sanitizedName, expertise, location);
+      await register(email, password, sanitizedName, expertise, location, phoneNumber, phoneCountryCode);
       
       toast({
         title: "Welcome!",
@@ -96,6 +107,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
     setName('');
     setExpertise('founder');
     setLocation('Syria');
+    setPhoneNumber('');
+    setPhoneCountryCode('+963');
   };
 
   return (
@@ -111,6 +124,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
         setExpertise={setExpertise}
         location={location}
         setLocation={setLocation}
+        phoneNumber={phoneNumber}
+        setPhoneNumber={setPhoneNumber}
+        phoneCountryCode={phoneCountryCode}
+        setPhoneCountryCode={setPhoneCountryCode}
         isLoading={isLoading}
       />
       

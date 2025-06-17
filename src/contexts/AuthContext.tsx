@@ -13,7 +13,7 @@ interface AuthContextType {
   geolocation: GeolocationData | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, name: string, expertise: ExpertiseType, location: string) => Promise<void>;
+  register: (email: string, password: string, name: string, expertise: ExpertiseType, location: string, phoneNumber?: string, phoneCountryCode?: string) => Promise<void>;
   logout: () => void;
   signOut: () => void; // Add signOut as an alias
 }
@@ -88,9 +88,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     password: string, 
     name: string, 
     expertise: ExpertiseType, 
-    location: string
+    location: string,
+    phoneNumber?: string,
+    phoneCountryCode?: string
   ) => {
-    await registerUser(email, password, name, expertise, location);
+    await registerUser(email, password, name, expertise, location, phoneNumber, phoneCountryCode);
   };
 
   const handleLogout = async () => {

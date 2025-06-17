@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -23,6 +24,8 @@ const Profile = () => {
     name: user?.name || '',
     expertise: user?.expertise || 'founder' as ExpertiseType,
     location: user?.location || 'Syria',
+    phoneNumber: user?.phoneNumber || '',
+    phoneCountryCode: user?.phoneCountryCode || '+963',
   });
 
   if (!user) {
@@ -38,6 +41,8 @@ const Profile = () => {
           name: formData.name,
           expertise: formData.expertise,
           location: formData.location,
+          phone_number: formData.phoneNumber,
+          phone_country_code: formData.phoneCountryCode,
         })
         .eq('id', user.id);
 
@@ -67,6 +72,8 @@ const Profile = () => {
       name: user.name,
       expertise: user.expertise,
       location: user.location,
+      phoneNumber: user.phoneNumber || '',
+      phoneCountryCode: user.phoneCountryCode || '+963',
     });
     setIsEditing(false);
   };

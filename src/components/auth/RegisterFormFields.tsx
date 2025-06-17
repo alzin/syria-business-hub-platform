@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CountrySelector } from '@/components/ui/country-selector';
+import { PhoneInput } from '@/components/ui/phone-input';
 import { ExpertiseType } from '@/types';
 
 interface RegisterFormFieldsProps {
@@ -17,6 +18,10 @@ interface RegisterFormFieldsProps {
   setExpertise: (expertise: ExpertiseType) => void;
   location: string;
   setLocation: (location: string) => void;
+  phoneNumber: string;
+  setPhoneNumber: (phoneNumber: string) => void;
+  phoneCountryCode: string;
+  setPhoneCountryCode: (code: string) => void;
   isLoading: boolean;
 }
 
@@ -31,6 +36,10 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
   setExpertise,
   location,
   setLocation,
+  phoneNumber,
+  setPhoneNumber,
+  phoneCountryCode,
+  setPhoneCountryCode,
   isLoading,
 }) => {
   const { t } = useTranslation();
@@ -101,6 +110,22 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
           value={location}
           onValueChange={setLocation}
           placeholder="Select your country..."
+          disabled={isLoading}
+          className="w-full"
+        />
+      </div>
+
+      <div>
+        <div className="text-sm text-gray-600 mb-2">
+          Phone Number
+        </div>
+        <PhoneInput
+          value={phoneNumber}
+          onValueChange={setPhoneNumber}
+          countryCode={phoneCountryCode}
+          onCountryCodeChange={setPhoneCountryCode}
+          selectedCountry={location}
+          placeholder="Enter your phone number"
           disabled={isLoading}
           className="w-full"
         />

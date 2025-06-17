@@ -202,6 +202,8 @@ export type Database = {
           id: string
           location: string
           name: string
+          phone_country_code: string | null
+          phone_number: string | null
           updated_at: string
           verified: boolean
         }
@@ -214,6 +216,8 @@ export type Database = {
           id: string
           location: string
           name: string
+          phone_country_code?: string | null
+          phone_number?: string | null
           updated_at?: string
           verified?: boolean
         }
@@ -226,6 +230,8 @@ export type Database = {
           id?: string
           location?: string
           name?: string
+          phone_country_code?: string | null
+          phone_number?: string | null
           updated_at?: string
           verified?: boolean
         }
