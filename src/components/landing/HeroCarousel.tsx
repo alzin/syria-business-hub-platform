@@ -28,7 +28,7 @@ const HeroCarousel = () => {
       id: 1,
       type: 'question',
       title: 'What are the current investment opportunities in Damascus?',
-      content: 'Looking for insights on the business climate and potential investment sectors...',
+      content: 'Looking for insights on the business climate and potential investment sectors in Syria...',
       author: 'Ahmad Al-Rashid',
       expertise: 'Business Consultant',
       votes: 24,
@@ -41,7 +41,7 @@ const HeroCarousel = () => {
       id: 2,
       type: 'article',
       title: 'Understanding Syrian Labor Law: A Complete Guide',
-      content: 'Comprehensive overview of employment regulations and worker rights in Syria...',
+      content: 'Comprehensive overview of employment regulations and worker rights in Syria for businesses...',
       author: 'Layla Mahmoud',
       expertise: 'Legal Expert',
       votes: 45,
@@ -54,7 +54,7 @@ const HeroCarousel = () => {
       id: 3,
       type: 'business_idea',
       title: 'Tech Startup: Educational Platform for Syrian Students',
-      content: 'Innovative e-learning platform connecting Syrian students with global resources...',
+      content: 'Innovative e-learning platform connecting Syrian students with global educational resources...',
       author: 'Omar Khoury',
       expertise: 'Tech Entrepreneur',
       votes: 38,
@@ -67,7 +67,7 @@ const HeroCarousel = () => {
       id: 4,
       type: 'news',
       title: 'New Trade Agreements Boost Syrian Export Potential',
-      content: 'Recent developments in international trade relations opening new markets...',
+      content: 'Recent developments in international trade relations opening new markets for Syrian products...',
       author: 'Fatima Al-Zahra',
       expertise: 'Economic Analyst',
       votes: 67,
@@ -80,7 +80,7 @@ const HeroCarousel = () => {
       id: 5,
       type: 'question',
       title: 'How to establish a NGO in Syria?',
-      content: 'Need guidance on legal requirements and registration process...',
+      content: 'Need guidance on legal requirements and registration process for non-profit organizations...',
       author: 'Nour Hassan',
       expertise: 'Civil Society Activist',
       votes: 19,
@@ -88,13 +88,26 @@ const HeroCarousel = () => {
       icon: Users,
       bgColor: 'bg-indigo-50',
       textColor: 'text-indigo-700'
+    },
+    {
+      id: 6,
+      type: 'article',
+      title: 'Digital Marketing Strategies for Syrian Businesses',
+      content: 'Practical guide to building online presence and reaching customers in the digital age...',
+      author: 'Rami Saleh',
+      expertise: 'Marketing Specialist',
+      votes: 31,
+      answers: 9,
+      icon: Lightbulb,
+      bgColor: 'bg-cyan-50',
+      textColor: 'text-cyan-700'
     }
   ];
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % dummyPosts.length);
-    }, 3500); // Change slide every 3.5 seconds
+    }, 4000); // Change slide every 4 seconds
 
     return () => clearInterval(interval);
   }, [dummyPosts.length]);
@@ -133,14 +146,14 @@ const HeroCarousel = () => {
     <div className="relative w-full max-w-lg h-auto">
       <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20">
         <div 
-          className="flex transition-transform duration-700 ease-in-out"
+          className="flex flex-col transition-transform duration-1000 ease-in-out"
           style={{ transform: `translateY(-${currentIndex * 100}%)` }}
         >
           {dummyPosts.map((post, index) => {
             const IconComponent = post.icon;
             return (
-              <div key={post.id} className="w-full flex-shrink-0">
-                <Card className={`${post.bgColor} border-0 shadow-none`}>
+              <div key={post.id} className="w-full flex-shrink-0 min-h-[280px]">
+                <Card className={`${post.bgColor} border-0 shadow-none h-full`}>
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between mb-2">
                       <Badge className={getTypeBadgeColor(post.type)}>
@@ -163,11 +176,13 @@ const HeroCarousel = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                    <p className="text-sm text-gray-600 mb-3 line-clamp-3">
                       {post.content}
                     </p>
                     <div className="flex items-center text-xs text-gray-500">
-                      <div className="w-6 h-6 bg-gray-300 rounded-full mr-2"></div>
+                      <div className="w-6 h-6 bg-gray-300 rounded-full mr-2 flex items-center justify-center">
+                        <div className="w-4 h-4 bg-gray-400 rounded-full"></div>
+                      </div>
                       <div>
                         <div className="font-medium text-gray-700">{post.author}</div>
                         <div>{post.expertise}</div>
@@ -194,6 +209,11 @@ const HeroCarousel = () => {
             }`}
           />
         ))}
+      </div>
+      
+      {/* Progress indicator */}
+      <div className="mt-2 text-center text-xs text-background/60">
+        {currentIndex + 1} / {dummyPosts.length}
       </div>
     </div>
   );
