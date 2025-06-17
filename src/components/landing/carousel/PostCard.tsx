@@ -44,6 +44,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   };
 
   const IconComponent = post.icon;
+  const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${post.avatarSeed}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf&radius=50`;
 
   return (
     <Card className={`${post.bgColor} border-0 shadow-none h-full animate-fade-in`}>
@@ -73,7 +74,17 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           {post.content}
         </p>
         <div className="flex items-center text-xs text-gray-500">
-          <div className="w-6 h-6 bg-gray-300 rounded-full mr-2 flex items-center justify-center">
+          <img 
+            src={avatarUrl}
+            alt={`${post.author} avatar`}
+            className="w-6 h-6 rounded-full mr-2 border border-gray-200"
+            onError={(e) => {
+              // Fallback to a simple colored circle if image fails to load
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.nextElementSibling!.classList.remove('hidden');
+            }}
+          />
+          <div className="w-6 h-6 bg-gray-300 rounded-full mr-2 flex items-center justify-center hidden">
             <div className="w-4 h-4 bg-gray-400 rounded-full"></div>
           </div>
           <div>

@@ -13,4 +13,5 @@ export interface PostPreview {
   icon: LucideIcon;
   bgColor: string;
   textColor: string;
+  avatarSeed: string;
 }
