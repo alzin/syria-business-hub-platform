@@ -107,7 +107,7 @@ const HeroCarousel = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % dummyPosts.length);
-    }, 4000); // Change slide every 4 seconds
+    }, 4000);
 
     return () => clearInterval(interval);
   }, [dummyPosts.length]);
@@ -142,57 +142,50 @@ const HeroCarousel = () => {
     }
   };
 
+  const currentPost = dummyPosts[currentIndex];
+  const IconComponent = currentPost.icon;
+
   return (
     <div className="relative w-full max-w-lg h-auto">
-      <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20">
-        <div 
-          className="flex flex-col transition-transform duration-1000 ease-in-out"
-          style={{ transform: `translateY(-${currentIndex * 100}%)` }}
-        >
-          {dummyPosts.map((post, index) => {
-            const IconComponent = post.icon;
-            return (
-              <div key={post.id} className="w-full flex-shrink-0 min-h-[280px]">
-                <Card className={`${post.bgColor} border-0 shadow-none h-full`}>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between mb-2">
-                      <Badge className={getTypeBadgeColor(post.type)}>
-                        <IconComponent className="w-3 h-3 mr-1" />
-                        {getTypeLabel(post.type)}
-                      </Badge>
-                      <div className="flex items-center space-x-2 text-xs text-gray-600">
-                        <div className="flex items-center">
-                          <Star className="w-3 h-3 mr-1 fill-current text-yellow-500" />
-                          {post.votes}
-                        </div>
-                        <div className="flex items-center">
-                          <MessageSquare className="w-3 h-3 mr-1" />
-                          {post.answers}
-                        </div>
-                      </div>
-                    </div>
-                    <CardTitle className={`text-base font-semibold ${post.textColor} leading-tight`}>
-                      {post.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <p className="text-sm text-gray-600 mb-3 line-clamp-3">
-                      {post.content}
-                    </p>
-                    <div className="flex items-center text-xs text-gray-500">
-                      <div className="w-6 h-6 bg-gray-300 rounded-full mr-2 flex items-center justify-center">
-                        <div className="w-4 h-4 bg-gray-400 rounded-full"></div>
-                      </div>
-                      <div>
-                        <div className="font-medium text-gray-700">{post.author}</div>
-                        <div>{post.expertise}</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+      <div className="relative rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20 h-[320px]">
+        <div className="h-full">
+          <Card className={`${currentPost.bgColor} border-0 shadow-none h-full animate-fade-in`} key={currentPost.id}>
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between mb-2">
+                <Badge className={getTypeBadgeColor(currentPost.type)}>
+                  <IconComponent className="w-3 h-3 mr-1" />
+                  {getTypeLabel(currentPost.type)}
+                </Badge>
+                <div className="flex items-center space-x-2 text-xs text-gray-600">
+                  <div className="flex items-center">
+                    <Star className="w-3 h-3 mr-1 fill-current text-yellow-500" />
+                    {currentPost.votes}
+                  </div>
+                  <div className="flex items-center">
+                    <MessageSquare className="w-3 h-3 mr-1" />
+                    {currentPost.answers}
+                  </div>
+                </div>
               </div>
-            );
-          })}
+              <CardTitle className={`text-base font-semibold ${currentPost.textColor} leading-tight`}>
+                {currentPost.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <p className="text-sm text-gray-600 mb-3 line-clamp-3">
+                {currentPost.content}
+              </p>
+              <div className="flex items-center text-xs text-gray-500">
+                <div className="w-6 h-6 bg-gray-300 rounded-full mr-2 flex items-center justify-center">
+                  <div className="w-4 h-4 bg-gray-400 rounded-full"></div>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-700">{currentPost.author}</div>
+                  <div>{currentPost.expertise}</div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
