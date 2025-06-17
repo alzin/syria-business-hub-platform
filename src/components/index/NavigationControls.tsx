@@ -23,7 +23,7 @@ const NavigationControls: React.FC<NavigationControlsProps> = ({ searchTerm, set
                 setSearchTerm('');
                 setSearchParams({ posts: 'true' });
               }}
-              className="text-syrian-green hover:bg-syrian-green/10"
+              className="text-syrian-green hover:bg-syrian-green hover:text-white transition-colors"
             >
               ← Back to Posts
             </Button>
@@ -41,7 +41,7 @@ const NavigationControls: React.FC<NavigationControlsProps> = ({ searchTerm, set
                 setSearchParams({});
                 setSearchTerm('');
               }}
-              className="text-syrian-green hover:bg-syrian-green/10"
+              className="text-syrian-green hover:bg-syrian-green hover:text-white transition-colors"
             >
               ← Back to Home
             </Button>
