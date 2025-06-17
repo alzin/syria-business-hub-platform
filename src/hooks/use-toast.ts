@@ -6,7 +6,9 @@ import type {
 } from "@/components/ui/toast"
 
 const TOAST_LIMIT = 1
-const TOAST_REMOVE_DELAY = 1000000
+// Remove dismissed toasts from the DOM after a short delay.
+// The previous value left dismissed toasts hanging around for over 16 minutes.
+const TOAST_REMOVE_DELAY = 1000
 
 type ToasterToast = ToastProps & {
   id: string
