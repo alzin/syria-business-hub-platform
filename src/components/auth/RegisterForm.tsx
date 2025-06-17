@@ -1,0 +1,134 @@
+
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
+import { ExpertiseType } from '@/types';
+import DOMPurify from 'dompurify';
+import RegisterFormFields from './RegisterFormFields';
+
+interface RegisterFormProps {
+  onSuccess: () => void;
+  onSwitchToLogin: () => void;
+}
+
+const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin }) => {
+  const { t } = useTranslation();
+  const { register } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [expertise, setExpertise] = useState<ExpertiseType>('founder');
+  const [location, setLocation] = useState<string>('Syria');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !password || !name || !location) {
+      toast({
+        title: "Missing information",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      toast({
+        title: "Password too short",
+        description: "Password must be at least 6 characters long.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const sanitizedName = DOMPurify.sanitize(name);
+      if (!sanitizedName) {
+        toast({
+          title: "Invalid name",
+          description: "Please enter a valid name.",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      await register(email, password, sanitizedName, expertise, location);
+      
+      toast({
+        title: "Welcome!",
+        description: "Your account has been created successfully. Please check your email to confirm your account.",
+      });
+      
+      onSuccess();
+      resetForm();
+    } catch (error: any) {
+      console.error('Registration failed:', error);
+      
+      let errorMessage = "Please try again.";
+      
+      if (error.message?.includes('User already registered')) {
+        errorMessage = "An account with this email already exists. Please try logging in instead.";
+      } else if (error.message?.includes('Password should be at least 6 characters')) {
+        errorMessage = "Password must be at least 6 characters long.";
+      } else if (error.message?.includes('Invalid email')) {
+        errorMessage = "Please enter a valid email address.";
+      }
+      
+      toast({
+        title: "Registration failed",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const resetForm = () => {
+    setEmail('');
+    setPassword('');
+    setName('');
+    setExpertise('founder');
+    setLocation('Syria');
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <RegisterFormFields
+        name={name}
+        setName={setName}
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        expertise={expertise}
+        setExpertise={setExpertise}
+        location={location}
+        setLocation={setLocation}
+        isLoading={isLoading}
+      />
+      
+      <Button type="submit" className="w-full" disabled={isLoading}>
+        {isLoading ? t('loading') : t('register')}
+      </Button>
+
+      <div className="text-center">
+        <Button 
+          variant="link" 
+          onClick={onSwitchToLogin}
+          disabled={isLoading}
+        >
+          Already have an account? {t('login')}
+        </Button>
+      </div>
+    </form>
+  );
+};
+
+export default RegisterForm;
