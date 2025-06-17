@@ -13,32 +13,44 @@ const Logo = ({ className = "w-8 h-8" }: { className?: string }) => {
     >
       <title id="syrigoLogoTitle">SyriGo Logo</title>
       
-      {/* Background Circle */}
-      <circle cx="24" cy="24" r="22" fill="url(#gradient)" stroke="#1E40AF" strokeWidth="2"/>
-      
-      {/* Letter S */}
-      <path
-        d="M14 18c0-2 1.5-3.5 3.5-3.5h3c2 0 3.5 1.5 3.5 3.5s-1.5 3.5-3.5 3.5h-2c-2 0-3.5 1.5-3.5 3.5s1.5 3.5 3.5 3.5h3c2 0 3.5-1.5 3.5-3.5"
-        stroke="white"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        fill="none"
+      {/* Modern circular background with subtle gradient */}
+      <circle 
+        cx="24" 
+        cy="24" 
+        r="20" 
+        fill="url(#modernGradient)" 
+        className="drop-shadow-sm"
       />
       
-      {/* Letter G */}
-      <path
-        d="M30 18c0-2 1.5-3.5 3.5-3.5h3c2 0 3.5 1.5 3.5 3.5v8c0 2-1.5 3.5-3.5 3.5h-3c-2 0-3.5-1.5-3.5-3.5v-2h4"
-        stroke="white"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        fill="none"
-      />
+      {/* Stylized "SG" monogram */}
+      <g transform="translate(24, 24)">
+        {/* Letter S - modern curved design */}
+        <path
+          d="M-8,-6 C-8,-8 -6,-10 -4,-10 L-1,-10 C1,-10 3,-8 3,-6 C3,-4 1,-2 -1,-2 L-4,-2 C-6,-2 -8,0 -8,2 C-8,4 -6,6 -4,6 L-1,6 C1,6 3,4 3,2"
+          stroke="white"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          fill="none"
+          className="drop-shadow-sm"
+        />
+        
+        {/* Letter G - clean geometric design */}
+        <path
+          d="M5,-6 C5,-8 7,-10 9,-10 L12,-10 C14,-10 16,-8 16,-6 L16,2 C16,4 14,6 12,6 L9,6 C7,6 5,4 5,2 L5,-1 L12,-1"
+          stroke="white"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          fill="none"
+          className="drop-shadow-sm"
+        />
+      </g>
       
-      {/* Gradient Definition */}
+      {/* Modern gradient definition */}
       <defs>
-        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#3B82F6" />
-          <stop offset="100%" stopColor="#1E40AF" />
+        <linearGradient id="modernGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#4F46E5" />
+          <stop offset="50%" stopColor="#7C3AED" />
+          <stop offset="100%" stopColor="#2563EB" />
         </linearGradient>
       </defs>
     </svg>
