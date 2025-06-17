@@ -11,8 +11,8 @@ interface ProfileFormData {
   name: string;
   expertise: ExpertiseType;
   location: string;
-  phoneNumber?: string;
-  phoneCountryCode?: string;
+  phoneNumber: string;
+  phoneCountryCode: string;
 }
 
 interface ProfileFormProps {
@@ -66,9 +66,9 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange })
       <div>
         <div className="text-sm text-gray-600 mb-2">Phone Number</div>
         <PhoneInput
-          value={formData.phoneNumber || ''}
+          value={formData.phoneNumber}
           onValueChange={(value: string) => onFormDataChange({ ...formData, phoneNumber: value })}
-          countryCode={formData.phoneCountryCode || '+1'}
+          countryCode={formData.phoneCountryCode}
           onCountryCodeChange={(code: string) => onFormDataChange({ ...formData, phoneCountryCode: code })}
           selectedCountry={formData.location}
           placeholder="Enter your phone number"

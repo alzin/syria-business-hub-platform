@@ -14,6 +14,8 @@ interface ProfileFormData {
   name: string;
   expertise: ExpertiseType;
   location: string;
+  phoneNumber: string;
+  phoneCountryCode: string;
 }
 
 interface ProfileContentProps {
