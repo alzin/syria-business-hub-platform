@@ -10,6 +10,7 @@ export interface User {
   joinedAt: Date;
   phoneNumber?: string;
   phoneCountryCode?: string;
+  phoneVerified?: boolean;
 }
 
 export type ExpertiseType = 'legal' | 'investor' | 'founder' | 'developer' | 'government';

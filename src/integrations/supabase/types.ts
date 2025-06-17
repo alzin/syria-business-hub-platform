@@ -251,7 +251,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_verification_code: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
+      request_phone_verification: {
+        Args: { user_id: string; phone_number: string }
+        Returns: Json
+      }
+      verify_phone_code: {
+        Args: { user_id: string; code: string }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
