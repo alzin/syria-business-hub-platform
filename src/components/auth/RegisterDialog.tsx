@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
@@ -5,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { CountrySelector } from '@/components/ui/country-selector';
 import { toast } from '@/components/ui/use-toast';
 import { ExpertiseType } from '@/types';
 import DOMPurify from 'dompurify';
@@ -26,13 +28,13 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [expertise, setExpertise] = useState<ExpertiseType>('founder');
-  const [location, setLocation] = useState<'syria' | 'international'>('international');
+  const [location, setLocation] = useState<string>('Syria'); // Default to Syria
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !password || !name) {
+    if (!email || !password || !name || !location) {
       toast({
         title: "Missing information",
         description: "Please fill in all required fields.",
@@ -77,7 +79,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
       setPassword('');
       setName('');
       setExpertise('founder');
-      setLocation('international');
+      setLocation('Syria');
     } catch (error: any) {
       console.error('Registration failed:', error);
       
@@ -107,7 +109,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
       setPassword('');
       setName('');
       setExpertise('founder');
-      setLocation('international');
+      setLocation('Syria');
     }
     onOpenChange(open);
   };
@@ -177,19 +179,16 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
           </div>
 
           <div>
-            <Select 
-              value={location} 
-              onValueChange={(value: 'syria' | 'international') => setLocation(value)}
+            <div className="text-sm text-gray-600 mb-2">
+              Country you currently live in
+            </div>
+            <CountrySelector
+              value={location}
+              onValueChange={setLocation}
+              placeholder="Select your country..."
               disabled={isLoading}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select your location" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="syria">Syria</SelectItem>
-                <SelectItem value="international">International</SelectItem>
-              </SelectContent>
-            </Select>
+              className="w-full"
+            />
           </div>
           
           <Button type="submit" className="w-full" disabled={isLoading}>

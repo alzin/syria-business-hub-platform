@@ -12,7 +12,8 @@ interface PostCardSyriaLocationBadgeProps {
 const PostCardSyriaLocationBadge: React.FC<PostCardSyriaLocationBadgeProps> = ({ author }) => {
   const { t } = useTranslation();
 
-  if (author.location !== 'syria') {
+  // Check if the user's location is Syria (case-insensitive)
+  if (author.location.toLowerCase() !== 'syria') {
     return null;
   }
 

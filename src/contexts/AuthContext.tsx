@@ -9,7 +9,7 @@ interface AuthContextType {
   geolocation: GeolocationData | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, name: string, expertise: ExpertiseType, location: 'syria' | 'international') => Promise<void>;
+  register: (email: string, password: string, name: string, expertise: ExpertiseType, location: string) => Promise<void>; // Changed to string
   logout: () => void;
   signOut: () => void; // Add signOut as an alias
 }
@@ -98,7 +98,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           email: profile.email,
           name: profile.name,
           expertise: profile.expertise as ExpertiseType,
-          location: profile.location as 'syria' | 'international',
+          location: profile.location,
           accessLevel: profile.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
           avatar: profile.avatar,
           verified: profile.verified,
@@ -153,7 +153,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     console.log('Login successful');
   };
 
-  const register = async (email: string, password: string, name: string, expertise: ExpertiseType, location: 'syria' | 'international') => {
+  const register = async (email: string, password: string, name: string, expertise: ExpertiseType, location: string) => {
     console.log('Attempting registration for:', email);
     const { error } = await supabase.auth.signUp({
       email,

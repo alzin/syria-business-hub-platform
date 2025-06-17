@@ -29,7 +29,7 @@ const Profile = () => {
   const [formData, setFormData] = useState({
     name: user?.name || '',
     expertise: user?.expertise || 'founder' as ExpertiseType,
-    location: user?.location || 'international' as 'syria' | 'international',
+    location: user?.location || 'Syria', // Changed default from 'international' to 'Syria'
   });
 
   if (!user) {

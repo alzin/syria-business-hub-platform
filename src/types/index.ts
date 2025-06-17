@@ -1,9 +1,10 @@
+
 export interface User {
   id: string;
   email: string;
   name: string;
   expertise: ExpertiseType;
-  location: 'syria' | 'international';
+  location: string; // Changed from 'syria' | 'international' to string
   accessLevel: 'visitor' | 'registered' | 'premium' | 'verified';
   avatar?: string;
   verified: boolean;
