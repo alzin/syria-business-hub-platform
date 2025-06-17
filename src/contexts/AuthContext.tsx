@@ -1,7 +1,11 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User as SupabaseUser, Session } from '@supabase/supabase-js';
+import { Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { User, GeolocationData, ExpertiseType } from '@/types';
+import { useGeolocation } from '@/hooks/useGeolocation';
+import { useUserProfile } from '@/hooks/useUserProfile';
+import { loginUser, registerUser, logoutUser } from '@/utils/authUtils';
 
 interface AuthContextType {
   user: User | null;
@@ -9,7 +13,7 @@ interface AuthContextType {
   geolocation: GeolocationData | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, name: string, expertise: ExpertiseType, location: string) => Promise<void>; // Changed to string
+  register: (email: string, password: string, name: string, expertise: ExpertiseType, location: string) => Promise<void>;
   logout: () => void;
   signOut: () => void; // Add signOut as an alias
 }
@@ -25,10 +29,11 @@ export const useAuth = () => {
 };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
-  const [geolocation, setGeolocation] = useState<GeolocationData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  
+  const geolocation = useGeolocation();
+  const { user, fetchUserProfile, clearUser } = useUserProfile();
 
   useEffect(() => {
     let isMounted = true;
@@ -51,7 +56,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
         }, 0);
       } else {
-        setUser(null);
+        clearUser();
       }
       
       setIsLoading(false);
@@ -68,137 +73,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsLoading(false);
     });
 
-    // Detect geolocation only once on mount
-    detectGeolocation();
-
     return () => {
       isMounted = false;
       subscription.unsubscribe();
     };
-  }, []);
+  }, [fetchUserProfile, clearUser]);
 
-  const fetchUserProfile = async (supabaseUser: SupabaseUser) => {
-    try {
-      console.log('Fetching profile for user:', supabaseUser.id);
-      
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', supabaseUser.id)
-        .maybeSingle();
-
-      if (error) {
-        console.error('Error fetching profile:', error);
-        return;
-      }
-
-      if (profile) {
-        const userProfile: User = {
-          id: profile.id,
-          email: profile.email,
-          name: profile.name,
-          expertise: profile.expertise as ExpertiseType,
-          location: profile.location,
-          accessLevel: profile.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
-          avatar: profile.avatar,
-          verified: profile.verified,
-          joinedAt: new Date(profile.created_at),
-        };
-        setUser(userProfile);
-        console.log('Profile loaded successfully:', userProfile.name);
-      } else {
-        console.warn('No profile found for user:', supabaseUser.id);
-      }
-    } catch (error) {
-      console.error('Error in fetchUserProfile:', error);
-    }
+  const handleLogin = async (email: string, password: string) => {
+    await loginUser(email, password);
   };
 
-  const detectGeolocation = async () => {
-    // Only detect geolocation once and cache the result
-    if (geolocation) return;
-
-    try {
-      console.log('Detecting geolocation...');
-      const response = await fetch('https://ipapi.co/json/');
-      const data = await response.json();
-      const geoData: GeolocationData = {
-        country: data.country_name,
-        countryCode: data.country_code,
-        inSyria: data.country_code === 'SY'
-      };
-      setGeolocation(geoData);
-      console.log('Geolocation detected:', geoData);
-    } catch (error) {
-      console.error('Failed to detect geolocation:', error);
-      setGeolocation({
-        country: 'Unknown',
-        countryCode: 'UN',
-        inSyria: false
-      });
-    }
+  const handleRegister = async (
+    email: string, 
+    password: string, 
+    name: string, 
+    expertise: ExpertiseType, 
+    location: string
+  ) => {
+    await registerUser(email, password, name, expertise, location);
   };
 
-  const login = async (email: string, password: string) => {
-    console.log('Attempting login for:', email);
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      console.error('Login error:', error);
-      throw error;
-    }
-    console.log('Login successful');
-  };
-
-  const register = async (email: string, password: string, name: string, expertise: ExpertiseType, location: string) => {
-    console.log('Attempting registration for:', email);
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/`,
-        data: {
-          name,
-          expertise,
-          location,
-        },
-      },
-    });
-
-    if (error) {
-      console.error('Registration error:', error);
-      throw error;
-    }
-    console.log('Registration successful');
-  };
-
-  const logout = async () => {
-    console.log('Logging out...');
+  const handleLogout = async () => {
+    // Clear local state first to provide immediate feedback
+    clearUser();
+    setSession(null);
     
-    try {
-      // Clear local state first to provide immediate feedback
-      setUser(null);
-      setSession(null);
-      
-      // Then attempt to sign out from Supabase
-      // If there's no session, this might fail, but that's okay
-      const { error } = await supabase.auth.signOut();
-      
-      if (error) {
-        console.warn('Logout warning (but continuing):', error.message);
-        // Don't throw the error since we've already cleared local state
-        // This handles cases where the session is already expired or missing
-      } else {
-        console.log('Logout successful');
-      }
-    } catch (error) {
-      console.warn('Logout error (but continuing):', error);
-      // Even if logout fails on the server side, we've cleared local state
-      // so the user appears logged out in the UI
-    }
+    // Then attempt server logout
+    await logoutUser();
   };
 
   return (
@@ -207,10 +108,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       session,
       geolocation,
       isLoading,
-      login,
-      register,
-      logout,
-      signOut: logout, // Add signOut as an alias
+      login: handleLogin,
+      register: handleRegister,
+      logout: handleLogout,
+      signOut: handleLogout, // Add signOut as an alias
     }}>
       {children}
     </AuthContext.Provider>
