@@ -2,7 +2,7 @@
 import { MessageSquare, Lightbulb, Building2, Newspaper, Users } from 'lucide-react';
 import { PostPreview } from './types';
 
-export const dummyPosts: PostPreview[] = [
+export const englishPosts: PostPreview[] = [
   {
     id: 1,
     type: 'question',
@@ -44,47 +44,53 @@ export const dummyPosts: PostPreview[] = [
     bgColor: 'bg-purple-50',
     textColor: 'text-purple-700',
     avatarSeed: 'raj-patel'
-  },
+  }
+];
+
+export const arabicPosts: PostPreview[] = [
   {
     id: 4,
     type: 'news',
-    title: 'New Trade Agreements Boost Syrian Export Potential',
-    content: 'Recent developments in international trade relations opening new markets for Syrian products...',
-    author: 'Maria González',
-    expertise: 'Economic Analyst',
+    title: 'اتفاقيات تجارية جديدة تعزز إمكانات التصدير السورية',
+    content: 'التطورات الأخيرة في العلاقات التجارية الدولية تفتح أسواقاً جديدة للمنتجات السورية...',
+    author: 'مريم الأحمد',
+    expertise: 'محللة اقتصادية',
     votes: 67,
     answers: 23,
     icon: Newspaper,
     bgColor: 'bg-orange-50',
     textColor: 'text-orange-700',
-    avatarSeed: 'maria-gonzalez'
+    avatarSeed: 'mariam-ahmad'
   },
   {
     id: 5,
     type: 'question',
-    title: 'How to establish a NGO in Syria?',
-    content: 'Need guidance on legal requirements and registration process for non-profit organizations...',
-    author: 'James Chen',
-    expertise: 'Civil Society Activist',
+    title: 'كيفية تأسيس منظمة غير حكومية في سوريا؟',
+    content: 'أحتاج إرشادات حول المتطلبات القانونية وعملية التسجيل للمنظمات غير الربحية...',
+    author: 'عمر السالم',
+    expertise: 'ناشط في المجتمع المدني',
     votes: 19,
     answers: 6,
     icon: Users,
     bgColor: 'bg-indigo-50',
     textColor: 'text-indigo-700',
-    avatarSeed: 'james-chen'
+    avatarSeed: 'omar-salem'
   },
   {
     id: 6,
     type: 'article',
-    title: 'Digital Marketing Strategies for Syrian Businesses',
-    content: 'Practical guide to building online presence and reaching customers in the digital age...',
-    author: 'Elena Volkov',
-    expertise: 'Marketing Specialist',
+    title: 'استراتيجيات التسويق الرقمي للشركات السورية',
+    content: 'دليل عملي لبناء الحضور الرقمي والوصول إلى العملاء في العصر الرقمي...',
+    author: 'لينا الخوري',
+    expertise: 'أخصائية تسويق',
     votes: 31,
     answers: 9,
     icon: Lightbulb,
     bgColor: 'bg-cyan-50',
     textColor: 'text-cyan-700',
-    avatarSeed: 'elena-volkov'
+    avatarSeed: 'lina-khoury'
   }
 ];
+
+// Legacy export for backward compatibility
+export const dummyPosts = englishPosts;
