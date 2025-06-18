@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useRealtimeNotifications } from "@/hooks/useRealtimeNotifications";
-import { useAuth } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import PostDetail from "./pages/PostDetail";
 import UserProfile from "./pages/UserProfile";
@@ -18,9 +17,7 @@ import "./i18n";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  const { user } = useAuth();
-  
-  // Only set up realtime notifications if user is authenticated
+  // Only set up realtime notifications - removed useAuth call that was causing the error
   useRealtimeNotifications();
   
   return (
