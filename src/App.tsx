@@ -17,7 +17,7 @@ import "./i18n";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  // Only set up realtime notifications - removed useAuth call that was causing the error
+  // Set up realtime notifications - now safely within AuthProvider context
   useRealtimeNotifications();
   
   return (
