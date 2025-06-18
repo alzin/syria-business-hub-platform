@@ -200,12 +200,14 @@ export type Database = {
           email: string
           expertise: string
           id: string
+          industry_sector: string | null
           location: string
           name: string
           phone_country_code: string | null
           phone_number: string | null
           phone_verification_code: string | null
           phone_verified: boolean | null
+          specialization: string | null
           updated_at: string
           verification_expires_at: string | null
           verified: boolean
@@ -217,12 +219,14 @@ export type Database = {
           email: string
           expertise: string
           id: string
+          industry_sector?: string | null
           location: string
           name: string
           phone_country_code?: string | null
           phone_number?: string | null
           phone_verification_code?: string | null
           phone_verified?: boolean | null
+          specialization?: string | null
           updated_at?: string
           verification_expires_at?: string | null
           verified?: boolean
@@ -234,12 +238,14 @@ export type Database = {
           email?: string
           expertise?: string
           id?: string
+          industry_sector?: string | null
           location?: string
           name?: string
           phone_country_code?: string | null
           phone_number?: string | null
           phone_verification_code?: string | null
           phone_verified?: boolean | null
+          specialization?: string | null
           updated_at?: string
           verification_expires_at?: string | null
           verified?: boolean

@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { CountrySelector } from '@/components/ui/country-selector';
 import { PhoneInput } from '@/components/ui/phone-input';
 import { ExpertiseType } from '@/types';
+import { industrySectors, specializations } from '@/data/industrySectors';
 
 interface RegisterFormFieldsProps {
   name: string;
@@ -22,6 +23,10 @@ interface RegisterFormFieldsProps {
   setPhoneNumber: (phoneNumber: string) => void;
   phoneCountryCode: string;
   setPhoneCountryCode: (code: string) => void;
+  specialization: string;
+  setSpecialization: (specialization: string) => void;
+  industrySector: string;
+  setIndustrySector: (sector: string) => void;
   isLoading: boolean;
 }
 
@@ -40,6 +45,10 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
   setPhoneNumber,
   phoneCountryCode,
   setPhoneCountryCode,
+  specialization,
+  setSpecialization,
+  industrySector,
+  setIndustrySector,
   isLoading,
 }) => {
   const { t } = useTranslation();
@@ -93,11 +102,67 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
             <SelectValue placeholder="Select your expertise" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="founder">Startup Founder</SelectItem>
             <SelectItem value="legal">Legal Expert</SelectItem>
-            <SelectItem value="investor">Investor</SelectItem>
-            <SelectItem value="founder">Founder</SelectItem>
             <SelectItem value="developer">Developer</SelectItem>
-            <SelectItem value="government">Government</SelectItem>
+            <SelectItem value="investor">Investor</SelectItem>
+            <SelectItem value="government">Government Representative</SelectItem>
+            <SelectItem value="marketing">Marketing Professional</SelectItem>
+            <SelectItem value="consultant">Consultant</SelectItem>
+            <SelectItem value="researcher">Researcher</SelectItem>
+            <SelectItem value="academic">Academic</SelectItem>
+            <SelectItem value="healthcare">Healthcare Professional</SelectItem>
+            <SelectItem value="engineer">Engineer</SelectItem>
+            <SelectItem value="designer">Designer</SelectItem>
+            <SelectItem value="sales">Sales Professional</SelectItem>
+            <SelectItem value="operations">Operations Manager</SelectItem>
+            <SelectItem value="finance">Finance Professional</SelectItem>
+            <SelectItem value="hr">HR Professional</SelectItem>
+            <SelectItem value="student">Student</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div>
+        <div className="text-sm text-gray-600 mb-2">
+          Specialization / Major
+        </div>
+        <Select 
+          value={specialization} 
+          onValueChange={setSpecialization}
+          disabled={isLoading}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select your specialization or major..." />
+          </SelectTrigger>
+          <SelectContent>
+            {specializations.map((spec) => (
+              <SelectItem key={spec} value={spec}>
+                {spec}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div>
+        <div className="text-sm text-gray-600 mb-2">
+          Industry Sector
+        </div>
+        <Select 
+          value={industrySector} 
+          onValueChange={setIndustrySector}
+          disabled={isLoading}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select your industry sector..." />
+          </SelectTrigger>
+          <SelectContent>
+            {industrySectors.map((sector) => (
+              <SelectItem key={sector} value={sector}>
+                {sector}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>

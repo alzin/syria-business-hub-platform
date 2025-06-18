@@ -26,6 +26,8 @@ const Profile = () => {
     location: user?.location || 'Syria',
     phoneNumber: user?.phoneNumber || '',
     phoneCountryCode: user?.phoneCountryCode || '+963',
+    specialization: user?.specialization || '',
+    industrySector: user?.industrySector || '',
   });
 
   if (!user) {
@@ -43,6 +45,8 @@ const Profile = () => {
           location: formData.location,
           phone_number: formData.phoneNumber,
           phone_country_code: formData.phoneCountryCode,
+          specialization: formData.specialization,
+          industry_sector: formData.industrySector,
         })
         .eq('id', user.id);
 
@@ -74,6 +78,8 @@ const Profile = () => {
       location: user.location,
       phoneNumber: user.phoneNumber || '',
       phoneCountryCode: user.phoneCountryCode || '+963',
+      specialization: user.specialization || '',
+      industrySector: user.industrySector || '',
     });
     setIsEditing(false);
   };
