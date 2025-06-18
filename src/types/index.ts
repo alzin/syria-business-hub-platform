@@ -3,35 +3,16 @@ export interface User {
   email: string;
   name: string;
   expertise: ExpertiseType;
-  location: string;
+  location: string; // Changed from 'syria' | 'international' to string
   accessLevel: 'visitor' | 'registered' | 'premium' | 'verified';
   avatar?: string;
   verified: boolean;
   joinedAt: Date;
   phoneNumber?: string;
   phoneCountryCode?: string;
-  specialization?: string;
-  industrySector?: string;
 }
 
-export type ExpertiseType = 
-  | 'founder' 
-  | 'legal' 
-  | 'developer' 
-  | 'investor' 
-  | 'government'
-  | 'marketing'
-  | 'consultant'
-  | 'researcher'
-  | 'academic'
-  | 'healthcare'
-  | 'engineer'
-  | 'designer'
-  | 'sales'
-  | 'operations'
-  | 'finance'
-  | 'hr'
-  | 'student';
+export type ExpertiseType = 'legal' | 'investor' | 'founder' | 'developer' | 'government';
 
 export interface Post {
   id: string;

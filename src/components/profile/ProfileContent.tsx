@@ -16,8 +16,6 @@ interface ProfileFormData {
   location: string;
   phoneNumber: string;
   phoneCountryCode: string;
-  specialization: string;
-  industrySector: string;
 }
 
 interface ProfileContentProps {

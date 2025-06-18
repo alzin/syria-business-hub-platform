@@ -6,7 +6,6 @@ import { CountrySelector } from '@/components/ui/country-selector';
 import { PhoneInput } from '@/components/ui/phone-input';
 import { ExpertiseType } from '@/types';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { industrySectors, specializations } from '@/data/industrySectors';
 
 interface ProfileFormData {
   name: string;
@@ -14,8 +13,6 @@ interface ProfileFormData {
   location: string;
   phoneNumber: string;
   phoneCountryCode: string;
-  specialization: string;
-  industrySector: string;
 }
 
 interface ProfileFormProps {
@@ -46,23 +43,11 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange })
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="founder">Startup Founder</SelectItem>
               <SelectItem value="legal">Legal Expert</SelectItem>
-              <SelectItem value="developer">Developer</SelectItem>
               <SelectItem value="investor">Investor</SelectItem>
+              <SelectItem value="founder">Startup Founder</SelectItem>
+              <SelectItem value="developer">Developer</SelectItem>
               <SelectItem value="government">Government Rep</SelectItem>
-              <SelectItem value="marketing">Marketing Professional</SelectItem>
-              <SelectItem value="consultant">Consultant</SelectItem>
-              <SelectItem value="researcher">Researcher</SelectItem>
-              <SelectItem value="academic">Academic</SelectItem>
-              <SelectItem value="healthcare">Healthcare Professional</SelectItem>
-              <SelectItem value="engineer">Engineer</SelectItem>
-              <SelectItem value="designer">Designer</SelectItem>
-              <SelectItem value="sales">Sales Professional</SelectItem>
-              <SelectItem value="operations">Operations Manager</SelectItem>
-              <SelectItem value="finance">Finance Professional</SelectItem>
-              <SelectItem value="hr">HR Professional</SelectItem>
-              <SelectItem value="student">Student</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -75,46 +60,6 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange })
             placeholder="Select your country..."
             className="w-full"
           />
-        </div>
-      </div>
-
-      <div className={`flex ${isMobile ? 'flex-col space-y-3' : 'items-start space-x-4'}`}>
-        <div className={isMobile ? 'w-full' : 'flex-1'}>
-          <div className="text-sm text-gray-600 mb-2">Specialization / Major</div>
-          <Select 
-            value={formData.specialization} 
-            onValueChange={(value: string) => onFormDataChange({ ...formData, specialization: value })}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select specialization..." />
-            </SelectTrigger>
-            <SelectContent>
-              {specializations.map((spec) => (
-                <SelectItem key={spec} value={spec}>
-                  {spec}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        
-        <div className={isMobile ? 'w-full' : 'flex-1'}>
-          <div className="text-sm text-gray-600 mb-2">Industry Sector</div>
-          <Select 
-            value={formData.industrySector} 
-            onValueChange={(value: string) => onFormDataChange({ ...formData, industrySector: value })}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select industry..." />
-            </SelectTrigger>
-            <SelectContent>
-              {industrySectors.map((sector) => (
-                <SelectItem key={sector} value={sector}>
-                  {sector}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
         </div>
       </div>
 

@@ -24,8 +24,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
   const [location, setLocation] = useState<string>('Syria');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [phoneCountryCode, setPhoneCountryCode] = useState<string>('+963');
-  const [specialization, setSpecialization] = useState<string>('');
-  const [industrySector, setIndustrySector] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
 
   // Update phone country code when location changes
@@ -71,17 +69,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
         return;
       }
 
-      await register(
-        email, 
-        password, 
-        sanitizedName, 
-        expertise, 
-        location, 
-        phoneNumber, 
-        phoneCountryCode,
-        specialization,
-        industrySector
-      );
+      await register(email, password, sanitizedName, expertise, location, phoneNumber, phoneCountryCode);
       
       toast({
         title: "Welcome!",
@@ -121,8 +109,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
     setLocation('Syria');
     setPhoneNumber('');
     setPhoneCountryCode('+963');
-    setSpecialization('');
-    setIndustrySector('');
   };
 
   return (
@@ -142,10 +128,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
         setPhoneNumber={setPhoneNumber}
         phoneCountryCode={phoneCountryCode}
         setPhoneCountryCode={setPhoneCountryCode}
-        specialization={specialization}
-        setSpecialization={setSpecialization}
-        industrySector={industrySector}
-        setIndustrySector={setIndustrySector}
         isLoading={isLoading}
       />
       
