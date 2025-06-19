@@ -1,50 +1,31 @@
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
 
-const isDevelopment = import.meta.env.DEV;
-
 export const useRealtimeNotifications = () => {
-  const { user } = useAuth();
+  const { user, session } = useAuth();
   const queryClient = useQueryClient();
   const channelRef = useRef<any>(null);
   const retryTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [isConnecting, setIsConnecting] = useState(false);
 
   useEffect(() => {
-    if (!user?.id) {
-      if (isDevelopment) {
-        console.log('No user ID, skipping realtime setup');
-      }
-      return;
-    }
-
-    // Prevent multiple simultaneous connection attempts
-    if (isConnecting) {
-      if (isDevelopment) {
-        console.log('Already connecting, skipping duplicate setup');
-      }
+    if (!user || !session) {
+      console.log('No user or session, skipping realtime setup');
       return;
     }
 
     const setupRealtimeChannel = () => {
       // Clean up any existing channel first
       if (channelRef.current) {
-        if (isDevelopment) {
-          console.log('Cleaning up existing realtime channel');
-        }
+        console.log('Cleaning up existing realtime channel');
         supabase.removeChannel(channelRef.current);
         channelRef.current = null;
       }
 
-      setIsConnecting(true);
-
-      if (isDevelopment) {
-        console.log('Setting up realtime notifications for user:', user.id);
-      }
+      console.log('Setting up realtime notifications for user:', user.id);
 
       const channel = supabase
         .channel(`notifications-${user.id}`, {
@@ -63,9 +44,7 @@ export const useRealtimeNotifications = () => {
             filter: `user_id=eq.${user.id}`,
           },
           (payload) => {
-            if (isDevelopment) {
-              console.log('New notification received via realtime:', payload);
-            }
+            console.log('New notification received via realtime:', payload);
             
             // Invalidate notifications query to refresh the list
             queryClient.invalidateQueries({ queryKey: ['notifications', user.id] });
@@ -82,9 +61,7 @@ export const useRealtimeNotifications = () => {
           }
         )
         .subscribe((status, err) => {
-          if (isDevelopment) {
-            console.log('Realtime subscription status:', status);
-          }
+          console.log('Realtime subscription status:', status);
           
           if (err) {
             console.error('Realtime subscription error:', err);
@@ -92,10 +69,7 @@ export const useRealtimeNotifications = () => {
 
           switch (status) {
             case 'SUBSCRIBED':
-              if (isDevelopment) {
-                console.log('Successfully subscribed to realtime notifications');
-              }
-              setIsConnecting(false);
+              console.log('Successfully subscribed to realtime notifications');
               // Clear any retry timeouts since we're now connected
               if (retryTimeoutRef.current) {
                 clearTimeout(retryTimeoutRef.current);
@@ -105,27 +79,16 @@ export const useRealtimeNotifications = () => {
               
             case 'CHANNEL_ERROR':
             case 'TIMED_OUT':
-              if (isDevelopment) {
-                console.warn(`Realtime connection ${status.toLowerCase()}, will retry in 10 seconds`);
-              }
-              setIsConnecting(false);
-              // Schedule a retry after a longer delay to be less aggressive
+            case 'CLOSED':
+              console.warn(`Realtime connection ${status.toLowerCase()}, will retry in 5 seconds`);
+              // Schedule a retry after a delay
               if (retryTimeoutRef.current) {
                 clearTimeout(retryTimeoutRef.current);
               }
               retryTimeoutRef.current = setTimeout(() => {
-                if (isDevelopment) {
-                  console.log('Retrying realtime connection...');
-                }
+                console.log('Retrying realtime connection...');
                 setupRealtimeChannel();
-              }, 10000); // Increased from 5 to 10 seconds
-              break;
-              
-            case 'CLOSED':
-              if (isDevelopment) {
-                console.log('Realtime connection closed');
-              }
-              setIsConnecting(false);
+              }, 5000);
               break;
           }
         });
@@ -136,11 +99,7 @@ export const useRealtimeNotifications = () => {
     setupRealtimeChannel();
 
     return () => {
-      if (isDevelopment) {
-        console.log('Cleaning up realtime notifications');
-      }
-      
-      setIsConnecting(false);
+      console.log('Cleaning up realtime notifications');
       
       // Clear any pending retry timeouts
       if (retryTimeoutRef.current) {
@@ -154,5 +113,5 @@ export const useRealtimeNotifications = () => {
         channelRef.current = null;
       }
     };
-  }, [user?.id]); // Only depend on user.id, not the entire user object, session, or queryClient
+  }, [user?.id, session, queryClient]); // Depend on user.id instead of user object to reduce re-renders
 };

@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { User, GeolocationData, ExpertiseType } from '@/types';
@@ -35,11 +35,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const geolocation = useGeolocation();
   const { user, fetchUserProfile, clearUser } = useUserProfile();
 
-  // Memoize the profile fetching to prevent unnecessary calls
-  const memoizedFetchUserProfile = useCallback((authUser: any) => {
-    fetchUserProfile(authUser);
-  }, [fetchUserProfile]);
-
   useEffect(() => {
     let isMounted = true;
 
@@ -51,18 +46,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (!isMounted) return;
 
-      // Only update session if it's actually different
-      setSession(prevSession => {
-        if (!prevSession && !session) return prevSession;
-        if (prevSession?.access_token === session?.access_token) return prevSession;
-        return session;
-      });
+      setSession(session);
       
       if (session?.user) {
         // Defer profile fetching to avoid blocking the auth state change
         setTimeout(() => {
           if (isMounted) {
-            memoizedFetchUserProfile(session.user);
+            fetchUserProfile(session.user);
           }
         }, 0);
       } else {
@@ -78,7 +68,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       setSession(session);
       if (session?.user) {
-        memoizedFetchUserProfile(session.user);
+        fetchUserProfile(session.user);
       }
       setIsLoading(false);
     });
@@ -87,7 +77,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isMounted = false;
       subscription.unsubscribe();
     };
-  }, [memoizedFetchUserProfile, clearUser]);
+  }, [fetchUserProfile, clearUser]);
 
   const handleLogin = async (email: string, password: string) => {
     await loginUser(email, password);
