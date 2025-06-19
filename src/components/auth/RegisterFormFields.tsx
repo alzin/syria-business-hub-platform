@@ -1,10 +1,12 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CountrySelector } from '@/components/ui/country-selector';
 import { PhoneInput } from '@/components/ui/phone-input';
+import { Button } from '@/components/ui/button';
+import { Eye, EyeOff } from 'lucide-react';
 import { ExpertiseType } from '@/types';
 
 interface RegisterFormFieldsProps {
@@ -43,6 +45,7 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
   isLoading,
 }) => {
   const { t } = useTranslation();
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <>
@@ -70,9 +73,9 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
         />
       </div>
       
-      <div>
+      <div className="relative">
         <Input
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder={t('password')}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -80,7 +83,22 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
           minLength={6}
           disabled={isLoading}
           autoComplete="new-password"
+          className="pr-10"
         />
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+          onClick={() => setShowPassword(!showPassword)}
+          disabled={isLoading}
+        >
+          {showPassword ? (
+            <EyeOff className="h-4 w-4" />
+          ) : (
+            <Eye className="h-4 w-4" />
+          )}
+        </Button>
       </div>
 
       <div>
