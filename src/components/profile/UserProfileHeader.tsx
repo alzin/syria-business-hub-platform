@@ -53,7 +53,7 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
               <ExpertiseBadge expertise={userProfile.expertise} verified={userProfile.verified} />
               <div className={`flex items-center space-x-1 text-sm text-gray-500 ${horizontalSpacing}`}>
                 <MapPin className="w-4 h-4" />
-                <span>{userProfile.location === 'syria' ? 'Syria' : 'International'}</span>
+                <span>{userProfile.location}</span>
               </div>
               <div className={`flex items-center space-x-1 text-sm text-gray-500 ${horizontalSpacing}`}>
                 <Calendar className="w-4 h-4" />

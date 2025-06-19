@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +37,7 @@ const UserProfile = () => {
         email: data.email,
         name: data.name,
         expertise: data.expertise as ExpertiseType,
-        location: data.location as 'syria' | 'international',
+        location: data.location, // Keep the actual string value instead of casting
         accessLevel: data.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
         verified: data.verified,
         avatar: data.avatar,
@@ -78,7 +77,7 @@ const UserProfile = () => {
           email: post.profiles.email,
           name: post.profiles.name,
           expertise: post.profiles.expertise as ExpertiseType,
-          location: post.profiles.location as 'syria' | 'international',
+          location: post.profiles.location, // Keep the actual string value
           accessLevel: post.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
           verified: post.profiles.verified,
           avatar: post.profiles.avatar,
