@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { User as SupabaseUser } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { User, ExpertiseType } from '@/types';
@@ -7,7 +7,7 @@ import { User, ExpertiseType } from '@/types';
 export const useUserProfile = () => {
   const [user, setUser] = useState<User | null>(null);
 
-  const fetchUserProfile = async (supabaseUser: SupabaseUser) => {
+  const fetchUserProfile = useCallback(async (supabaseUser: SupabaseUser) => {
     try {
       console.log('Fetching profile for user:', supabaseUser.id);
       
@@ -44,11 +44,11 @@ export const useUserProfile = () => {
     } catch (error) {
       console.error('Error in fetchUserProfile:', error);
     }
-  };
+  }, [setUser]);
 
-  const clearUser = () => {
+  const clearUser = useCallback(() => {
     setUser(null);
-  };
+  }, [setUser]);
 
   return {
     user,
