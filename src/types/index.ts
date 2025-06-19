@@ -12,7 +12,7 @@ export interface User {
   phoneCountryCode?: string;
 }
 
-export type ExpertiseType = 'legal' | 'investor' | 'founder' | 'developer' | 'government';
+export type ExpertiseType = 'legal' | 'investor' | 'founder' | 'developer' | 'government' | '';
 
 export interface Post {
   id: string;

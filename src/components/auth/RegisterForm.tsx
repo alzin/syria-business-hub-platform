@@ -20,7 +20,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [expertise, setExpertise] = useState<ExpertiseType>('founder');
+  const [expertise, setExpertise] = useState<ExpertiseType>('');
   const [location, setLocation] = useState<string>('Syria');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [phoneCountryCode, setPhoneCountryCode] = useState<string>('+963');
@@ -37,10 +37,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !password || !name || !location) {
+    if (!email || !password || !name || !location || !expertise) {
       toast({
         title: "Missing information",
-        description: "Please fill in all required fields.",
+        description: "Please fill in all required fields including your expertise.",
         variant: "destructive",
       });
       return;
@@ -105,7 +105,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
     setEmail('');
     setPassword('');
     setName('');
-    setExpertise('founder');
+    setExpertise('');
     setLocation('Syria');
     setPhoneNumber('');
     setPhoneCountryCode('+963');
