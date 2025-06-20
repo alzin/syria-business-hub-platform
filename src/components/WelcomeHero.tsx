@@ -26,7 +26,7 @@ const WelcomeHero = () => {
             {t('welcomeTitle', 'Connecting Syrian Voices Worldwide')}
           </h1>
           <p className="text-xl md:text-2xl mb-4 text-white/90 max-w-3xl mx-auto">
-            {t('welcomeSubtitle', 'Connect with Syrian experts, ask questions, share news, and engage in meaningful discussions about Syria')}
+            {t('welcomeSubtitle')}
           </p>
           <p className="text-lg mb-8 text-yellow-200 font-medium">
             {t('platformTagline', 'Where Syrian Expertise Meets Global Community')}
