@@ -7,7 +7,6 @@ const resources = {
   en: {
     translation: {
       // App name and branding
-      appName: 'SyrVest',
       platformTagline: 'Where Syrian Expertise Meets Global Community',
       
       // Footer
@@ -58,12 +57,10 @@ const resources = {
       },
       
       // Navigation
-      home: 'Home',
       posts: 'Posts',
       questions: 'Questions',
       news: 'News',
       profile: 'Profile',
-      settings: 'Settings',
       
       // Authentication
       login: 'Login',
@@ -71,30 +68,20 @@ const resources = {
       logout: 'Logout',
       email: 'Email',
       password: 'Password',
-      confirmPassword: 'Confirm Password',
-      name: 'Full Name',
       fullName: 'Full Name',
-      forgotPassword: 'Forgot Password?',
-      rememberMe: 'Remember me',
       
       // Actions
-      submit: 'Submit',
       cancel: 'Cancel',
       save: 'Save',
       saving: 'Saving...',
       edit: 'Edit',
       'edit profile': 'Edit Profile',
       delete: 'Delete',
-      reply: 'Reply',
-      vote: 'Vote',
-      share: 'Share',
-      report: 'Report',
       'back to posts': 'Back to Posts',
       'goBackHome': 'Go Back Home',
       
       // Posts and Questions
       askQuestion: 'Ask Question',
-      postArticle: 'Post Article',
       title: 'Title',
       content: 'Content',
       category: 'Category',
@@ -110,42 +97,23 @@ const resources = {
       // Search
       search: 'Search',
       searchPlaceholder: 'Search questions and news...',
-      noResults: 'No results found',
       
       // Common UI
       loading: 'Loading...',
       error: 'Error',
-      success: 'Success',
-      warning: 'Warning',
-      info: 'Information',
       
       // Voting
       upvote: 'Upvote',
-      downvote: 'Downvote',
-      votes: 'votes',
       
       // Comments
       comments: 'Comments',
-      addComment: 'Add Comment',
       
       // User Profile
-      expertise: 'Expertise',
-      location: 'Location',
-      joinedDate: 'Joined',
       joined: 'Joined',
-      userPosts: 'Posts',
       answers: 'Answers',
       verified: 'Verified',
       
-      // Filters
-      filterByCategory: 'Filter by Category',
-      allCategories: 'All Categories',
-      recent: 'Recent',
-      popular: 'Popular',
-      unanswered: 'Unanswered',
-      
       // Messages
-      welcomeMessage: 'Welcome to SyrVest',
       noPostsFound: 'No posts found',
       recentPosts: 'Recent Posts',
       userMustBeLoggedIn: 'You must be logged in to view this page',
@@ -227,10 +195,6 @@ const resources = {
       failedToUpdate: 'Failed to update {{item}}',
       
       // Errors
-      invalidEmail: 'Please enter a valid email address',
-      passwordTooShort: 'Password must be at least 8 characters',
-      passwordMismatch: 'Passwords do not match',
-      requiredField: 'This field is required',
       
       // Additional translations
       postedBy: 'by',
@@ -356,30 +320,20 @@ const resources = {
       logout: 'تسجيل الخروج',
       email: 'البريد الإلكتروني',
       password: 'كلمة المرور',
-      confirmPassword: 'تأكيد كلمة المرور',
-      name: 'الاسم الكامل',
       fullName: 'الاسم الكامل',
-      forgotPassword: 'نسيت كلمة المرور؟',
-      rememberMe: 'تذكرني',
       
       // Actions
-      submit: 'إرسال',
       cancel: 'إلغاء',
       save: 'حفظ',
       saving: 'جاري الحفظ...',
       edit: 'تعديل',
       'edit profile': 'تعديل الملف الشخصي',
       delete: 'حذف',
-      reply: 'رد',
-      vote: 'تصويت',
-      share: 'مشاركة',
-      report: 'إبلاغ',
       'back to posts': 'العودة للمنشورات',
       'goBackHome': 'العودة للرئيسية',
       
       // Posts and Questions
       askQuestion: 'اطرح سؤالاً',
-      postArticle: 'انشر مقالاً',
       title: 'العنوان',
       content: 'المحتوى',
       category: 'الفئة',
@@ -395,42 +349,23 @@ const resources = {
       // Search
       search: 'بحث',
       searchPlaceholder: 'ابحث في الأسئلة والأخبار...',
-      noResults: 'لا توجد نتائج',
       
       // Common UI
       loading: 'جاري التحميل...',
       error: 'خطأ',
-      success: 'نجح',
-      warning: 'تحذير',
-      info: 'معلومات',
       
       // Voting
       upvote: 'تصويت إيجابي',
-      downvote: 'تصويت سلبي',
-      votes: 'أصوات',
       
       // Comments
       comments: 'التعليقات',
-      addComment: 'أضف تعليقاً',
       
       // User Profile
-      expertise: 'الخبرة',
-      location: 'الموقع',
-      joinedDate: 'تاريخ الانضمام',
       joined: 'انضم في',
-      userPosts: 'المنشورات',
       answers: 'الإجابات',
       verified: 'موثق',
       
-      // Filters
-      filterByCategory: 'تصفية حسب الفئة',
-      allCategories: 'جميع الفئات',
-      recent: 'الأحدث',
-      popular: 'الأكثر شعبية',
-      unanswered: 'غير مجاب عليها',
-      
       // Messages
-      welcomeMessage: 'مرحباً بك في سير فيست',
       noPostsFound: 'لم يتم العثور على منشورات',
       recentPosts: 'المنشورات الأخيرة',
       userMustBeLoggedIn: 'يجب أن تكون مسجل الدخول لعرض هذه الصفحة',
@@ -512,10 +447,6 @@ const resources = {
       failedToUpdate: 'فشل في تحديث {{item}}',
       
       // Errors
-      invalidEmail: 'يرجى إدخال عنوان بريد إلكتروني صحيح',
-      passwordTooShort: 'يجب أن تكون كلمة المرور 8 أحرف على الأقل',
-      passwordMismatch: 'كلمات المرور غير متطابقة',
-      requiredField: 'هذا الحقل مطلوب',
       
       // Additional translations
       postedBy: 'بواسطة',
