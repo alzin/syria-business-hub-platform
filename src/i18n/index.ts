@@ -121,7 +121,7 @@ const resources = {
       
       // Landing Page
       welcomeTitle: 'Connecting Syrian Voices Worldwide',
-      welcomeSubtitle: 'Connect with Syrian experts, ask questions, share news, and engage in meaningful discussions about Syria',
+      welcomeSubtitle: 'SyrGo — Where Investors Discover Opportunities, and Syrian Professionals Bring Them to Life. Ask. Share. Offer.',
       getStarted: 'Get Started',
       learnMore: 'Learn More',
       
