@@ -23,13 +23,13 @@ const WelcomeHero = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         <div className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
-            {t('welcomeTitle', 'Connecting Syrian Voices Worldwide')}
+            {t('welcomeTitle')}
           </h1>
           <p className="text-xl md:text-2xl mb-4 text-white/90 max-w-3xl mx-auto">
-            {t('welcomeSubtitle', 'Connect with Syrian experts, ask questions, share news, and engage in meaningful discussions about Syria')}
+            {t('welcomeSubtitle')}
           </p>
           <p className="text-lg mb-8 text-yellow-200 font-medium">
-            {t('platformTagline', 'Where Syrian Expertise Meets Global Community')}
+            {t('platformTagline')}
           </p>
           
           {!user && (

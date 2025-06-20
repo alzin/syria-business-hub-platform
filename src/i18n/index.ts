@@ -215,12 +215,6 @@ const resources = {
       'Expert Members': 'Expert Members',
       
       // Landing Page - Hero Section
-      'Connecting Syrian Voices Worldwide': 'Connecting Syrian Voices Worldwide',
-      'Your Gateway to': 'Your Gateway to',
-      'Syrian Knowledge': 'Syrian Knowledge',
-      'Connect with Syrian experts, ask questions, share news, and engage in meaningful discussions about Syria\'s present and future': 'Connect with Syrian experts, ask questions, share news, and engage in meaningful discussions about Syria\'s present and future',
-      'Ask a Question': 'Ask a Question',
-      'Join as Expert': 'Join as Expert',
       
       // Profile Updates
       profileUpdated: 'Profile Updated',
@@ -501,12 +495,6 @@ const resources = {
       'Expert Members': 'الأعضاء الخبراء',
       
       // Landing Page - Hero Section
-      'Connecting Syrian Voices Worldwide': 'ربط الأصوات السورية عالمياً',
-      'Your Gateway to': 'بوابتك إلى',
-      'Syrian Knowledge': 'المعرفة السورية',
-      'Connect with Syrian experts, ask questions, share news, and engage in meaningful discussions about Syria\'s present and future': 'تواصل مع الخبراء السوريين، اطرح الأسئلة، شارك الأخبار، وشارك في نقاشات مهمة حول حاضر ومستقبل سوريا',
-      'Ask a Question': 'اطرح سؤالاً',
-      'Join as Expert': 'انضم كخبير',
       
       // Profile Updates
       profileUpdated: 'تم تحديث الملف الشخصي',
