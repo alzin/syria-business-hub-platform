@@ -79,7 +79,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
               </h1>
               
               <p className={`text-xl md:text-2xl mb-4 text-background/90 max-w-4xl mx-auto lg:${isRTL ? 'ml-0 mr-0' : 'mx-0'} leading-relaxed animate-slide-in-right`}>
-                {t('Connect with Syrian experts, ask questions, share news, and engage in meaningful discussions about Syria\'s present and future')}
+                {t('welcomeSubtitle')}
               </p>
               
               <p className="text-lg mb-8 text-warning font-medium flex items-center justify-center animate-fade-in delay-300">
