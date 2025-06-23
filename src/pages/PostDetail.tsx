@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -173,13 +172,6 @@ const PostDetail = () => {
 
   return (
     <PostDetailLayout>
-      {/* SyrGo Tagline */}
-      <div className="mb-6 text-center">
-        <p className="text-lg text-gray-600 font-medium">
-          SyrGo is where Syrian professionals meet Investors and Business owners — Ask, Share, Offer.
-        </p>
-      </div>
-
       {/* Main post */}
       <Card className="mb-8">
         <CardHeader>

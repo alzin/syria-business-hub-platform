@@ -86,6 +86,13 @@ const Index = () => {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* SyrGo Tagline */}
+        <div className="mb-8 text-center">
+          <p className="text-lg text-gray-600 font-medium">
+            SyrGo is where Syrian professionals meet Investors and Business owners — Ask, Share, Offer.
+          </p>
+        </div>
+
         <ContentTypeFilters
           selectedContentType={selectedContentType}
           setSelectedContentType={setSelectedContentType}
