@@ -121,7 +121,7 @@ const resources = {
       
       // Landing Page
       welcomeTitle: 'Connecting Syrian Voices Worldwide',
-      welcomeSubtitle: 'SyrGo — Where Investors Discover Opportunities, and Syrian Professionals Bring Them to Life. Ask. Share. Offer.',
+      welcomeSubtitle: 'Syria investment platform “ SyrGo”  is a trusted bridge between Syrian professionals and global business needs.',
       getStarted: 'Get Started',
       learnMore: 'Learn More',
       
