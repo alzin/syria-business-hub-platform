@@ -434,7 +434,7 @@ const resources = {
       
       // Landing Page - Hero Section
       'Your Gateway to': 'بوابتك إلى',
-      'Syrian Knowledge': 'المعرفة السورية',
+      'Syrian Knowledge': 'فرص الأعمال السورية',
       'Ask a Question': 'اطرح سؤالاً',
       'Join as Expert': 'انضم كخبير',
       
