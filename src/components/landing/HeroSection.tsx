@@ -2,14 +2,12 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import LoginDialog from '@/components/auth/LoginDialog';
 import RegisterDialog from '@/components/auth/RegisterDialog';
 import CreatePostDialog from '@/components/CreatePostDialog';
 import HeroCarousel from '@/components/landing/HeroCarousel';
-import { MessageSquare, Users, Sparkles, Globe } from 'lucide-react';
+import { MessageSquare, Users, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface HeroSectionProps {
@@ -65,11 +63,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Text Content */}
             <div className={`text-center lg:${isRTL ? 'text-right' : 'text-left'} animate-fade-in`}>
-              <Badge className="mb-6 bg-warning/20 text-warning border-warning/40 hover:bg-warning/30 transition-all duration-300 animate-bounce">
-                <Globe className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
-                {t('Connecting Syrian Voices Worldwide')}
-              </Badge>
-              
               <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in leading-tight">
                 {t('Your Gateway to')}
                 <span className="block text-warning relative">

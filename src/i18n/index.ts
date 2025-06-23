@@ -120,7 +120,6 @@ const resources = {
       userNotFound: 'User not found',
       
       // Landing Page
-      welcomeTitle: 'Connecting Syrian Voices Worldwide',
       welcomeSubtitle: 'Syria investment platform “ SyrGo”  is a trusted bridge between Syrian professionals and global business needs.',
       getStarted: 'Get Started',
       learnMore: 'Learn More',
@@ -183,9 +182,8 @@ const resources = {
       'Expert Members': 'Expert Members',
       
       // Landing Page - Hero Section
-      'Connecting Syrian Voices Worldwide': 'Connecting Syrian Voices Worldwide',
       'Your Gateway to': 'Your Gateway to',
-      'Syrian Knowledge': 'Syrian Knowledge',
+      'Syrian Knowledge': 'Syrian Business Opportunities',
       'Ask a Question': 'Ask a Question',
       'Join as Expert': 'Join as Expert',
       
@@ -435,7 +433,6 @@ const resources = {
       'Expert Members': 'الأعضاء الخبراء',
       
       // Landing Page - Hero Section
-      'Connecting Syrian Voices Worldwide': 'ربط الأصوات السورية عالمياً',
       'Your Gateway to': 'بوابتك إلى',
       'Syrian Knowledge': 'المعرفة السورية',
       'Ask a Question': 'اطرح سؤالاً',
