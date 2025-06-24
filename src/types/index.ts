@@ -2,7 +2,6 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  expertise: ExpertiseType;
   expertiseCategory?: string;
   expertiseSpecialization?: string;
   location: string;

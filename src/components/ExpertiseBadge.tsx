@@ -2,35 +2,34 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Shield, Star, Code, Briefcase, Building } from 'lucide-react';
-import { ExpertiseType } from '@/types';
 
 interface ExpertiseBadgeProps {
-  expertise: ExpertiseType;
+  expertiseCategory?: string;
   verified?: boolean;
   size?: 'sm' | 'md' | 'lg';
 }
 
 const ExpertiseBadge: React.FC<ExpertiseBadgeProps> = ({ 
-  expertise, 
+  expertiseCategory, 
   verified = false, 
   size = 'md' 
 }) => {
-  const getExpertiseConfig = (expertise: ExpertiseType) => {
-    switch (expertise) {
-      case 'legal':
+  const getExpertiseConfig = (category?: string) => {
+    switch (category) {
+      case 'Legal Expert':
         return { icon: Shield, label: 'Legal Expert', color: 'bg-blue-100 text-blue-800' };
-      case 'investor':
+      case 'Investor':
         return { icon: Star, label: 'Investor', color: 'bg-yellow-100 text-yellow-800' };
-      case 'founder':
+      case 'Founder':
         return { icon: Briefcase, label: 'Founder', color: 'bg-purple-100 text-purple-800' };
-      case 'government':
+      case 'Government':
         return { icon: Building, label: 'Government', color: 'bg-gray-100 text-gray-800' };
       default:
-        return { icon: Briefcase, label: 'Expert', color: 'bg-gray-100 text-gray-800' };
+        return { icon: Briefcase, label: category || 'Expert', color: 'bg-gray-100 text-gray-800' };
     }
   };
 
-  const config = getExpertiseConfig(expertise);
+  const config = getExpertiseConfig(expertiseCategory);
   const Icon = config.icon;
   
   const iconSize = size === 'sm' ? 'w-3 h-3' : size === 'lg' ? 'w-5 h-5' : 'w-4 h-4';

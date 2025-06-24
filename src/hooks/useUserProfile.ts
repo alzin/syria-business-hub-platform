@@ -2,7 +2,7 @@
 import { useState, useCallback } from 'react';
 import { User as SupabaseUser } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-import { User, ExpertiseType } from '@/types';
+import { User } from '@/types';
 
 export const useUserProfile = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -27,7 +27,6 @@ export const useUserProfile = () => {
           id: profile.id,
           email: profile.email,
           name: profile.name,
-          expertise: profile.expertise as ExpertiseType,
           expertiseCategory: profile.expertise_category,
           expertiseSpecialization: profile.expertise_specialization,
           location: profile.location,

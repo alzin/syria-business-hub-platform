@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +11,7 @@ import UserPostsTabs from '@/components/profile/UserPostsTabs';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { User as UserType, Post, ExpertiseType, CategoryType } from '@/types';
+import { User as UserType, Post, CategoryType } from '@/types';
 
 const UserProfile = () => {
   const { id } = useParams<{ id: string }>();
@@ -36,8 +37,9 @@ const UserProfile = () => {
         id: data.id,
         email: data.email,
         name: data.name,
-        expertise: data.expertise as ExpertiseType,
-        location: data.location, // Keep the actual string value instead of casting
+        expertiseCategory: data.expertise_category,
+        expertiseSpecialization: data.expertise_specialization,
+        location: data.location,
         accessLevel: data.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
         verified: data.verified,
         avatar: data.avatar,
@@ -59,7 +61,7 @@ const UserProfile = () => {
         .select(`
           *,
           profiles:author_id (
-            id, name, expertise, location, access_level, verified, avatar, email, created_at
+            id, name, location, access_level, verified, avatar, email, created_at, expertise_category, expertise_specialization
           )
         `)
         .eq('author_id', id)
@@ -76,8 +78,9 @@ const UserProfile = () => {
           id: post.profiles.id,
           email: post.profiles.email,
           name: post.profiles.name,
-          expertise: post.profiles.expertise as ExpertiseType,
-          location: post.profiles.location, // Keep the actual string value
+          expertiseCategory: post.profiles.expertise_category,
+          expertiseSpecialization: post.profiles.expertise_specialization,
+          location: post.profiles.location,
           accessLevel: post.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
           verified: post.profiles.verified,
           avatar: post.profiles.avatar,

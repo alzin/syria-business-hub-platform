@@ -1,6 +1,5 @@
 
 import { supabase } from '@/integrations/supabase/client';
-import { ExpertiseType } from '@/types';
 
 export const loginUser = async (email: string, password: string) => {
   console.log('Attempting login for:', email);
@@ -20,7 +19,6 @@ export const registerUser = async (
   email: string, 
   password: string, 
   name: string, 
-  expertise: ExpertiseType, 
   location: string,
   phoneNumber?: string,
   phoneCountryCode?: string,
@@ -35,7 +33,6 @@ export const registerUser = async (
       emailRedirectTo: `${window.location.origin}/`,
       data: {
         name,
-        expertise,
         location,
         phone_number: phoneNumber,
         phone_country_code: phoneCountryCode,

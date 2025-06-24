@@ -71,7 +71,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
               </div>
             ) : (
               <>
-                <ExpertiseBadge expertise={user.expertise} verified={user.verified} />
+                <ExpertiseBadge expertiseCategory={user.expertiseCategory} verified={user.verified} />
                 <div className={`flex items-center ${isRTL ? 'space-x-1 space-x-reverse' : 'space-x-1'} ${isMobile ? 'text-sm' : 'text-base'} text-gray-500`}>
                   <MapPin className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'}`} />
                   <span>{user.location}</span>

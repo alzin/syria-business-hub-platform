@@ -51,7 +51,7 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
             
             <div className={`flex flex-col sm:flex-row items-center sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4 ${horizontalSpacing}`}>
               <div className="flex flex-col items-center sm:items-start">
-                <ExpertiseBadge expertise={userProfile.expertise} verified={userProfile.verified} />
+                <ExpertiseBadge expertiseCategory={userProfile.expertiseCategory} verified={userProfile.verified} />
                 {userProfile.expertiseCategory && (
                   <div className="mt-1 text-sm text-gray-700 font-medium">
                     {userProfile.expertiseCategory}
