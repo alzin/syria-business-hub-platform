@@ -10,6 +10,15 @@ import ProfileNotLoggedIn from '@/components/profile/ProfileNotLoggedIn';
 import { toast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
 
+interface ProfileFormData {
+  name: string;
+  expertiseCategory: string;
+  expertiseSpecialization: string;
+  location: string;
+  phoneNumber: string;
+  phoneCountryCode: string;
+}
+
 const Profile = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -19,7 +28,7 @@ const Profile = () => {
   const [currentAvatar, setCurrentAvatar] = useState(user?.avatar || null);
   
   // Form state
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ProfileFormData>({
     name: user?.name || '',
     expertiseCategory: user?.expertiseCategory || '',
     expertiseSpecialization: user?.expertiseSpecialization || '',

@@ -199,6 +199,8 @@ export type Database = {
           created_at: string
           email: string
           expertise: string
+          expertise_category: string | null
+          expertise_specialization: string | null
           id: string
           industry_sector: string | null
           location: string
@@ -218,6 +220,8 @@ export type Database = {
           created_at?: string
           email: string
           expertise: string
+          expertise_category?: string | null
+          expertise_specialization?: string | null
           id: string
           industry_sector?: string | null
           location: string
@@ -237,6 +241,8 @@ export type Database = {
           created_at?: string
           email?: string
           expertise?: string
+          expertise_category?: string | null
+          expertise_specialization?: string | null
           id?: string
           industry_sector?: string | null
           location?: string
