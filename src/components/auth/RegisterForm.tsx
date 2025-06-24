@@ -81,14 +81,22 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
         return;
       }
 
-      // Map category to old expertise type for backwards compatibility
-      const expertiseType = expertiseCategory.toLowerCase().replace(' expert', '').replace(' ', '_');
+      // Use a simple mapping for backward compatibility with the old expertise field
+      const expertiseMapping: { [key: string]: string } = {
+        'Legal Expert': 'legal',
+        'Investor': 'investor', 
+        'Founder': 'founder',
+        'Government': 'government'
+      };
+      
+      // Default to 'founder' for new categories that don't have a direct mapping
+      const legacyExpertise = expertiseMapping[expertiseCategory] || 'founder';
       
       await register(
         email, 
         password, 
         sanitizedName, 
-        expertiseType as any, 
+        legacyExpertise as any, 
         location, 
         phoneNumber, 
         phoneCountryCode,
