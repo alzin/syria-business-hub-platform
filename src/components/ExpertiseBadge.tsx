@@ -23,8 +23,6 @@ const ExpertiseBadge: React.FC<ExpertiseBadgeProps> = ({
         return { icon: Star, label: 'Investor', color: 'bg-yellow-100 text-yellow-800' };
       case 'founder':
         return { icon: Briefcase, label: 'Founder', color: 'bg-purple-100 text-purple-800' };
-      case 'developer':
-        return { icon: Code, label: 'Developer', color: 'bg-green-100 text-green-800' };
       case 'government':
         return { icon: Building, label: 'Government', color: 'bg-gray-100 text-gray-800' };
       default:

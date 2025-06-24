@@ -7,12 +7,13 @@ import { Button } from '@/components/ui/button';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import ProfileForm from '@/components/profile/ProfileForm';
 import { Edit2, Save, X } from 'lucide-react';
-import { User, ExpertiseType } from '@/types';
+import { User } from '@/types';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ProfileFormData {
   name: string;
-  expertise: ExpertiseType;
+  expertiseCategory: string;
+  expertiseSpecialization: string;
   location: string;
   phoneNumber: string;
   phoneCountryCode: string;
