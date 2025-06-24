@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -20,7 +19,7 @@ interface AuthContextType {
     expertise: ExpertiseType, 
     location: string, 
     phoneNumber?: string, 
-    phoneCount: phoneCountryCode?: string,
+    phoneCountryCode?: string,
     expertiseCategory?: string,
     expertiseSpecialization?: string
   ) => Promise<void>;
