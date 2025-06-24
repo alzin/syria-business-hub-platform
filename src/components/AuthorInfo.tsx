@@ -59,7 +59,7 @@ const AuthorInfo: React.FC<AuthorInfoProps> = ({
         <div className="flex items-center space-x-2">
           <p className={`font-medium text-gray-900 ${textSize}`}>{author.name}</p>
           <ExpertiseBadge 
-            expertise={author.expertise} 
+            expertiseCategory={author.expertiseCategory} 
             verified={author.verified} 
             size={size === 'sm' ? 'sm' : 'md'}
           />

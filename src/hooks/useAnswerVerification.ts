@@ -15,7 +15,7 @@ export const useAnswerVerification = () => {
       // Check if user is verified and has expertise to verify answers
       const { data: userProfile } = await supabase
         .from('profiles')
-        .select('verified, expertise')
+        .select('verified, expertise_category')
         .eq('id', user.id)
         .single();
 

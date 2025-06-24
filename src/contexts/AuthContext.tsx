@@ -1,7 +1,8 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-import { User, GeolocationData, ExpertiseType } from '@/types';
+import { User, GeolocationData } from '@/types';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { loginUser, registerUser, logoutUser } from '@/utils/authUtils';
@@ -16,9 +17,8 @@ interface AuthContextType {
     email: string, 
     password: string, 
     name: string, 
-    expertise: ExpertiseType, 
-    location: string, 
-    phoneNumber?: string, 
+    location: string,
+    phoneNumber?: string,
     phoneCountryCode?: string,
     expertiseCategory?: string,
     expertiseSpecialization?: string
@@ -96,7 +96,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     email: string, 
     password: string, 
     name: string, 
-    expertise: ExpertiseType, 
     location: string,
     phoneNumber?: string,
     phoneCountryCode?: string,
@@ -107,7 +106,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       email, 
       password, 
       name, 
-      expertise, 
       location, 
       phoneNumber, 
       phoneCountryCode,

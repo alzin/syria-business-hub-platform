@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +24,7 @@ import PostDetailContent from '@/components/post-detail/PostDetailContent';
 import PostComments from '@/components/post-detail/PostComments';
 import PostAnswers from '@/components/post-detail/PostAnswers';
 import LoginPrompt from '@/components/post-detail/LoginPrompt';
-import { Post, Answer, Comment, User as UserType, ExpertiseType, CategoryType } from '@/types';
+import { Post, Answer, Comment, User as UserType, CategoryType } from '@/types';
 
 const PostDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -44,18 +45,18 @@ const PostDetail = () => {
         .select(`
           *,
           profiles:author_id (
-            id, name, expertise, location, access_level, verified, avatar, email, created_at
+            id, name, expertise_category, expertise_specialization, location, access_level, verified, avatar, email, created_at
           ),
           answers (
             *,
             profiles:author_id (
-              id, name, expertise, location, access_level, verified, avatar, email, created_at
+              id, name, expertise_category, expertise_specialization, location, access_level, verified, avatar, email, created_at
             )
           ),
           comments (
             *,
             profiles:author_id (
-              id, name, expertise, location, access_level, verified, avatar, email, created_at
+              id, name, expertise_category, expertise_specialization, location, access_level, verified, avatar, email, created_at
             )
           )
         `)
@@ -74,8 +75,9 @@ const PostDetail = () => {
           id: data.profiles.id,
           email: data.profiles.email,
           name: data.profiles.name,
-          expertise: data.profiles.expertise as ExpertiseType,
-          location: data.profiles.location as 'syria' | 'international',
+          expertiseCategory: data.profiles.expertise_category,
+          expertiseSpecialization: data.profiles.expertise_specialization,
+          location: data.profiles.location,
           accessLevel: data.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
           verified: data.profiles.verified,
           avatar: data.profiles.avatar,
@@ -92,8 +94,9 @@ const PostDetail = () => {
             id: answer.profiles.id,
             email: answer.profiles.email,
             name: answer.profiles.name,
-            expertise: answer.profiles.expertise as ExpertiseType,
-            location: answer.profiles.location as 'syria' | 'international',
+            expertiseCategory: answer.profiles.expertise_category,
+            expertiseSpecialization: answer.profiles.expertise_specialization,
+            location: answer.profiles.location,
             accessLevel: answer.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
             verified: answer.verified,
             avatar: answer.profiles.avatar,
@@ -110,8 +113,9 @@ const PostDetail = () => {
             id: comment.profiles.id,
             email: comment.profiles.email,
             name: comment.profiles.name,
-            expertise: comment.profiles.expertise as ExpertiseType,
-            location: comment.profiles.location as 'syria' | 'international',
+            expertiseCategory: comment.profiles.expertise_category,
+            expertiseSpecialization: comment.profiles.expertise_specialization,
+            location: comment.profiles.location,
             accessLevel: comment.profiles.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
             verified: comment.profiles.verified,
             avatar: comment.profiles.avatar,
@@ -243,7 +247,7 @@ const PostDetail = () => {
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
-      </AlertDialog>
+      </Alert>
     </PostDetailLayout>
   );
 };
