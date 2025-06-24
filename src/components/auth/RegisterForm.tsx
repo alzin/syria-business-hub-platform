@@ -81,22 +81,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
         return;
       }
 
-      // Use a simple mapping for backward compatibility with the old expertise field
-      const expertiseMapping: { [key: string]: string } = {
-        'Legal Expert': 'legal',
-        'Investor': 'investor', 
-        'Founder': 'founder',
-        'Government': 'government'
-      };
-      
-      // Default to 'founder' for new categories that don't have a direct mapping
-      const legacyExpertise = expertiseMapping[expertiseCategory] || 'founder';
-      
       await register(
         email, 
         password, 
         sanitizedName, 
-        legacyExpertise as any, 
         location, 
         phoneNumber, 
         phoneCountryCode,

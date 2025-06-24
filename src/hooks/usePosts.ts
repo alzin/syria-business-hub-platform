@@ -1,7 +1,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Post, User, ExpertiseType, CategoryType } from '@/types';
+import { Post, User, CategoryType } from '@/types';
 
 export const usePosts = (category?: CategoryType | 'all', searchTerm?: string) => {
   return useQuery({
@@ -14,7 +14,8 @@ export const usePosts = (category?: CategoryType | 'all', searchTerm?: string) =
           profiles:author_id (
             id,
             name,
-            expertise,
+            expertise_category,
+            expertise_specialization,
             location,
             access_level,
             verified,
@@ -53,7 +54,8 @@ export const usePosts = (category?: CategoryType | 'all', searchTerm?: string) =
           id: post.profiles.id,
           email: post.profiles.email,
           name: post.profiles.name,
-          expertise: post.profiles.expertise as ExpertiseType,
+          expertiseCategory: post.profiles.expertise_category,
+          expertiseSpecialization: post.profiles.expertise_specialization,
           location: post.profiles.location,
           accessLevel: post.profiles.access_level,
           verified: post.profiles.verified,
