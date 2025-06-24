@@ -1,12 +1,12 @@
+
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CountrySelector } from '@/components/ui/country-selector';
 import { PhoneInput } from '@/components/ui/phone-input';
 import { Button } from '@/components/ui/button';
 import { Eye, EyeOff } from 'lucide-react';
-import { ExpertiseType } from '@/types';
+import TwoStepExpertiseSelector from '@/components/ui/two-step-expertise-selector';
 
 interface RegisterFormFieldsProps {
   name: string;
@@ -15,8 +15,10 @@ interface RegisterFormFieldsProps {
   setEmail: (email: string) => void;
   password: string;
   setPassword: (password: string) => void;
-  expertise: ExpertiseType;
-  setExpertise: (expertise: ExpertiseType) => void;
+  expertiseCategory: string;
+  setExpertiseCategory: (category: string) => void;
+  expertiseSpecialization: string;
+  setExpertiseSpecialization: (specialization: string) => void;
   location: string;
   setLocation: (location: string) => void;
   phoneNumber: string;
@@ -33,8 +35,10 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
   setEmail,
   password,
   setPassword,
-  expertise,
-  setExpertise,
+  expertiseCategory,
+  setExpertiseCategory,
+  expertiseSpecialization,
+  setExpertiseSpecialization,
   location,
   setLocation,
   phoneNumber,
@@ -101,22 +105,14 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
       </div>
 
       <div>
-        <Select 
-          value={expertise} 
-          onValueChange={(value: ExpertiseType) => setExpertise(value)}
+        <TwoStepExpertiseSelector
+          category={expertiseCategory}
+          specialization={expertiseSpecialization}
+          onCategoryChange={setExpertiseCategory}
+          onSpecializationChange={setExpertiseSpecialization}
           disabled={isLoading}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Select your expertise" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="legal">Legal Expert</SelectItem>
-            <SelectItem value="investor">Investor</SelectItem>
-            <SelectItem value="founder">Founder</SelectItem>
-            <SelectItem value="developer">Developer</SelectItem>
-            <SelectItem value="government">Government</SelectItem>
-          </SelectContent>
-        </Select>
+          className="w-full"
+        />
       </div>
 
       <div>

@@ -13,9 +13,19 @@ interface AuthContextType {
   geolocation: GeolocationData | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, name: string, expertise: ExpertiseType, location: string, phoneNumber?: string, phoneCountryCode?: string) => Promise<void>;
+  register: (
+    email: string, 
+    password: string, 
+    name: string, 
+    expertise: ExpertiseType, 
+    location: string, 
+    phoneNumber?: string, 
+    phoneCount: phoneCountryCode?: string,
+    expertiseCategory?: string,
+    expertiseSpecialization?: string
+  ) => Promise<void>;
   logout: () => void;
-  signOut: () => void; // Add signOut as an alias
+  signOut: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -90,9 +100,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     expertise: ExpertiseType, 
     location: string,
     phoneNumber?: string,
-    phoneCountryCode?: string
+    phoneCountryCode?: string,
+    expertiseCategory?: string,
+    expertiseSpecialization?: string
   ) => {
-    await registerUser(email, password, name, expertise, location, phoneNumber, phoneCountryCode);
+    await registerUser(
+      email, 
+      password, 
+      name, 
+      expertise, 
+      location, 
+      phoneNumber, 
+      phoneCountryCode,
+      expertiseCategory,
+      expertiseSpecialization
+    );
   };
 
   const handleLogout = async () => {
@@ -113,7 +135,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       login: handleLogin,
       register: handleRegister,
       logout: handleLogout,
-      signOut: handleLogout, // Add signOut as an alias
+      signOut: handleLogout,
     }}>
       {children}
     </AuthContext.Provider>

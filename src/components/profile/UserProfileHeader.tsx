@@ -50,7 +50,19 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
             </div>
             
             <div className={`flex flex-col sm:flex-row items-center sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4 ${horizontalSpacing}`}>
-              <ExpertiseBadge expertise={userProfile.expertise} verified={userProfile.verified} />
+              <div className="flex flex-col items-center sm:items-start">
+                <ExpertiseBadge expertise={userProfile.expertise} verified={userProfile.verified} />
+                {userProfile.expertiseCategory && (
+                  <div className="mt-1 text-sm text-gray-700 font-medium">
+                    {userProfile.expertiseCategory}
+                  </div>
+                )}
+                {userProfile.expertiseSpecialization && (
+                  <div className="text-xs text-gray-500 text-center sm:text-left max-w-xs">
+                    {userProfile.expertiseSpecialization}
+                  </div>
+                )}
+              </div>
               <div className={`flex items-center space-x-1 text-sm text-gray-500 ${horizontalSpacing}`}>
                 <MapPin className="w-4 h-4" />
                 <span>{userProfile.location}</span>

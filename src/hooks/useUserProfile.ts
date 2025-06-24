@@ -28,6 +28,8 @@ export const useUserProfile = () => {
           email: profile.email,
           name: profile.name,
           expertise: profile.expertise as ExpertiseType,
+          expertiseCategory: profile.expertise_category,
+          expertiseSpecialization: profile.expertise_specialization,
           location: profile.location,
           accessLevel: profile.access_level as 'visitor' | 'registered' | 'premium' | 'verified',
           avatar: profile.avatar,

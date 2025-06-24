@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
-import { ExpertiseType } from '@/types';
 import { getCountryByName } from '@/data/phoneCountries';
 import DOMPurify from 'dompurify';
 import RegisterFormFields from './RegisterFormFields';
@@ -20,7 +19,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [expertise, setExpertise] = useState<ExpertiseType>('');
+  const [expertiseCategory, setExpertiseCategory] = useState<string>('');
+  const [expertiseSpecialization, setExpertiseSpecialization] = useState<string>('');
   const [location, setLocation] = useState<string>('Syria');
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [phoneCountryCode, setPhoneCountryCode] = useState<string>('+963');
@@ -37,10 +37,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !password || !name || !location || !expertise) {
+    if (!email || !password || !name || !location || !expertiseCategory || !expertiseSpecialization) {
       toast({
         title: "Missing information",
-        description: "Please fill in all required fields including your expertise.",
+        description: "Please fill in all required fields including your expertise category and specialization.",
         variant: "destructive",
       });
       return;
@@ -69,7 +69,20 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
         return;
       }
 
-      await register(email, password, sanitizedName, expertise, location, phoneNumber, phoneCountryCode);
+      // Map category to old expertise type for backwards compatibility
+      const expertiseType = expertiseCategory.toLowerCase().replace(' expert', '').replace(' ', '_');
+      
+      await register(
+        email, 
+        password, 
+        sanitizedName, 
+        expertiseType as any, 
+        location, 
+        phoneNumber, 
+        phoneCountryCode,
+        expertiseCategory,
+        expertiseSpecialization
+      );
       
       toast({
         title: "Welcome!",
@@ -105,7 +118,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
     setEmail('');
     setPassword('');
     setName('');
-    setExpertise('');
+    setExpertiseCategory('');
+    setExpertiseSpecialization('');
     setLocation('Syria');
     setPhoneNumber('');
     setPhoneCountryCode('+963');
@@ -120,8 +134,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
         setEmail={setEmail}
         password={password}
         setPassword={setPassword}
-        expertise={expertise}
-        setExpertise={setExpertise}
+        expertiseCategory={expertiseCategory}
+        setExpertiseCategory={setExpertiseCategory}
+        expertiseSpecialization={expertiseSpecialization}
+        setExpertiseSpecialization={setExpertiseSpecialization}
         location={location}
         setLocation={setLocation}
         phoneNumber={phoneNumber}

@@ -8,7 +8,6 @@ import ProfileActions from '@/components/profile/ProfileActions';
 import ProfileContent from '@/components/profile/ProfileContent';
 import ProfileNotLoggedIn from '@/components/profile/ProfileNotLoggedIn';
 import { toast } from '@/hooks/use-toast';
-import { ExpertiseType } from '@/types';
 import { useTranslation } from 'react-i18next';
 
 const Profile = () => {
@@ -22,7 +21,8 @@ const Profile = () => {
   // Form state
   const [formData, setFormData] = useState({
     name: user?.name || '',
-    expertise: user?.expertise || 'founder' as ExpertiseType,
+    expertiseCategory: user?.expertiseCategory || '',
+    expertiseSpecialization: user?.expertiseSpecialization || '',
     location: user?.location || 'Syria',
     phoneNumber: user?.phoneNumber || '',
     phoneCountryCode: user?.phoneCountryCode || '+963',
@@ -39,7 +39,8 @@ const Profile = () => {
         .from('profiles')
         .update({
           name: formData.name,
-          expertise: formData.expertise,
+          expertise_category: formData.expertiseCategory,
+          expertise_specialization: formData.expertiseSpecialization,
           location: formData.location,
           phone_number: formData.phoneNumber,
           phone_country_code: formData.phoneCountryCode,
@@ -70,7 +71,8 @@ const Profile = () => {
   const handleCancel = () => {
     setFormData({
       name: user.name,
-      expertise: user.expertise,
+      expertiseCategory: user.expertiseCategory || '',
+      expertiseSpecialization: user.expertiseSpecialization || '',
       location: user.location,
       phoneNumber: user.phoneNumber || '',
       phoneCountryCode: user.phoneCountryCode || '+963',

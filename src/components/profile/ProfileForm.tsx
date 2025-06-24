@@ -1,15 +1,15 @@
 
 import React from 'react';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CountrySelector } from '@/components/ui/country-selector';
 import { PhoneInput } from '@/components/ui/phone-input';
-import { ExpertiseType } from '@/types';
+import TwoStepExpertiseSelector from '@/components/ui/two-step-expertise-selector';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ProfileFormData {
   name: string;
-  expertise: ExpertiseType;
+  expertiseCategory: string;
+  expertiseSpecialization: string;
   location: string;
   phoneNumber: string;
   phoneCountryCode: string;
@@ -33,23 +33,15 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange })
       />
       
       <div className={`flex ${isMobile ? 'flex-col space-y-3' : 'items-start space-x-4'}`}>
-        <div className={isMobile ? 'w-full' : 'w-48'}>
+        <div className={isMobile ? 'w-full' : 'flex-1'}>
           <div className="text-sm text-gray-600 mb-2">Expertise</div>
-          <Select 
-            value={formData.expertise} 
-            onValueChange={(value: ExpertiseType) => onFormDataChange({ ...formData, expertise: value })}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="legal">Legal Expert</SelectItem>
-              <SelectItem value="investor">Investor</SelectItem>
-              <SelectItem value="founder">Startup Founder</SelectItem>
-              <SelectItem value="developer">Developer</SelectItem>
-              <SelectItem value="government">Government Rep</SelectItem>
-            </SelectContent>
-          </Select>
+          <TwoStepExpertiseSelector
+            category={formData.expertiseCategory}
+            specialization={formData.expertiseSpecialization}
+            onCategoryChange={(category) => onFormDataChange({ ...formData, expertiseCategory: category })}
+            onSpecializationChange={(specialization) => onFormDataChange({ ...formData, expertiseSpecialization: specialization })}
+            className="w-full"
+          />
         </div>
         
         <div className={isMobile ? 'w-full' : 'w-48'}>
