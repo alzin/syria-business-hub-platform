@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ExpertiseCategoryType, EXPERTISE_OPTIONS } from '@/types';
 
@@ -24,9 +24,19 @@ const TwoStepExpertiseSelector: React.FC<TwoStepExpertiseSelectorProps> = ({
 
   const handleCategoryChange = (value: string) => {
     onCategoryChange(value);
-    // Reset specialization when category changes
-    onSpecializationChange('');
+    
+    // Check if the new category requires specialization
+    const newCategoryData = EXPERTISE_OPTIONS.find(opt => opt.category === value);
+    if (!newCategoryData?.requiresSpecialization) {
+      // If specialization is not required, clear it
+      onSpecializationChange('');
+    } else {
+      // If specialization is required and there was a previous selection, clear it
+      onSpecializationChange('');
+    }
   };
+
+  const showSpecializationSelector = selectedCategoryData?.requiresSpecialization;
 
   return (
     <div className={`space-y-4 ${className}`}>
@@ -50,7 +60,7 @@ const TwoStepExpertiseSelector: React.FC<TwoStepExpertiseSelectorProps> = ({
         </Select>
       </div>
 
-      {category && selectedCategoryData && (
+      {showSpecializationSelector && selectedCategoryData && (
         <div>
           <div className="text-sm text-gray-600 mb-2">Specific Domain</div>
           <Select 

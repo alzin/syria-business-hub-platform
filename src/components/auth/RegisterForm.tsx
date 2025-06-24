@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { getCountryByName } from '@/data/phoneCountries';
+import { EXPERTISE_OPTIONS } from '@/types';
 import DOMPurify from 'dompurify';
 import RegisterFormFields from './RegisterFormFields';
 
@@ -37,10 +38,21 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !password || !name || !location || !expertiseCategory || !expertiseSpecialization) {
+    if (!email || !password || !name || !location || !expertiseCategory) {
       toast({
         title: "Missing information",
-        description: "Please fill in all required fields including your expertise category and specialization.",
+        description: "Please fill in all required fields including your expertise category.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Check if specialization is required for the selected category
+    const selectedCategoryData = EXPERTISE_OPTIONS.find(opt => opt.category === expertiseCategory);
+    if (selectedCategoryData?.requiresSpecialization && !expertiseSpecialization) {
+      toast({
+        title: "Missing specialization",
+        description: "Please select a specific domain for your chosen expertise category.",
         variant: "destructive",
       });
       return;
