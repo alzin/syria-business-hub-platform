@@ -40,8 +40,19 @@ export interface ExpertiseOption {
 export const EXPERTISE_OPTIONS: ExpertiseOption[] = [
   {
     category: 'Legal Expert',
-    specializations: [],
-    requiresSpecialization: false
+    specializations: [
+      'Company Registration & Business Setup',
+      'Contract Drafting & Review',
+      'Intellectual Property (IP) & Trademark Registration',
+      'Legal Research & Compliance Advisory',
+      'Court Documentation & Litigation Support',
+      'Real Estate & Property Law',
+      'NGO & Nonprofit Legal Support',
+      'Family Law Consultation',
+      'Immigration & Visa Advisory',
+      'Customs & Trade Law Advisory'
+    ],
+    requiresSpecialization: true
   },
   {
     category: 'Investor',
