@@ -32,13 +32,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
     setShowLogin(true);
   };
 
-  const handleAskQuestion = () => {
-    if (user) {
-      setShowCreateQuestion(true);
-    } else {
-      setShowRegister(true);
-    }
-  };
+  // const handleAskQuestion = () => {
+  //   if (user) {
+  //     setShowCreateQuestion(true);
+  //   } else {
+  //     setShowRegister(true);
+  //   }
+  // };
 
   const handleJoinAsExpert = () => {
     if (user) {
@@ -81,18 +81,17 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in delay-500">
-                <Button 
+                {/* <Button 
                   size="lg" 
                   className="bg-background text-primary hover:bg-background/90 hover:scale-105 font-semibold shadow-2xl px-8 text-base transition-all duration-300 group"
                   onClick={handleAskQuestion}
                 >
                   <MessageSquare className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'} group-hover:animate-bounce`} />
                   {t('Ask a Question')}
-                </Button>
+                </Button> */}
                 <Button 
                   size="lg" 
-                  variant="outline" 
-                  className="border-2 border-background text-background bg-transparent hover:bg-background hover:text-primary hover:scale-105 font-semibold px-8 text-base transition-all duration-300 group"
+                  className="bg-background text-primary hover:bg-background/90 hover:scale-105 font-semibold shadow-2xl px-8 text-base transition-all duration-300 group"
                   onClick={handleJoinAsExpert}
                 >
                   <Users className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'} group-hover:animate-pulse`} />
