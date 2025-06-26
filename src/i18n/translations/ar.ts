@@ -341,7 +341,7 @@ export const arTranslations = {
   'Join thousands of Syrians and friends of Syria who are sharing knowledge and building community': 'انضم لآلاف السوريين وأصدقاء سوريا الذين يتبادلون المعرفة ويبنون المجتمع',
   'Ask Your First Question': 'اطرح سؤالك الأول',
   'Browse Community': 'تصفح المجتمع',
-  'Verified Experts': 'خبراء موثقون',
+  'Verified Experts': 'خبراء موثوقون',
   
   // Landing Page - Community Section
   'Join the Community Discussion': 'انضم لنقاش المجتمع',
