@@ -157,9 +157,7 @@ export const EXPERTISE_OPTIONS: ExpertiseOption[] = [
   {
     category: 'Translation & Languages',
     specializations: [
-      'Arabic-English Translation',
-      'Kurdish-English Translation',
-      'Turkish-Arabic Translation',
+      'Translation',
       'Legal & Technical Translation',
       'Interpretation (Remote or Live)',
       'Voice-over in Arabic, English, French',
