@@ -3,6 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { CategoryType } from '@/types';
+import { CATEGORY_OPTIONS } from '@/constants/categories';
 
 interface CategoryFiltersProps {
   selectedCategory: CategoryType | 'all';
@@ -14,16 +15,10 @@ const CategoryFilters: React.FC<CategoryFiltersProps> = ({ selectedCategory, set
 
   const categories: { key: CategoryType | 'all'; label: string }[] = [
     { key: 'all', label: 'All Categories' },
-    { key: 'business_idea', label: 'Business Idea' },
-    { key: 'business_economic', label: 'Business & Economic' },
-    { key: 'technology', label: 'Technology' },
-    { key: 'design_creative', label: 'Design & Creative' },
-    { key: 'marketing_sales', label: 'Marketing & Sales' },
-    { key: 'content_creation', label: 'Content Creation' },
-    { key: 'languages', label: 'Languages' },
-    { key: 'education', label: 'Education' },
-    { key: 'art', label: 'Art' },
-    { key: 'legal', label: 'Legal' },
+    ...CATEGORY_OPTIONS.map(option => ({
+      key: option.value,
+      label: option.label
+    }))
   ];
 
   return (

@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CategoryType } from '@/types';
+import { CATEGORY_OPTIONS } from '@/constants/categories';
 
 interface PostFormFieldsProps {
   postType: 'question' | 'news' | 'article' | 'business_idea';
@@ -27,19 +28,6 @@ const PostFormFields: React.FC<PostFormFieldsProps> = ({
   setCategory,
 }) => {
   const { t } = useTranslation();
-
-  const categories: { value: CategoryType; label: string }[] = [
-    { value: 'business_idea', label: 'Business Idea' },
-    { value: 'business_economic', label: 'Business & Economic' },
-    { value: 'technology', label: 'Technology' },
-    { value: 'design_creative', label: 'Design & Creative' },
-    { value: 'marketing_sales', label: 'Marketing & Sales' },
-    { value: 'content_creation', label: 'Content Creation' },
-    { value: 'languages', label: 'Languages' },
-    { value: 'education', label: 'Education' },
-    { value: 'art', label: 'Art' },
-    { value: 'legal', label: 'Legal' },
-  ];
 
   const getPlaceholders = () => {
     const placeholders = {
@@ -85,7 +73,7 @@ const PostFormFields: React.FC<PostFormFieldsProps> = ({
             <SelectValue placeholder={t('selectCategory')} />
           </SelectTrigger>
           <SelectContent>
-            {categories.map((cat) => (
+            {CATEGORY_OPTIONS.map((cat) => (
               <SelectItem key={cat.value} value={cat.value}>
                 {cat.label}
               </SelectItem>
