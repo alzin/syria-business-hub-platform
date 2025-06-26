@@ -87,10 +87,10 @@ const Index = () => {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* SyrVest” Tagline */}
+        {/* SyrVest Tagline */}
         <div className="mb-8 text-center">
           <p className="text-xl text-primary font-semibold">
-            SyrVest” is where Syrian professionals meet Investors and Business owners — <span className="underline decoration-2 underline-offset-2 text-accent font-bold">Ask, Share, Offer</span>.
+            SyrVest is where Syrian professionals meet Investors and Business owners — <span className="underline decoration-2 underline-offset-2 text-accent font-bold">Ask, Share, Offer</span>.
           </p>
         </div>
 
