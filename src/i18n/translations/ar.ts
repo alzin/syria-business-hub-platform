@@ -1,4 +1,3 @@
-
 export const arTranslations = {
   // App name and branding
   appName: 'سير فيست',
