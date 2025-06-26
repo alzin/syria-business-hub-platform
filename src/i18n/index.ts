@@ -11,7 +11,7 @@ const resources = {
       
       // Footer
       footer: {
-        brandName: 'Syrian Knowledge',
+        brandName: 'SyrVest',
         mission: 'Connecting Syrian experts worldwide to share knowledge, answer questions, and build a stronger community for Syria\'s future.',
         social: {
           facebook: 'Facebook',
@@ -46,7 +46,7 @@ const resources = {
           communityGuidelines: 'Community Guidelines',
           reportIssue: 'Report Issue'
         },
-        copyright: '© {{year}} Syrian Knowledge Platform. Made with',
+        copyright: '© {{year}} SyrVest Platform. Made with',
         tagline: 'for the Syrian community.',
         policies: {
           privacyPolicy: 'Privacy Policy',
@@ -120,7 +120,7 @@ const resources = {
       userNotFound: 'User not found',
       
       // Landing Page
-      welcomeSubtitle: 'Syria investment platform “ SyrGo”  is a trusted bridge between Syrian professionals and global business needs.',
+      welcomeSubtitle: 'Syria investment platform “ SyrVest”  is a trusted bridge between Syrian professionals and global business needs.',
       getStarted: 'Get Started',
       learnMore: 'Learn More',
       
@@ -371,7 +371,7 @@ const resources = {
       
       // Landing Page
       welcomeTitle: 'ربط الأصوات السورية عالمياً',
-      welcomeSubtitle: 'منصة الاستثمار السورية "سيرجو" هي جسر الثقة بين المهنيين السوريين واحتياجات الأعمال العالمية',
+      welcomeSubtitle: 'منصة الاستثمار السورية "سيرفيست" هي جسر الثقة بين المهنيين السوريين واحتياجات الأعمال العالمية',
       getStarted: 'ابدأ الآن',
       learnMore: 'اعرف المزيد',
       
