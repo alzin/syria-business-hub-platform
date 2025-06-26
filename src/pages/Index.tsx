@@ -10,6 +10,8 @@ import ContentTypeFilters from '@/components/index/ContentTypeFilters';
 import CategoryFilters from '@/components/index/CategoryFilters';
 import PostsSection from '@/components/index/PostsSection';
 import NavigationControls from '@/components/index/NavigationControls';
+import FloatingActionButton from '@/components/FloatingActionButton';
+import CreatePostDialog from '@/components/CreatePostDialog';
 
 const Index = () => {
   const { user } = useAuth();
@@ -17,6 +19,7 @@ const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | 'all'>('all');
   const [selectedContentType, setSelectedContentType] = useState<'all' | 'question' | 'article' | 'business_idea' | 'news'>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [showCreatePost, setShowCreatePost] = useState(false);
   
   // Authenticated users should always see posts, plus check for URL params or search
   const shouldShowPosts = user || searchParams.get('posts') === 'true' || searchTerm.length > 0;
@@ -112,6 +115,15 @@ const Index = () => {
           handleSearchChange={handleSearchChange}
         />
       </div>
+
+      {/* Floating Action Button for mobile */}
+      <FloatingActionButton onClick={() => setShowCreatePost(true)} />
+
+      {/* Create Post Dialog */}
+      <CreatePostDialog 
+        open={showCreatePost} 
+        onOpenChange={setShowCreatePost}
+      />
     </div>
   );
 };
