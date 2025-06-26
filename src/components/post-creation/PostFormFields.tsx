@@ -29,11 +29,16 @@ const PostFormFields: React.FC<PostFormFieldsProps> = ({
   const { t } = useTranslation();
 
   const categories: { value: CategoryType; label: string }[] = [
-    { value: 'legal', label: t('legal') },
-    { value: 'technology', label: t('technology') },
-    { value: 'investment', label: t('investment') },
-    { value: 'marketing', label: t('marketing') },
-    { value: 'operations', label: t('operations') },
+    { value: 'business_idea', label: 'Business Idea' },
+    { value: 'business_economic', label: 'Business & Economic' },
+    { value: 'technology', label: 'Technology' },
+    { value: 'design_creative', label: 'Design & Creative' },
+    { value: 'marketing_sales', label: 'Marketing & Sales' },
+    { value: 'content_creation', label: 'Content Creation' },
+    { value: 'languages', label: 'Languages' },
+    { value: 'education', label: 'Education' },
+    { value: 'art', label: 'Art' },
+    { value: 'legal', label: 'Legal' },
   ];
 
   const getPlaceholders = () => {

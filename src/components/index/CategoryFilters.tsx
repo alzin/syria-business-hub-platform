@@ -12,13 +12,18 @@ interface CategoryFiltersProps {
 const CategoryFilters: React.FC<CategoryFiltersProps> = ({ selectedCategory, setSelectedCategory }) => {
   const { t } = useTranslation();
 
-  const categories: { key: CategoryType | 'all'; label:string }[] = [
+  const categories: { key: CategoryType | 'all'; label: string }[] = [
     { key: 'all', label: 'All Categories' },
-    { key: 'legal', label: 'Legal & Compliance' },
+    { key: 'business_idea', label: 'Business Idea' },
+    { key: 'business_economic', label: 'Business & Economic' },
     { key: 'technology', label: 'Technology' },
-    { key: 'investment', label: 'Investment' },
-    { key: 'marketing', label: 'Marketing' },
-    { key: 'operations', label: 'Operations' },
+    { key: 'design_creative', label: 'Design & Creative' },
+    { key: 'marketing_sales', label: 'Marketing & Sales' },
+    { key: 'content_creation', label: 'Content Creation' },
+    { key: 'languages', label: 'Languages' },
+    { key: 'education', label: 'Education' },
+    { key: 'art', label: 'Art' },
+    { key: 'legal', label: 'Legal' },
   ];
 
   return (

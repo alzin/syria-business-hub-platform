@@ -253,7 +253,7 @@ export interface Post {
   contactInfo?: string;
 }
 
-export type CategoryType = 'legal' | 'technology' | 'investment' | 'marketing' | 'operations';
+export type CategoryType = 'business_idea' | 'business_economic' | 'technology' | 'design_creative' | 'marketing_sales' | 'content_creation' | 'languages' | 'education' | 'art' | 'legal';
 
 export interface Answer {
   id: string;

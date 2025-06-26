@@ -28,7 +28,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
   const [selectedType, setSelectedType] = useState<'question' | 'news' | 'article' | 'business_idea' | null>(initialType || null);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [category, setCategory] = useState<CategoryType>('legal');
+  const [category, setCategory] = useState<CategoryType>('business_idea');
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState('');
   
@@ -102,7 +102,7 @@ const CreatePostDialog: React.FC<CreatePostDialogProps> = ({ open, onOpenChange,
     setSelectedType(initialType || null);
     setTitle('');
     setContent('');
-    setCategory('legal');
+    setCategory('business_idea');
     setTags([]);
     setNewTag('');
     setInvestmentNeeded('');
