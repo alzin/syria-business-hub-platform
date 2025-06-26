@@ -53,7 +53,6 @@ export const uiTranslations = {
 
   // Post types in Arabic
   question: 'سؤال',
-  news: 'أخبار',
   article: 'مقال',
   business_idea: 'فكرة تجارية',
   articles: 'المقالات',
