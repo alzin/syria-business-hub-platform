@@ -30,9 +30,6 @@ export const arTranslations = {
   'Government': 'حكومي',
   'Business & Consulting': 'الأعمال والاستشارات',
   'Technology & Development': 'التكنولوجيا والتطوير',
-  'Design & Creative': 'التصميم والإبداع',
-  'Marketing & Sales': 'التسويق والمبيعات',
-  'Writing & Content Creation': 'الكتابة وإنشاء المحتوى',
   'Translation & Languages': 'الترجمة واللغات',
   'Education & Coaching': 'التعليم والتدريب',
   'Administrative & Virtual Assistance': 'المساعدة الإدارية والافتراضية',
@@ -258,7 +255,7 @@ export const arTranslations = {
   category: 'الفئة',
   tags: 'العلامات',
   
-  // Categories
+  // Categories (legacy)
   legal: 'القانونية والامتثال',
   technology: 'التكنولوجيا',
   investment: 'الاستثمار',
@@ -310,7 +307,7 @@ export const arTranslations = {
   'Business Leaders': 'قادة الأعمال',
   'Get guidance on Syrian laws, regulations, and legal procedures from practicing attorneys': 'احصل على إرشادات حول القوانين السورية واللوائح والإجراءات القانونية من محامين ممارسين',
   'Discuss tech developments, startup ecosystem, and digital transformation in Syria': 'ناقش التطورات التقنية ونظام الشركات الناشئة والتحول الرقمي في سوريا',
-  'Insights on Syrian market conditions, business opportunities, and economic developments': 'رؤى حول ظروف السوق السورية والفرص التجارية والتطورات الاقتصادية',
+  'Insights on Syrian market conditions, business opportunities, and economic developments': 'رؤى حول ظروف السوق السورية والفرص التجارية والتطورات الاقتصادية',  
   'Browse Questions': 'تصفح الأسئلة',
   
   // Landing Page - Features Section
@@ -424,5 +421,8 @@ export const arTranslations = {
   question: 'سؤال',
   news: 'أخبار',
   article: 'مقال',
-  business_idea: 'فكرة تجارية'
+  business_idea: 'فكرة تجارية',
+
+  // Additional category text for selectCategory
+  selectCategory: 'اختر الفئة'
 };
