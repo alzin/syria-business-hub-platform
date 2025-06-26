@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Input } from '@/components/ui/input';
 import { CountrySelector } from '@/components/ui/country-selector';
 import { PhoneInput } from '@/components/ui/phone-input';
@@ -48,10 +49,11 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
   isLoading,
 }) => {
   const { t } = useTranslation();
+  const { isRTL } = useLanguage();
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <>
+    <div className={`space-y-4 ${isRTL ? 'text-right' : 'text-left'}`}>
       <div>
         <Input
           type="text"
@@ -61,6 +63,7 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
           required
           disabled={isLoading}
           autoComplete="name"
+          className={isRTL ? 'text-right' : 'text-left'}
         />
       </div>
 
@@ -73,6 +76,7 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
           required
           disabled={isLoading}
           autoComplete="email"
+          className={isRTL ? 'text-right' : 'text-left'}
         />
       </div>
       
@@ -86,13 +90,15 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
           minLength={6}
           disabled={isLoading}
           autoComplete="new-password"
-          className="pr-10"
+          className={`${isRTL ? 'text-right pr-10' : 'text-left pr-10'}`}
         />
         <Button
           type="button"
           variant="ghost"
           size="sm"
-          className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+          className={`absolute top-0 h-full px-3 py-2 hover:bg-transparent ${
+            isRTL ? 'left-0' : 'right-0'
+          }`}
           onClick={() => setShowPassword(!showPassword)}
           disabled={isLoading}
         >
@@ -116,7 +122,7 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
       </div>
 
       <div>
-        <div className="text-sm text-gray-600 mb-2">
+        <div className={`text-sm text-gray-600 mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
           Country you currently live in
         </div>
         <CountrySelector
@@ -129,7 +135,7 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
       </div>
 
       <div>
-        <div className="text-sm text-gray-600 mb-2">
+        <div className={`text-sm text-gray-600 mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
           Phone Number
         </div>
         <PhoneInput
@@ -143,7 +149,7 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
           className="w-full"
         />
       </div>
-    </>
+    </div>
   );
 };
 

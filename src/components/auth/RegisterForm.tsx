@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
@@ -16,6 +17,7 @@ interface RegisterFormProps {
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin }) => {
   const { t } = useTranslation();
+  const { isRTL } = useLanguage();
   const { register } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -134,41 +136,43 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <RegisterFormFields
-        name={name}
-        setName={setName}
-        email={email}
-        setEmail={setEmail}
-        password={password}
-        setPassword={setPassword}
-        expertiseCategory={expertiseCategory}
-        setExpertiseCategory={setExpertiseCategory}
-        expertiseSpecialization={expertiseSpecialization}
-        setExpertiseSpecialization={setExpertiseSpecialization}
-        location={location}
-        setLocation={setLocation}
-        phoneNumber={phoneNumber}
-        setPhoneNumber={setPhoneNumber}
-        phoneCountryCode={phoneCountryCode}
-        setPhoneCountryCode={setPhoneCountryCode}
-        isLoading={isLoading}
-      />
-      
-      <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? t('loading') : t('register')}
-      </Button>
-
-      <div className="text-center">
-        <Button 
-          variant="link" 
-          onClick={onSwitchToLogin}
-          disabled={isLoading}
-        >
-          Already have an account? {t('login')}
+    <div className={isRTL ? 'text-right' : 'text-left'}>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <RegisterFormFields
+          name={name}
+          setName={setName}
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          expertiseCategory={expertiseCategory}
+          setExpertiseCategory={setExpertiseCategory}
+          expertiseSpecialization={expertiseSpecialization}
+          setExpertiseSpecialization={setExpertiseSpecialization}
+          location={location}
+          setLocation={setLocation}
+          phoneNumber={phoneNumber}
+          setPhoneNumber={setPhoneNumber}
+          phoneCountryCode={phoneCountryCode}
+          setPhoneCountryCode={setPhoneCountryCode}
+          isLoading={isLoading}
+        />
+        
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? t('loading') : t('register')}
         </Button>
-      </div>
-    </form>
+
+        <div className="text-center">
+          <Button 
+            variant="link" 
+            onClick={onSwitchToLogin}
+            disabled={isLoading}
+          >
+            Already have an account? {t('login')}
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 };
 

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import RegisterForm from './RegisterForm';
 
@@ -16,6 +17,7 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
   onSwitchToLogin 
 }) => {
   const { t } = useTranslation();
+  const { isRTL } = useLanguage();
 
   const handleSuccess = () => {
     onOpenChange(false);
@@ -23,9 +25,11 @@ const RegisterDialog: React.FC<RegisterDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className={`sm:max-w-md ${isRTL ? 'text-right' : 'text-left'}`}>
         <DialogHeader>
-          <DialogTitle>{t('register')}</DialogTitle>
+          <DialogTitle className={isRTL ? 'text-right' : 'text-left'}>
+            {t('register')}
+          </DialogTitle>
         </DialogHeader>
         
         <RegisterForm 

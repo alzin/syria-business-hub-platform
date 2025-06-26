@@ -1,4 +1,3 @@
-
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -9,6 +8,161 @@ const resources = {
       // App name and branding
       platformTagline: 'Where Syrian Expertise Meets Global Community',
       
+      // Expertise Categories
+      'Legal Expert': 'Legal Expert',
+      'Investor': 'Investor',
+      'Founder': 'Founder',
+      'Government': 'Government',
+      'Business & Consulting': 'Business & Consulting',
+      'Technology & Development': 'Technology & Development',
+      'Design & Creative': 'Design & Creative',
+      'Marketing & Sales': 'Marketing & Sales',
+      'Writing & Content Creation': 'Writing & Content Creation',
+      'Translation & Languages': 'Translation & Languages',
+      'Education & Coaching': 'Education & Coaching',
+      'Administrative & Virtual Assistance': 'Administrative & Virtual Assistance',
+      'Arts, Culture & Media': 'Arts, Culture & Media',
+      'Specialized & Niche Services': 'Specialized & Niche Services',
+
+      // Legal Expert Specializations
+      'Company Registration & Business Setup': 'Company Registration & Business Setup',
+      'Contract Drafting & Review': 'Contract Drafting & Review',
+      'Intellectual Property (IP) & Trademark Registration': 'Intellectual Property (IP) & Trademark Registration',
+      'Legal Research & Compliance Advisory': 'Legal Research & Compliance Advisory',
+      'Court Documentation & Litigation Support': 'Court Documentation & Litigation Support',
+      'Real Estate & Property Law': 'Real Estate & Property Law',
+      'NGO & Nonprofit Legal Support': 'NGO & Nonprofit Legal Support',
+      'Family Law Consultation': 'Family Law Consultation',
+      'Immigration & Visa Advisory': 'Immigration & Visa Advisory',
+      'Customs & Trade Law Advisory': 'Customs & Trade Law Advisory',
+
+      // Business & Consulting Specializations
+      'Business Plan Writing': 'Business Plan Writing',
+      'Feasibility Studies': 'Feasibility Studies',
+      'Market Research & Analysis': 'Market Research & Analysis',
+      'Financial Modeling': 'Financial Modeling',
+      'Pitch Deck Preparation': 'Pitch Deck Preparation',
+      'Legal Consulting (Contracts, Company Formation)': 'Legal Consulting (Contracts, Company Formation)',
+      'Tax & Accounting Advisory': 'Tax & Accounting Advisory',
+      'Project Management': 'Project Management',
+      'Business Process Reengineering': 'Business Process Reengineering',
+      'Risk & Internal Audit Consulting': 'Risk & Internal Audit Consulting',
+      'ERP System Advisory (SAP, Oracle, Zoho)': 'ERP System Advisory (SAP, Oracle, Zoho)',
+
+      // Technology & Development Specializations
+      'Website Development (HTML, WordPress, React)': 'Website Development (HTML, WordPress, React)',
+      'Mobile App Development (Android/iOS)': 'Mobile App Development (Android/iOS)',
+      'UX/UI Design': 'UX/UI Design',
+      'Software Engineering': 'Software Engineering',
+      'QA Testing & Debugging': 'QA Testing & Debugging',
+      'Data Entry & Web Research': 'Data Entry & Web Research',
+      'Tech Support / Helpdesk': 'Tech Support / Helpdesk',
+      'AI & Machine Learning Services': 'AI & Machine Learning Services',
+      'Cybersecurity Audits': 'Cybersecurity Audits',
+      'Database Management (SQL, MongoDB)': 'Database Management (SQL, MongoDB)',
+      'System Administration': 'System Administration',
+      'Blockchain & Smart Contracts Development': 'Blockchain & Smart Contracts Development',
+
+      // Design & Creative Specializations
+      'Logo & Branding Design': 'Logo & Branding Design',
+      'Social Media Design': 'Social Media Design',
+      'Business Cards & Stationery': 'Business Cards & Stationery',
+      'Infographics': 'Infographics',
+      'Presentation Design (PowerPoint, Keynote)': 'Presentation Design (PowerPoint, Keynote)',
+      'Product Mockups': 'Product Mockups',
+      'Animation (2D, Whiteboard, Motion Graphics)': 'Animation (2D, Whiteboard, Motion Graphics)',
+      'Video Editing': 'Video Editing',
+      'Interior Design & 3D Rendering': 'Interior Design & 3D Rendering',
+      'Fashion Design': 'Fashion Design',
+      'Architectural Drafting': 'Architectural Drafting',
+
+      // Marketing & Sales Specializations
+      'Digital Marketing Strategy': 'Digital Marketing Strategy',
+      'Social Media Management': 'Social Media Management',
+      'SEO & SEM Services': 'SEO & SEM Services',
+      'Paid Ads Management (Meta, Google)': 'Paid Ads Management (Meta, Google)',
+      'Email Marketing Campaigns': 'Email Marketing Campaigns',
+      'Influencer Marketing': 'Influencer Marketing',
+      'Marketing Automation (Hubspot, Zoho)': 'Marketing Automation (Hubspot, Zoho)',
+      'Affiliate Program Setup': 'Affiliate Program Setup',
+      'Lead Generation': 'Lead Generation',
+      'Sales Funnel Optimization': 'Sales Funnel Optimization',
+      'Public Relations & Press Releases': 'Public Relations & Press Releases',
+
+      // Writing & Content Creation Specializations
+      'Article & Blog Writing': 'Article & Blog Writing',
+      'Copywriting (Web, Ads, Landing Pages)': 'Copywriting (Web, Ads, Landing Pages)',
+      'Script Writing (YouTube, Ads, Reels)': 'Script Writing (YouTube, Ads, Reels)',
+      'Technical Writing': 'Technical Writing',
+      'Resume & Cover Letter Writing': 'Resume & Cover Letter Writing',
+      'Grant Writing': 'Grant Writing',
+      'Editing & Proofreading': 'Editing & Proofreading',
+      'Academic Writing': 'Academic Writing',
+      'LinkedIn Profile Optimization': 'LinkedIn Profile Optimization',
+      'Subtitling & Captioning': 'Subtitling & Captioning',
+
+      // Translation & Languages Specializations
+      'Translation': 'Translation',
+      'Legal & Technical Translation': 'Legal & Technical Translation',
+      'Interpretation (Remote or Live)': 'Interpretation (Remote or Live)',
+      'Voice-over in Arabic, English, French': 'Voice-over in Arabic, English, French',
+      'Language Tutoring (Arabic, French, German, English)': 'Language Tutoring (Arabic, French, German, English)',
+      'Localization for Apps & Websites': 'Localization for Apps & Websites',
+      'Transcription Services (Audio/Video)': 'Transcription Services (Audio/Video)',
+
+      // Education & Coaching Specializations
+      'Private Tutoring (Math, Science, English…)': 'Private Tutoring (Math, Science, English…)',
+      'Online Course Creation': 'Online Course Creation',
+      'Study Abroad Consulting': 'Study Abroad Consulting',
+      'IELTS / TOEFL Coaching': 'IELTS / TOEFL Coaching',
+      'CV & Interview Prep': 'CV & Interview Prep',
+      'Career Coaching': 'Career Coaching',
+      'Life Coaching': 'Life Coaching',
+      'University Application Support': 'University Application Support',
+      'Educational Content Development': 'Educational Content Development',
+
+      // Administrative & Virtual Assistance Specializations
+      'Virtual Assistant Services': 'Virtual Assistant Services',
+      'Customer Support (Email, Chat)': 'Customer Support (Email, Chat)',
+      'Calendar & Task Management': 'Calendar & Task Management',
+      'Travel Planning & Booking': 'Travel Planning & Booking',
+      'CRM Data Entry': 'CRM Data Entry',
+      'Event Planning': 'Event Planning',
+      'Data Collection / Market Surveys': 'Data Collection / Market Surveys',
+      'Procurement Assistance': 'Procurement Assistance',
+      'Research Assistant Services': 'Research Assistant Services',
+
+      // Arts, Culture & Media Specializations
+      'Music Composition': 'Music Composition',
+      'Audio Mixing & Mastering': 'Audio Mixing & Mastering',
+      'Podcast Editing': 'Podcast Editing',
+      'Voice Acting (Arabic, English, French)': 'Voice Acting (Arabic, English, French)',
+      'Photography & Photo Editing': 'Photography & Photo Editing',
+      'Script Narration': 'Script Narration',
+      'Cultural Consultation': 'Cultural Consultation',
+      'Arabic Calligraphy / Design': 'Arabic Calligraphy / Design',
+      'Heritage Storytelling (for NGOs or campaigns)': 'Heritage Storytelling (for NGOs or campaigns)',
+
+      // Specialized & Niche Services Specializations
+      'Real Estate Documentation': 'Real Estate Documentation',
+      'Medical Translation / Medical Support': 'Medical Translation / Medical Support',
+      'NGO Proposal Writing': 'NGO Proposal Writing',
+      'Migration Support Services': 'Migration Support Services',
+      'Humanitarian Aid Consulting': 'Humanitarian Aid Consulting',
+      'UX Research in Arabic Markets': 'UX Research in Arabic Markets',
+      'Digital Payment Integration': 'Digital Payment Integration',
+      'GIS Mapping Services': 'GIS Mapping Services',
+      'Import/Export Trade Consulting': 'Import/Export Trade Consulting',
+      'Supply Chain Support': 'Supply Chain Support',
+      'Recruitment & HR Outsourcing': 'Recruitment & HR Outsourcing',
+      'Architecture Portfolio Building': 'Architecture Portfolio Building',
+
+      // Registration Form Labels
+      'Main Category': 'Main Category',
+      'Specific Domain': 'Specific Domain',
+      'Select your main expertise category': 'Select your main expertise category',
+      'Select your specific domain': 'Select your specific domain',
+
       // Footer
       footer: {
         brandName: 'SyrVest',
@@ -120,7 +274,7 @@ const resources = {
       userNotFound: 'User not found',
       
       // Landing Page
-      welcomeSubtitle: 'Syria investment platform “ SyrVest”  is a trusted bridge between Syrian professionals and global business needs.',
+      welcomeSubtitle: 'Syria investment platform " SyrVest"  is a trusted bridge between Syrian professionals and global business needs.',
       getStarted: 'Get Started',
       learnMore: 'Learn More',
       
@@ -257,9 +411,164 @@ const resources = {
       appName: 'سير فيست',
       platformTagline: 'حيث تلتقي الخبرة السورية بالمجتمع العالمي',
       
+      // Expertise Categories
+      'Legal Expert': 'خبير قانوني',
+      'Investor': 'مستثمر',
+      'Founder': 'مؤسس',
+      'Government': 'حكومي',
+      'Business & Consulting': 'الأعمال والاستشارات',
+      'Technology & Development': 'التكنولوجيا والتطوير',
+      'Design & Creative': 'التصميم والإبداع',
+      'Marketing & Sales': 'التسويق والمبيعات',
+      'Writing & Content Creation': 'الكتابة وإنشاء المحتوى',
+      'Translation & Languages': 'الترجمة واللغات',
+      'Education & Coaching': 'التعليم والتدريب',
+      'Administrative & Virtual Assistance': 'المساعدة الإدارية والافتراضية',
+      'Arts, Culture & Media': 'الفنون والثقافة والإعلام',
+      'Specialized & Niche Services': 'الخدمات المتخصصة والمتخصصة',
+
+      // Legal Expert Specializations
+      'Company Registration & Business Setup': 'تسجيل الشركات وتأسيس الأعمال',
+      'Contract Drafting & Review': 'صياغة ومراجعة العقود',
+      'Intellectual Property (IP) & Trademark Registration': 'الملكية الفكرية وتسجيل العلامات التجارية',
+      'Legal Research & Compliance Advisory': 'البحث القانوني والاستشارات التنظيمية',
+      'Court Documentation & Litigation Support': 'وثائق المحكمة ودعم التقاضي',
+      'Real Estate & Property Law': 'قانون العقارات والممتلكات',
+      'NGO & Nonprofit Legal Support': 'الدعم القانوني للمنظمات غير الحكومية وغير الربحية',
+      'Family Law Consultation': 'استشارات قانون الأسرة',
+      'Immigration & Visa Advisory': 'استشارات الهجرة والتأشيرات',
+      'Customs & Trade Law Advisory': 'استشارات قانون الجمارك والتجارة',
+
+      // Business & Consulting Specializations
+      'Business Plan Writing': 'كتابة خطط الأعمال',
+      'Feasibility Studies': 'دراسات الجدوى',
+      'Market Research & Analysis': 'بحوث وتحليل السوق',
+      'Financial Modeling': 'النمذجة المالية',
+      'Pitch Deck Preparation': 'إعداد عروض الاستثمار',
+      'Legal Consulting (Contracts, Company Formation)': 'الاستشارات القانونية (العقود، تكوين الشركات)',
+      'Tax & Accounting Advisory': 'استشارات الضرائب والمحاسبة',
+      'Project Management': 'إدارة المشاريع',
+      'Business Process Reengineering': 'إعادة هندسة العمليات التجارية',
+      'Risk & Internal Audit Consulting': 'استشارات المخاطر والتدقيق الداخلي',
+      'ERP System Advisory (SAP, Oracle, Zoho)': 'استشارات أنظمة تخطيط موارد المؤسسات (SAP، Oracle، Zoho)',
+
+      // Technology & Development Specializations
+      'Website Development (HTML, WordPress, React)': 'تطوير المواقع الإلكترونية (HTML، WordPress، React)',
+      'Mobile App Development (Android/iOS)': 'تطوير تطبيقات الجوال (Android/iOS)',
+      'UX/UI Design': 'تصميم تجربة المستخدم وواجهة المستخدم',
+      'Software Engineering': 'هندسة البرمجيات',
+      'QA Testing & Debugging': 'اختبار ضمان الجودة وإصلاح الأخطاء',
+      'Data Entry & Web Research': 'إدخال البيانات والبحث عبر الإنترنت',
+      'Tech Support / Helpdesk': 'الدعم التقني / مكتب المساعدة',
+      'AI & Machine Learning Services': 'خدمات الذكاء الاصطناعي والتعلم الآلي',
+      'Cybersecurity Audits': 'تدقيق الأمن السيبراني',
+      'Database Management (SQL, MongoDB)': 'إدارة قواعد البيانات (SQL، MongoDB)',
+      'System Administration': 'إدارة الأنظمة',
+      'Blockchain & Smart Contracts Development': 'تطوير البلوك تشين والعقود الذكية',
+
+      // Design & Creative Specializations
+      'Logo & Branding Design': 'تصميم الشعارات والهوية التجارية',
+      'Social Media Design': 'تصميم وسائل التواصل الاجتماعي',
+      'Business Cards & Stationery': 'تصميم بطاقات العمل والقرطاسية',
+      'Infographics': 'الرسوم البيانية التوضيحية',
+      'Presentation Design (PowerPoint, Keynote)': 'تصميم العروض التقديمية (PowerPoint، Keynote)',
+      'Product Mockups': 'نماذج المنتجات الأولية',
+      'Animation (2D, Whiteboard, Motion Graphics)': 'الرسوم المتحركة (2D، السبورة البيضاء، الرسوم المتحركة)',
+      'Video Editing': 'تحرير الفيديو',
+      'Interior Design & 3D Rendering': 'التصميم الداخلي والعرض ثلاثي الأبعاد',
+      'Fashion Design': 'تصميم الأزياء',
+      'Architectural Drafting': 'الرسم المعماري',
+
+      // Marketing & Sales Specializations
+      'Digital Marketing Strategy': 'استراتيجية التسويق الرقمي',
+      'Social Media Management': 'إدارة وسائل التواصل الاجتماعي',
+      'SEO & SEM Services': 'خدمات تحسين محركات البحث والتسويق عبر محركات البحث',
+      'Paid Ads Management (Meta, Google)': 'إدارة الإعلانات المدفوعة (Meta، Google)',
+      'Email Marketing Campaigns': 'حملات التسويق عبر البريد الإلكتروني',
+      'Influencer Marketing': 'التسويق عبر المؤثرين',
+      'Marketing Automation (Hubspot, Zoho)': 'أتمتة التسويق (Hubspot، Zoho)',
+      'Affiliate Program Setup': 'إعداد برامج الشراكة',
+      'Lead Generation': 'توليد العملاء المحتملين',
+      'Sales Funnel Optimization': 'تحسين قمع المبيعات',
+      'Public Relations & Press Releases': 'العلاقات العامة والبيانات الصحفية',
+
+      // Writing & Content Creation Specializations
+      'Article & Blog Writing': 'كتابة المقالات والمدونات',
+      'Copywriting (Web, Ads, Landing Pages)': 'كتابة النصوص الإعلانية (المواقع، الإعلانات، صفحات الهبوط)',
+      'Script Writing (YouTube, Ads, Reels)': 'كتابة النصوص (YouTube، الإعلانات، Reels)',
+      'Technical Writing': 'الكتابة التقنية',
+      'Resume & Cover Letter Writing': 'كتابة السيرة الذاتية ورسالة التغطية',
+      'Grant Writing': 'كتابة طلبات المنح',
+      'Editing & Proofreading': 'التحرير والتدقيق اللغوي',
+      'Academic Writing': 'الكتابة الأكاديمية',
+      'LinkedIn Profile Optimization': 'تحسين ملف LinkedIn الشخصي',
+      'Subtitling & Captioning': 'إضافة الترجمة والتسميات التوضيحية',
+
+      // Translation & Languages Specializations
+      'Translation': 'الترجمة',
+      'Legal & Technical Translation': 'الترجمة القانونية والتقنية',
+      'Interpretation (Remote or Live)': 'الترجمة الفورية (عن بُعد أو مباشرة)',
+      'Voice-over in Arabic, English, French': 'التعليق الصوتي بالعربية والإنجليزية والفرنسية',
+      'Language Tutoring (Arabic, French, German, English)': 'تدريس اللغات (العربية، الفرنسية، الألمانية، الإنجليزية)',
+      'Localization for Apps & Websites': 'التوطين للتطبيقات والمواقع الإلكترونية',
+      'Transcription Services (Audio/Video)': 'خدمات النسخ (الصوت/الفيديو)',
+
+      // Education & Coaching Specializations
+      'Private Tutoring (Math, Science, English…)': 'التدريس الخصوصي (الرياضيات، العلوم، الإنجليزية...)',
+      'Online Course Creation': 'إنشاء الدورات التدريبية عبر الإنترنت',
+      'Study Abroad Consulting': 'استشارات الدراسة في الخارج',
+      'IELTS / TOEFL Coaching': 'تدريب IELTS / TOEFL',
+      'CV & Interview Prep': 'إعداد السيرة الذاتية والمقابلات',
+      'Career Coaching': 'التدريب المهني',
+      'Life Coaching': 'التدريب على الحياة',
+      'University Application Support': 'دعم طلبات الجامعة',
+      'Educational Content Development': 'تطوير المحتوى التعليمي',
+
+      // Administrative & Virtual Assistance Specializations
+      'Virtual Assistant Services': 'خدمات المساعد الافتراضي',
+      'Customer Support (Email, Chat)': 'دعم العملاء (البريد الإلكتروني، الدردشة)',
+      'Calendar & Task Management': 'إدارة التقويم والمهام',
+      'Travel Planning & Booking': 'تخطيط وحجز السفر',
+      'CRM Data Entry': 'إدخال بيانات إدارة علاقات العملاء',
+      'Event Planning': 'تخطيط الفعاليات',
+      'Data Collection / Market Surveys': 'جمع البيانات / استطلاعات السوق',
+      'Procurement Assistance': 'مساعدة في المشتريات',
+      'Research Assistant Services': 'خدمات مساعد البحث',
+
+      // Arts, Culture & Media Specializations
+      'Music Composition': 'تأليف الموسيقى',
+      'Audio Mixing & Mastering': 'خلط وإتقان الصوت',
+      'Podcast Editing': 'تحرير البودكاست',
+      'Voice Acting (Arabic, English, French)': 'التمثيل الصوتي (العربية، الإنجليزية، الفرنسية)',
+      'Photography & Photo Editing': 'التصوير الفوتوغرافي وتحرير الصور',
+      'Script Narration': 'سرد النصوص',
+      'Cultural Consultation': 'الاستشارات الثقافية',
+      'Arabic Calligraphy / Design': 'الخط العربي / التصميم',
+      'Heritage Storytelling (for NGOs or campaigns)': 'سرد التراث (للمنظمات غير الحكومية أو الحملات)',
+
+      // Specialized & Niche Services Specializations
+      'Real Estate Documentation': 'وثائق العقارات',
+      'Medical Translation / Medical Support': 'الترجمة الطبية / الدعم الطبي',
+      'NGO Proposal Writing': 'كتابة مقترحات المنظمات غير الحكومية',
+      'Migration Support Services': 'خدمات دعم الهجرة',
+      'Humanitarian Aid Consulting': 'استشارات المساعدات الإنسانية',
+      'UX Research in Arabic Markets': 'بحوث تجربة المستخدم في الأسواق العربية',
+      'Digital Payment Integration': 'تكامل المدفوعات الرقمية',
+      'GIS Mapping Services': 'خدمات رسم الخرائط الجغرافية',
+      'Import/Export Trade Consulting': 'استشارات تجارة الاستيراد والتصدير',
+      'Supply Chain Support': 'دعم سلسلة التوريد',
+      'Recruitment & HR Outsourcing': 'التوظيف والاستعانة بمصادر خارجية للموارد البشرية',
+      'Architecture Portfolio Building': 'بناء محفظة الهندسة المعمارية',
+
+      // Registration Form Labels
+      'Main Category': 'الفئة الرئيسية',
+      'Specific Domain': 'المجال المحدد',
+      'Select your main expertise category': 'اختر فئة خبرتك الرئيسية',
+      'Select your specific domain': 'اختر مجالك المحدد',
+
       // Footer
       footer: {
-        brandName: 'المعرفة السورية',
+        brandName: 'سيرفيست',
         mission: 'ربط الخبراء السوريين حول العالم لتبادل المعرفة، والإجابة على الأسئلة، وبناء مجتمع أقوى لمستقبل سوريا.',
         social: {
           facebook: 'فيسبوك',
@@ -294,7 +603,7 @@ const resources = {
           communityGuidelines: 'إرشادات المجتمع',
           reportIssue: 'الإبلاغ عن مشكلة'
         },
-        copyright: '© {{year}} منصة المعرفة السورية. صنع بـ',
+        copyright: '© {{year}} منصة سيرفيست. صنع بـ',
         tagline: 'للمجتمع السوري.',
         policies: {
           privacyPolicy: 'سياسة الخصوصية',

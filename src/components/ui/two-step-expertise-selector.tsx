@@ -1,5 +1,7 @@
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ExpertiseCategoryType, EXPERTISE_OPTIONS } from '@/types';
 
@@ -20,6 +22,8 @@ const TwoStepExpertiseSelector: React.FC<TwoStepExpertiseSelectorProps> = ({
   disabled = false,
   className = ""
 }) => {
+  const { t } = useTranslation();
+  const { isRTL } = useLanguage();
   const selectedCategoryData = EXPERTISE_OPTIONS.find(opt => opt.category === category);
 
   const handleCategoryChange = (value: string) => {
@@ -39,21 +43,27 @@ const TwoStepExpertiseSelector: React.FC<TwoStepExpertiseSelectorProps> = ({
   const showSpecializationSelector = selectedCategoryData?.requiresSpecialization;
 
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div className={`space-y-4 ${className} ${isRTL ? 'text-right' : 'text-left'}`}>
       <div>
-        <div className="text-sm text-gray-600 mb-2">Main Category</div>
+        <div className={`text-sm text-gray-600 mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
+          {t('Main Category')}
+        </div>
         <Select 
           value={category} 
           onValueChange={handleCategoryChange}
           disabled={disabled}
         >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Select your main expertise category" />
+          <SelectTrigger className={`w-full ${isRTL ? 'text-right' : 'text-left'}`}>
+            <SelectValue placeholder={t('Select your main expertise category')} />
           </SelectTrigger>
           <SelectContent>
             {EXPERTISE_OPTIONS.map((option) => (
-              <SelectItem key={option.category} value={option.category}>
-                {option.category}
+              <SelectItem 
+                key={option.category} 
+                value={option.category}
+                className={isRTL ? 'text-right' : 'text-left'}
+              >
+                {t(option.category)}
               </SelectItem>
             ))}
           </SelectContent>
@@ -62,19 +72,25 @@ const TwoStepExpertiseSelector: React.FC<TwoStepExpertiseSelectorProps> = ({
 
       {showSpecializationSelector && selectedCategoryData && (
         <div>
-          <div className="text-sm text-gray-600 mb-2">Specific Domain</div>
+          <div className={`text-sm text-gray-600 mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
+            {t('Specific Domain')}
+          </div>
           <Select 
             value={specialization} 
             onValueChange={onSpecializationChange}
             disabled={disabled}
           >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select your specific domain" />
+            <SelectTrigger className={`w-full ${isRTL ? 'text-right' : 'text-left'}`}>
+              <SelectValue placeholder={t('Select your specific domain')} />
             </SelectTrigger>
             <SelectContent>
               {selectedCategoryData.specializations.map((spec) => (
-                <SelectItem key={spec} value={spec}>
-                  {spec}
+                <SelectItem 
+                  key={spec} 
+                  value={spec}
+                  className={isRTL ? 'text-right' : 'text-left'}
+                >
+                  {t(spec)}
                 </SelectItem>
               ))}
             </SelectContent>
