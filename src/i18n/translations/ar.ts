@@ -4,6 +4,25 @@ export const arTranslations = {
   appName: 'سير فيست',
   platformTagline: 'حيث تلتقي الخبرة السورية بالمجتمع العالمي',
   
+  // Main tagline for posts page
+  'SyrVest is where Syrian professionals meet Investors and Business owners — Ask, Share, Offer': 'سيرفيست هو المكان الذي يلتقي فيه المهنيون السوريون بالمستثمرين وأصحاب الأعمال — اسأل، شارك، اعرض',
+  
+  // Post Categories
+  'Business Idea': 'أفكار مشاريع',
+  'Business & Economic': 'اقتصاد وأعمال',
+  'Technology': 'تكنولوجيا',
+  'Design & Creative': 'إبداع وتصميم',
+  'Marketing & Sales': 'تسويق ومبيعات',
+  'Content Creation': 'صناعة محتوى',
+  'Languages': 'لغات',
+  'Education': 'تعليم',
+  'Art': 'فن',
+  'Legal': 'قانوني',
+  
+  // Filter by Category
+  'Filter by Category': 'تصفية حسب الفئة',
+  'All Categories': 'جميع الفئات',
+
   // Expertise Categories
   'Legal Expert': 'خبير قانوني',
   'Investor': 'مستثمر',
@@ -399,5 +418,11 @@ export const arTranslations = {
   all: 'الكل',
   articles: 'المقالات',
   ideas: 'الأفكار',
-  'Get expert advice and community insights': 'احصل على مشورة الخبراء ورؤى المجتمع'
+  'Get expert advice and community insights': 'احصل على مشورة الخبراء ورؤى المجتمع',
+  
+  // Post types in Arabic
+  question: 'سؤال',
+  news: 'أخبار',
+  article: 'مقال',
+  business_idea: 'فكرة تجارية'
 };

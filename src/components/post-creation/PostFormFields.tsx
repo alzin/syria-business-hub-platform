@@ -75,7 +75,7 @@ const PostFormFields: React.FC<PostFormFieldsProps> = ({
           <SelectContent>
             {CATEGORY_OPTIONS.map((cat) => (
               <SelectItem key={cat.value} value={cat.value}>
-                {cat.label}
+                {t(cat.labelKey)}
               </SelectItem>
             ))}
           </SelectContent>

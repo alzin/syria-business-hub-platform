@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { MessageCircle, DollarSign, Clock, Users, Mail } from 'lucide-react';
 import { Post } from '@/types';
 import SanitizedContent from '@/components/SanitizedContent';
-import { getCategoryColor, getCategoryLabel } from '@/constants/categories';
+import { getCategoryColor, getCategoryLabelKey } from '@/constants/categories';
 
 interface PostDetailContentProps {
   post: Post;
@@ -23,7 +23,7 @@ const PostDetailContent: React.FC<PostDetailContentProps> = ({ post, answersCoun
           variant="outline"
           className={`text-sm ${getCategoryColor(post.category)}`}
         >
-          {getCategoryLabel(post.category)}
+          {t(getCategoryLabelKey(post.category))}
         </Badge>
       </div>
 

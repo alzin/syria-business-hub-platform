@@ -1,6 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { usePosts } from '@/hooks/usePosts';
 import { useAuth } from '@/contexts/AuthContext';
 import Header from '@/components/Header';
@@ -15,6 +15,7 @@ import CreatePostDialog from '@/components/CreatePostDialog';
 
 const Index = () => {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedCategory, setSelectedCategory] = useState<CategoryType | 'all'>('all');
   const [selectedContentType, setSelectedContentType] = useState<'all' | 'question' | 'article' | 'business_idea' | 'news'>('all');
@@ -93,7 +94,7 @@ const Index = () => {
         {/* SyrVest Tagline */}
         <div className="mb-8 text-center">
           <p className="text-xl text-primary font-semibold">
-            SyrVest is where Syrian professionals meet Investors and Business owners — <span className="underline decoration-2 underline-offset-2 text-accent font-bold">Ask, Share, Offer</span>.
+            {t('SyrVest is where Syrian professionals meet Investors and Business owners — Ask, Share, Offer')}
           </p>
         </div>
 

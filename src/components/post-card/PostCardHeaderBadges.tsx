@@ -3,7 +3,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 import { Post, CategoryType } from '@/types';
-import { getCategoryColor, getCategoryLabel } from '@/constants/categories';
+import { getCategoryColor, getCategoryLabelKey } from '@/constants/categories';
 
 interface PostCardHeaderBadgesProps {
   type: Post['type'];
@@ -35,9 +35,9 @@ const PostCardHeaderBadges: React.FC<PostCardHeaderBadgesProps> = ({ type, categ
       case 'news':
         return t('news');
       case 'article':
-        return t('Article');
+        return t('article');
       case 'business_idea':
-        return t('Business Idea');
+        return t('business_idea');
       default:
         return postType;
     }
@@ -55,7 +55,7 @@ const PostCardHeaderBadges: React.FC<PostCardHeaderBadgesProps> = ({ type, categ
         variant="outline"
         className={`text-xs ${getCategoryColor(category)}`}
       >
-        {getCategoryLabel(category)}
+        {t(getCategoryLabelKey(category))}
       </Badge>
     </div>
   );

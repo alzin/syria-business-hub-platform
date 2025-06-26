@@ -13,18 +13,18 @@ interface CategoryFiltersProps {
 const CategoryFilters: React.FC<CategoryFiltersProps> = ({ selectedCategory, setSelectedCategory }) => {
   const { t } = useTranslation();
 
-  const categories: { key: CategoryType | 'all'; label: string }[] = [
-    { key: 'all', label: 'All Categories' },
+  const categories: { key: CategoryType | 'all'; labelKey: string }[] = [
+    { key: 'all', labelKey: 'All Categories' },
     ...CATEGORY_OPTIONS.map(option => ({
       key: option.value,
-      label: option.label
+      labelKey: option.labelKey
     }))
   ];
 
   return (
     <div className="mb-8">
       <h2 className="text-lg font-semibold text-gray-900 mb-4">
-        {t('filterByCategory', 'Filter by Category')}
+        {t('Filter by Category')}
       </h2>
       <div className="flex flex-wrap gap-2">
         {categories.map((category) => (
@@ -38,7 +38,7 @@ const CategoryFilters: React.FC<CategoryFiltersProps> = ({ selectedCategory, set
             }
             onClick={() => setSelectedCategory(category.key)}
           >
-            {category.label}
+            {t(category.labelKey)}
           </Badge>
         ))}
       </div>
