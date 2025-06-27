@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -93,7 +94,7 @@ const Index = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* SyrVest Tagline */}
         <div className="mb-8 text-center">
-          <p className="text-xl text-primary font-semibold">
+          <p className="text-xl text-primary font-semibold whitespace-pre-line">
             {t('SyrVest is where Syrian professionals meet Investors and Business owners — Ask, Share, Offer')}
           </p>
         </div>
