@@ -6,6 +6,7 @@ export const categoriesTranslations = {
   'Technology': 'تكنولوجيا',
   'Design & Creative': 'إبداع وتصميم',
   'Marketing & Sales': 'تسويق ومبيعات',
+  'Writing & Content Creation': 'الكتابة وإنشاء المحتوى',
   'Content Creation': 'صناعة محتوى',
   'Languages': 'لغات',
   'Education': 'تعليم',
