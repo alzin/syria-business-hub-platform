@@ -11,7 +11,6 @@ import ContentTypeFilters from '@/components/index/ContentTypeFilters';
 import CategoryFilters from '@/components/index/CategoryFilters';
 import PostsSection from '@/components/index/PostsSection';
 import NavigationControls from '@/components/index/NavigationControls';
-import FloatingActionButton from '@/components/FloatingActionButton';
 import CreatePostDialog from '@/components/CreatePostDialog';
 
 const Index = () => {
@@ -82,7 +81,12 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header onSearch={handleSearchChange} searchTerm={searchTerm} />
+      <Header 
+        onSearch={handleSearchChange} 
+        searchTerm={searchTerm}
+        onCreatePost={() => setShowCreatePost(true)}
+        showCreateButton={shouldShowPosts && user}
+      />
       
       <NavigationControls
         searchTerm={searchTerm}
@@ -117,9 +121,6 @@ const Index = () => {
           handleSearchChange={handleSearchChange}
         />
       </div>
-
-      {/* Floating Action Button for mobile */}
-      <FloatingActionButton onClick={() => setShowCreatePost(true)} />
 
       {/* Create Post Dialog */}
       <CreatePostDialog 

@@ -12,7 +12,7 @@ import AuthButtons from '@/components/header/AuthButtons';
 import { useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Plus } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -22,9 +22,11 @@ import {
 interface HeaderProps {
   onSearch?: (term: string) => void;
   searchTerm?: string;
+  onCreatePost?: () => void;
+  showCreateButton?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
+const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '', onCreatePost, showCreateButton = false }) => {
   const { t } = useTranslation();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -110,10 +112,21 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '' }) => {
             )}
           </div>
 
-          {/* Mobile Search Bar */}
+          {/* Mobile Search Bar with Create Button */}
           {onSearch && isMobile && (
-            <div className="pb-3 pt-1">
-              <SearchBar onSearch={onSearch} searchTerm={searchTerm} />
+            <div className="pb-3 pt-1 flex items-center gap-2">
+              <div className="flex-1">
+                <SearchBar onSearch={onSearch} searchTerm={searchTerm} />
+              </div>
+              {showCreateButton && onCreatePost && (
+                <Button
+                  onClick={onCreatePost}
+                  size="sm"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground h-10 w-10 rounded-full p-0"
+                >
+                  <Plus className="h-5 w-5" />
+                </Button>
+              )}
             </div>
           )}
         </div>
