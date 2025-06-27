@@ -69,4 +69,12 @@ export const uiTranslations = {
   'Specific Domain': 'المجال المحدد',
   'Select your main expertise category': 'اختر فئة خبرتك الرئيسية',
   'Select your specific domain': 'اختر مجالك المحدد',
+
+  // Content Type Filters
+  'Content Type': 'نوع المحتوى',
+  'All Content': 'جميع المحتويات',
+  'Questions': 'الأسئلة',
+  'Articles': 'المقالات',
+  'Business Ideas': 'الأفكار التجارية',
+  'News': 'الأخبار',
 };

@@ -68,4 +68,12 @@ export const uiTranslations = {
   'Specific Domain': 'Specific Domain',
   'Select your main expertise category': 'Select your main expertise category',
   'Select your specific domain': 'Select your specific domain',
+
+  // Content Type Filters
+  'Content Type': 'Content Type',
+  'All Content': 'All Content',
+  'Questions': 'Questions',
+  'Articles': 'Articles',
+  'Business Ideas': 'Business Ideas',
+  'News': 'News',
 };
