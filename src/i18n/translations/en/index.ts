@@ -10,7 +10,7 @@ export const enTranslations = {
   platformTagline: 'Where Syrian Expertise Meets Global Community',
   
   // Main tagline for posts page with line break
-  'SyrVest is where Syrian professionals meet Investors and Business owners — Ask, Share, Offer': 'SyrVest is where Syrian professionals meet Investors and Business owners —\nAsk, Share, Offer',
+  'SyrVest is where Syrian professionals meet Investors and Business owners — Ask, Share, Offer': 'SyrVest is where Syrian professionals meet Investors and Business owners \nAsk, Share, Offer',
 
   // Spread all the modular translations
   ...categoriesTranslations,
