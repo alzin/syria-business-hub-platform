@@ -85,7 +85,7 @@ const Index = () => {
         onSearch={handleSearchChange} 
         searchTerm={searchTerm}
         onCreatePost={() => setShowCreatePost(true)}
-        showCreateButton={shouldShowPosts && user}
+        showCreateButton={shouldShowPosts && !!user}
       />
       
       <NavigationControls
