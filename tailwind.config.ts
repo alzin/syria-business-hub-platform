@@ -87,7 +87,8 @@ export default {
 			},
 			fontFamily: {
 				sans: ['Inter', 'system-ui', 'sans-serif'],
-				arabic: ['Amiri', 'serif'],
+				'arabic-headings': ['Cairo', 'Inter', 'sans-serif'],
+				'arabic-body': ['Noto Kufi Arabic', 'Inter', 'sans-serif'],
 			},
 			backgroundImage: {
 				'gradient-inspire': 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #059669 100%)',

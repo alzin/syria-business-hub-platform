@@ -37,7 +37,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     // Apply RTL class to body for better styling control
     if (lang === 'ar') {
       document.body.classList.add('rtl');
-      document.body.style.fontFamily = "'Amiri', serif";
+      document.body.style.fontFamily = "'Noto Kufi Arabic', 'Inter', sans-serif";
     } else {
       document.body.classList.remove('rtl');
       document.body.style.fontFamily = "'Inter', sans-serif";
