@@ -9,9 +9,9 @@ export const arTranslations = {
   // App name and branding
   appName: 'سير فيست',
   platformTagline: 'حيث تلتقي الخبرة السورية بالمجتمع العالمي',
-  
+
   // Main tagline for posts page
-  'SyrVest is where Syrian professionals meet Investors and Business owners — Ask, Share, Offer': 'سيرفيست هو المكان الذي يلتقي فيه المهنيون السوريون بالمستثمرين وأصحاب الأعمال — اسأل، شارك، اعرض',
+  'SyrVest is where Syrian professionals meet Investors and Business owners — Ask, Share, Offer': 'المنصة التي يلتقي فيها المهنيون السوريون بالمستثمرين وأصحاب العمل اسأل، شارك، اعرض',
 
   // Spread all the modular translations
   ...categoriesTranslations,
