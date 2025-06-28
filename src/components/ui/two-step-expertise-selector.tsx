@@ -10,7 +10,6 @@ interface TwoStepExpertiseSelectorProps {
   specialization: string;
   onCategoryChange: (category: string) => void;
   onSpecializationChange: (specialization: string) => void;
-  disabled?: boolean;
   className?: string;
 }
 
@@ -19,7 +18,6 @@ const TwoStepExpertiseSelector: React.FC<TwoStepExpertiseSelectorProps> = ({
   specialization,
   onCategoryChange,
   onSpecializationChange,
-  disabled = false,
   className = ""
 }) => {
   const { t } = useTranslation();
@@ -51,7 +49,6 @@ const TwoStepExpertiseSelector: React.FC<TwoStepExpertiseSelectorProps> = ({
         <Select 
           value={category} 
           onValueChange={handleCategoryChange}
-          disabled={disabled}
         >
           <SelectTrigger className={`w-full ${isRTL ? 'text-right' : 'text-left'}`}>
             <SelectValue placeholder={t('Select your main expertise category')} />
@@ -78,7 +75,6 @@ const TwoStepExpertiseSelector: React.FC<TwoStepExpertiseSelectorProps> = ({
           <Select 
             value={specialization} 
             onValueChange={onSpecializationChange}
-            disabled={disabled}
           >
             <SelectTrigger className={`w-full ${isRTL ? 'text-right' : 'text-left'}`}>
               <SelectValue placeholder={t('Select your specific domain')} />

@@ -45,7 +45,14 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
           
           <div className="flex-1 text-center sm:text-left w-full">
             <div className={`flex flex-col sm:flex-row items-center sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 mb-3 ${horizontalSpacing}`}>
-              <h1 className="text-xl sm:text-2xl font-bold text-gray-900">{userProfile.name}</h1>
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+                {userProfile.name}
+                {userProfile.expertiseSpecialization && (
+                  <span className="text-lg sm:text-xl font-normal text-gray-600 ml-2">
+                    ({userProfile.expertiseSpecialization})
+                  </span>
+                )}
+              </h1>
               {userProfile.verified && (
                 <span className="text-blue-500 text-sm">✓ {t('verified')}</span>
               )}
@@ -66,11 +73,6 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
                 {userProfile.expertiseCategory && (
                   <div className="mt-1 text-sm text-gray-700 font-medium">
                     {userProfile.expertiseCategory}
-                  </div>
-                )}
-                {userProfile.expertiseSpecialization && (
-                  <div className="text-xs text-gray-500 text-center sm:text-left max-w-xs">
-                    {userProfile.expertiseSpecialization}
                   </div>
                 )}
               </div>
