@@ -27,11 +27,17 @@ interface ProfileFormProps {
 const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange }) => {
   const isMobile = useIsMobile();
 
+  // Ensure languages is always an array
+  const safeFormData = {
+    ...formData,
+    languages: Array.isArray(formData.languages) ? formData.languages : []
+  };
+
   return (
     <div className="space-y-4">
       <Input
-        value={formData.name}
-        onChange={(e) => onFormDataChange({ ...formData, name: e.target.value })}
+        value={safeFormData.name}
+        onChange={(e) => onFormDataChange({ ...safeFormData, name: e.target.value })}
         className={`font-bold ${isMobile ? 'text-lg' : 'text-2xl'} mb-4`}
         placeholder="Enter your name"
       />
@@ -39,14 +45,14 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange })
       <div>
         <div className="text-sm text-gray-600 mb-2">Bio</div>
         <Textarea
-          value={formData.bio}
-          onChange={(e) => onFormDataChange({ ...formData, bio: e.target.value })}
+          value={safeFormData.bio}
+          onChange={(e) => onFormDataChange({ ...safeFormData, bio: e.target.value })}
           placeholder="Tell others about yourself, your background, and interests..."
           className="min-h-[100px] resize-none"
           maxLength={500}
         />
         <div className="text-xs text-gray-500 mt-1 text-right">
-          {formData.bio.length}/500
+          {safeFormData.bio.length}/500
         </div>
       </div>
       
@@ -54,10 +60,10 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange })
         <div className={isMobile ? 'w-full' : 'flex-1'}>
           <div className="text-sm text-gray-600 mb-2">Expertise</div>
           <TwoStepExpertiseSelector
-            category={formData.expertiseCategory}
-            specialization={formData.expertiseSpecialization}
-            onCategoryChange={(category) => onFormDataChange({ ...formData, expertiseCategory: category })}
-            onSpecializationChange={(specialization) => onFormDataChange({ ...formData, expertiseSpecialization: specialization })}
+            category={safeFormData.expertiseCategory}
+            specialization={safeFormData.expertiseSpecialization}
+            onCategoryChange={(category) => onFormDataChange({ ...safeFormData, expertiseCategory: category })}
+            onSpecializationChange={(specialization) => onFormDataChange({ ...safeFormData, expertiseSpecialization: specialization })}
             className="w-full"
           />
         </div>
@@ -65,8 +71,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange })
         <div className={isMobile ? 'w-full' : 'w-48'}>
           <div className="text-sm text-gray-600 mb-2">Country you currently live in</div>
           <CountrySelector
-            value={formData.location}
-            onValueChange={(value: string) => onFormDataChange({ ...formData, location: value })}
+            value={safeFormData.location}
+            onValueChange={(value: string) => onFormDataChange({ ...safeFormData, location: value })}
             placeholder="Select your country..."
             className="w-full"
           />
@@ -76,8 +82,8 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange })
       <div>
         <div className="text-sm text-gray-600 mb-2">Languages</div>
         <LanguagesSelector
-          value={formData.languages}
-          onValueChange={(languages: string[]) => onFormDataChange({ ...formData, languages })}
+          value={safeFormData.languages}
+          onValueChange={(languages: string[]) => onFormDataChange({ ...safeFormData, languages })}
           placeholder="Select languages you speak..."
           className="w-full"
         />
@@ -86,11 +92,11 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange })
       <div>
         <div className="text-sm text-gray-600 mb-2">Phone Number</div>
         <PhoneInput
-          value={formData.phoneNumber}
-          onValueChange={(value: string) => onFormDataChange({ ...formData, phoneNumber: value })}
-          countryCode={formData.phoneCountryCode}
-          onCountryCodeChange={(code: string) => onFormDataChange({ ...formData, phoneCountryCode: code })}
-          selectedCountry={formData.location}
+          value={safeFormData.phoneNumber}
+          onValueChange={(value: string) => onFormDataChange({ ...safeFormData, phoneNumber: value })}
+          countryCode={safeFormData.phoneCountryCode}
+          onCountryCodeChange={(code: string) => onFormDataChange({ ...safeFormData, phoneCountryCode: code })}
+          selectedCountry={safeFormData.location}
           placeholder="Enter your phone number"
           className="w-full"
         />

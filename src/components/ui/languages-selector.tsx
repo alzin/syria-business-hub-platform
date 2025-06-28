@@ -6,30 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
-
-// Common languages with their native names
-const LANGUAGES = [
-  { code: 'ar', name: 'Arabic', nativeName: 'العربية' },
-  { code: 'en', name: 'English', nativeName: 'English' },
-  { code: 'fr', name: 'French', nativeName: 'Français' },
-  { code: 'de', name: 'German', nativeName: 'Deutsch' },
-  { code: 'tr', name: 'Turkish', nativeName: 'Türkçe' },
-  { code: 'ku', name: 'Kurdish', nativeName: 'کوردی' },
-  { code: 'es', name: 'Spanish', nativeName: 'Español' },
-  { code: 'it', name: 'Italian', nativeName: 'Italiano' },
-  { code: 'ru', name: 'Russian', nativeName: 'Русский' },
-  { code: 'zh', name: 'Chinese', nativeName: '中文' },
-  { code: 'ja', name: 'Japanese', nativeName: '日本語' },
-  { code: 'pt', name: 'Portuguese', nativeName: 'Português' },
-  { code: 'nl', name: 'Dutch', nativeName: 'Nederlands' },
-  { code: 'sv', name: 'Swedish', nativeName: 'Svenska' },
-  { code: 'no', name: 'Norwegian', nativeName: 'Norsk' },
-  { code: 'da', name: 'Danish', nativeName: 'Dansk' },
-  { code: 'fi', name: 'Finnish', nativeName: 'Suomi' },
-  { code: 'pl', name: 'Polish', nativeName: 'Polski' },
-  { code: 'cs', name: 'Czech', nativeName: 'Čeština' },
-  { code: 'sk', name: 'Slovak', nativeName: 'Slovenčina' },
-];
+import { LANGUAGES } from '@/utils/languageUtils';
 
 interface LanguagesSelectorProps {
   value: string[];
@@ -40,7 +17,7 @@ interface LanguagesSelectorProps {
 }
 
 const LanguagesSelector: React.FC<LanguagesSelectorProps> = ({
-  value = [],
+  value = [], // Default to empty array to prevent undefined issues
   onValueChange,
   placeholder = "Select languages...",
   className,
@@ -48,19 +25,22 @@ const LanguagesSelector: React.FC<LanguagesSelectorProps> = ({
 }) => {
   const [open, setOpen] = React.useState(false);
 
-  const selectedLanguages = LANGUAGES.filter(lang => value.includes(lang.code));
-  const availableLanguages = LANGUAGES.filter(lang => !value.includes(lang.code));
+  // Ensure value is always an array
+  const safeValue = Array.isArray(value) ? value : [];
+
+  const selectedLanguages = LANGUAGES.filter(lang => safeValue.includes(lang.code));
+  const availableLanguages = LANGUAGES.filter(lang => !safeValue.includes(lang.code));
 
   const handleSelect = (languageCode: string) => {
-    if (value.includes(languageCode)) {
-      onValueChange(value.filter(code => code !== languageCode));
-    } else if (value.length < maxLanguages) {
-      onValueChange([...value, languageCode]);
+    if (safeValue.includes(languageCode)) {
+      onValueChange(safeValue.filter(code => code !== languageCode));
+    } else if (safeValue.length < maxLanguages) {
+      onValueChange([...safeValue, languageCode]);
     }
   };
 
   const removeLanguage = (languageCode: string) => {
-    onValueChange(value.filter(code => code !== languageCode));
+    onValueChange(safeValue.filter(code => code !== languageCode));
   };
 
   return (
@@ -86,12 +66,12 @@ const LanguagesSelector: React.FC<LanguagesSelectorProps> = ({
                   key={language.code}
                   value={language.name}
                   onSelect={() => handleSelect(language.code)}
-                  disabled={value.length >= maxLanguages}
+                  disabled={safeValue.length >= maxLanguages}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value.includes(language.code) ? "opacity-100" : "opacity-0"
+                      safeValue.includes(language.code) ? "opacity-100" : "opacity-0"
                     )}
                   />
                   <span className="flex-1">{language.name}</span>
@@ -125,7 +105,7 @@ const LanguagesSelector: React.FC<LanguagesSelectorProps> = ({
         </div>
       )}
       
-      {value.length >= maxLanguages && (
+      {safeValue.length >= maxLanguages && (
         <p className="text-xs text-gray-500 mt-1">
           Maximum {maxLanguages} languages allowed
         </p>
