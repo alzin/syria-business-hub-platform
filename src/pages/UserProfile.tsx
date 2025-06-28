@@ -37,6 +37,7 @@ const UserProfile = () => {
         id: data.id,
         email: data.email,
         name: data.name,
+        bio: data.bio,
         expertiseCategory: data.expertise_category,
         expertiseSpecialization: data.expertise_specialization,
         location: data.location,

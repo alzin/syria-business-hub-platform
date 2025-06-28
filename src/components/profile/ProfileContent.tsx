@@ -12,6 +12,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ProfileFormData {
   name: string;
+  bio: string;
   expertiseCategory: string;
   expertiseSpecialization: string;
   location: string;

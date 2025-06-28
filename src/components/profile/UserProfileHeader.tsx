@@ -48,6 +48,15 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
                 <span className="text-blue-500 text-sm">✓ {t('verified')}</span>
               )}
             </div>
+
+            {/* Bio section */}
+            {userProfile.bio && (
+              <div className="mb-4">
+                <p className="text-gray-700 text-sm sm:text-base leading-relaxed text-center sm:text-left">
+                  {userProfile.bio}
+                </p>
+              </div>
+            )}
             
             <div className={`flex flex-col sm:flex-row items-center sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mb-4 ${horizontalSpacing}`}>
               <div className="flex flex-col items-center sm:items-start">

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { CountrySelector } from '@/components/ui/country-selector';
 import { PhoneInput } from '@/components/ui/phone-input';
 import TwoStepExpertiseSelector from '@/components/ui/two-step-expertise-selector';
@@ -8,6 +9,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ProfileFormData {
   name: string;
+  bio: string;
   expertiseCategory: string;
   expertiseSpecialization: string;
   location: string;
@@ -31,6 +33,20 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange })
         className={`font-bold ${isMobile ? 'text-lg' : 'text-2xl'} mb-4`}
         placeholder="Enter your name"
       />
+
+      <div>
+        <div className="text-sm text-gray-600 mb-2">Bio</div>
+        <Textarea
+          value={formData.bio}
+          onChange={(e) => onFormDataChange({ ...formData, bio: e.target.value })}
+          placeholder="Tell others about yourself, your background, and interests..."
+          className="min-h-[100px] resize-none"
+          maxLength={500}
+        />
+        <div className="text-xs text-gray-500 mt-1 text-right">
+          {formData.bio.length}/500
+        </div>
+      </div>
       
       <div className={`flex ${isMobile ? 'flex-col space-y-3' : 'items-start space-x-4'}`}>
         <div className={isMobile ? 'w-full' : 'flex-1'}>

@@ -62,6 +62,15 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
               </Badge>
             )}
           </div>
+
+          {/* Bio section - only show when not editing and if bio exists */}
+          {!isEditing && user.bio && (
+            <div className={`${isMobile ? 'text-center mb-4' : 'mb-4'}`}>
+              <p className={`text-gray-700 ${isMobile ? 'text-sm' : 'text-base'} leading-relaxed`}>
+                {user.bio}
+              </p>
+            </div>
+          )}
           
           {/* Expertise and location info - responsive layout */}
           <div className={`${isMobile ? 'flex flex-col items-center space-y-2 mb-4' : `flex items-center ${isRTL ? 'space-x-4 mb-4 space-x-reverse' : 'space-x-4 mb-4'}`}`}>

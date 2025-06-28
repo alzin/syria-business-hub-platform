@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 
 interface ProfileFormData {
   name: string;
+  bio: string;
   expertiseCategory: string;
   expertiseSpecialization: string;
   location: string;
@@ -30,6 +31,7 @@ const Profile = () => {
   // Form state
   const [formData, setFormData] = useState<ProfileFormData>({
     name: user?.name || '',
+    bio: user?.bio || '',
     expertiseCategory: user?.expertiseCategory || '',
     expertiseSpecialization: user?.expertiseSpecialization || '',
     location: user?.location || 'Syria',
@@ -48,6 +50,7 @@ const Profile = () => {
         .from('profiles')
         .update({
           name: formData.name,
+          bio: formData.bio,
           expertise_category: formData.expertiseCategory,
           expertise_specialization: formData.expertiseSpecialization,
           location: formData.location,
@@ -80,6 +83,7 @@ const Profile = () => {
   const handleCancel = () => {
     setFormData({
       name: user.name,
+      bio: user.bio || '',
       expertiseCategory: user.expertiseCategory || '',
       expertiseSpecialization: user.expertiseSpecialization || '',
       location: user.location,

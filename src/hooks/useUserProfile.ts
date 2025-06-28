@@ -27,6 +27,7 @@ export const useUserProfile = () => {
           id: profile.id,
           email: profile.email,
           name: profile.name,
+          bio: profile.bio,
           expertiseCategory: profile.expertise_category,
           expertiseSpecialization: profile.expertise_specialization,
           location: profile.location,

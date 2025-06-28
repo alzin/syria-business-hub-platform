@@ -196,6 +196,7 @@ export type Database = {
         Row: {
           access_level: string
           avatar: string | null
+          bio: string | null
           created_at: string
           email: string
           expertise_category: string | null
@@ -214,6 +215,7 @@ export type Database = {
         Insert: {
           access_level?: string
           avatar?: string | null
+          bio?: string | null
           created_at?: string
           email: string
           expertise_category?: string | null
@@ -232,6 +234,7 @@ export type Database = {
         Update: {
           access_level?: string
           avatar?: string | null
+          bio?: string | null
           created_at?: string
           email?: string
           expertise_category?: string | null

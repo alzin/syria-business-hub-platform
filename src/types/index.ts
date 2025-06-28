@@ -11,6 +11,7 @@ export interface User {
   joinedAt: Date;
   phoneNumber?: string;
   phoneCountryCode?: string;
+  bio?: string;
 }
 
 export type ExpertiseType = 'legal' | 'investor' | 'founder' | 'government' | '';
