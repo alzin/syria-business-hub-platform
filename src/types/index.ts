@@ -12,6 +12,7 @@ export interface User {
   phoneNumber?: string;
   phoneCountryCode?: string;
   bio?: string;
+  languages?: string[];
 }
 
 export type ExpertiseType = 'legal' | 'investor' | 'founder' | 'government' | '';

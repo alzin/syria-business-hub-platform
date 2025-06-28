@@ -3,9 +3,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardHeader } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import ExpertiseBadge from '@/components/ExpertiseBadge';
-import { Calendar, MapPin, User as UserIcon } from 'lucide-react';
+import { Calendar, MapPin, User as UserIcon, Languages } from 'lucide-react';
 import { User as UserType } from '@/types';
+import { formatLanguagesForDisplay } from '@/utils/languageUtils';
 
 interface UserProfileHeaderProps {
   userProfile: UserType;
@@ -81,6 +83,23 @@ const UserProfileHeader: React.FC<UserProfileHeaderProps> = ({
                 <span className="text-xs sm:text-sm">{t('joined')} {userProfile.joinedAt.toLocaleDateString()}</span>
               </div>
             </div>
+
+            {/* Languages section */}
+            {userProfile.languages && userProfile.languages.length > 0 && (
+              <div className="mb-4">
+                <div className={`flex items-center space-x-2 mb-2 justify-center sm:justify-start ${horizontalSpacing}`}>
+                  <Languages className="w-4 h-4 text-gray-600" />
+                  <span className="text-sm text-gray-600 font-medium">{t('languages', 'Languages')}</span>
+                </div>
+                <div className="flex flex-wrap gap-1 justify-center sm:justify-start">
+                  {userProfile.languages.map((languageCode) => (
+                    <Badge key={languageCode} variant="outline" className="text-xs">
+                      {formatLanguagesForDisplay([languageCode])}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600">
               <div className="text-center sm:text-left">

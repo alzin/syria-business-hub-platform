@@ -37,6 +37,7 @@ export const useUserProfile = () => {
           joinedAt: new Date(profile.created_at),
           phoneNumber: profile.phone_number,
           phoneCountryCode: profile.phone_country_code,
+          languages: profile.languages || [],
         };
         setUser(userProfile);
         console.log('Profile loaded successfully:', userProfile.name);
