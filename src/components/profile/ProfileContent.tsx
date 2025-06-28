@@ -18,6 +18,7 @@ interface ProfileFormData {
   location: string;
   phoneNumber: string;
   phoneCountryCode: string;
+  languages: string[];
 }
 
 interface ProfileContentProps {

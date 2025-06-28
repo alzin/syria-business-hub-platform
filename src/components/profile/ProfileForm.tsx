@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { CountrySelector } from '@/components/ui/country-selector';
 import { PhoneInput } from '@/components/ui/phone-input';
+import { LanguagesSelector } from '@/components/ui/languages-selector';
 import TwoStepExpertiseSelector from '@/components/ui/two-step-expertise-selector';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -15,6 +16,7 @@ interface ProfileFormData {
   location: string;
   phoneNumber: string;
   phoneCountryCode: string;
+  languages: string[];
 }
 
 interface ProfileFormProps {
@@ -69,6 +71,16 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onFormDataChange })
             className="w-full"
           />
         </div>
+      </div>
+
+      <div>
+        <div className="text-sm text-gray-600 mb-2">Languages</div>
+        <LanguagesSelector
+          value={formData.languages || []}
+          onValueChange={(languages: string[]) => onFormDataChange({ ...formData, languages })}
+          placeholder="Select languages you speak..."
+          className="w-full"
+        />
       </div>
 
       <div>
