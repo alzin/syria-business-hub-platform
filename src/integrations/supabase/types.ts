@@ -202,7 +202,6 @@ export type Database = {
           expertise_category: string | null
           expertise_specialization: string | null
           id: string
-          languages: string[] | null
           location: string
           name: string
           phone_country_code: string | null
@@ -222,7 +221,6 @@ export type Database = {
           expertise_category?: string | null
           expertise_specialization?: string | null
           id: string
-          languages?: string[] | null
           location: string
           name: string
           phone_country_code?: string | null
@@ -242,7 +240,6 @@ export type Database = {
           expertise_category?: string | null
           expertise_specialization?: string | null
           id?: string
-          languages?: string[] | null
           location?: string
           name?: string
           phone_country_code?: string | null

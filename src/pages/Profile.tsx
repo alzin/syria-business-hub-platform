@@ -18,7 +18,6 @@ interface ProfileFormData {
   location: string;
   phoneNumber: string;
   phoneCountryCode: string;
-  languages: string[];
 }
 
 const Profile = () => {
@@ -38,7 +37,6 @@ const Profile = () => {
     location: user?.location || 'Syria',
     phoneNumber: user?.phoneNumber || '',
     phoneCountryCode: user?.phoneCountryCode || '+963',
-    languages: user?.languages || [],
   });
 
   if (!user) {
@@ -58,7 +56,6 @@ const Profile = () => {
           location: formData.location,
           phone_number: formData.phoneNumber,
           phone_country_code: formData.phoneCountryCode,
-          languages: formData.languages,
         })
         .eq('id', user.id);
 
@@ -92,7 +89,6 @@ const Profile = () => {
       location: user.location,
       phoneNumber: user.phoneNumber || '',
       phoneCountryCode: user.phoneCountryCode || '+963',
-      languages: user.languages || [],
     });
     setIsEditing(false);
   };
@@ -124,7 +120,8 @@ const Profile = () => {
           onAvatarUpdate={handleAvatarUpdate}
           onEdit={() => setIsEditing(true)}
           onSave={handleSave}
-          onCancel={handleCancel}          onFormDataChange={setFormData}
+          onCancel={handleCancel}
+          onFormDataChange={setFormData}
         />
 
         {/* Additional profile sections can be added here */}

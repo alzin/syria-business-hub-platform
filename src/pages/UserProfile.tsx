@@ -45,7 +45,6 @@ const UserProfile = () => {
         verified: data.verified,
         avatar: data.avatar,
         joinedAt: new Date(data.created_at),
-        languages: data.languages || [],
       };
 
       return user;
