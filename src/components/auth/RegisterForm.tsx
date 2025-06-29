@@ -40,10 +40,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !password || !name || !location || !expertiseCategory) {
+    if (!email || !password || !name || !location || !expertiseCategory || !phoneNumber) {
       toast({
         title: "Missing information",
-        description: "Please fill in all required fields including your expertise category.",
+        description: "Please fill in all required fields including your phone number.",
         variant: "destructive",
       });
       return;

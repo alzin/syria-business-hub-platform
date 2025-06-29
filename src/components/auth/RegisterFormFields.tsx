@@ -136,7 +136,7 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
 
       <div>
         <div className={`text-sm text-gray-600 mb-2 ${isRTL ? 'text-right' : 'text-left'}`}>
-          Phone Number
+          Phone Number *
         </div>
         <PhoneInput
           value={phoneNumber}
@@ -147,6 +147,7 @@ const RegisterFormFields: React.FC<RegisterFormFieldsProps> = ({
           placeholder="Enter your phone number"
           disabled={isLoading}
           className="w-full"
+          required
         />
       </div>
     </div>

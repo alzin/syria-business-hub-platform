@@ -17,6 +17,7 @@ interface PhoneInputProps {
   placeholder?: string;
   disabled?: boolean;
   className?: string;
+  required?: boolean;
 }
 
 export const PhoneInput: React.FC<PhoneInputProps> = ({
@@ -28,6 +29,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
   placeholder = "Enter phone number",
   disabled = false,
   className,
+  required = false,
 }) => {
   const [open, setOpen] = useState(false);
   const [phoneCountry, setPhoneCountry] = useState<PhoneCountry | undefined>();
@@ -102,6 +104,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
         value={value}
         onChange={handlePhoneChange}
         disabled={disabled}
+        required={required}
         className="rounded-l-none"
       />
     </div>
