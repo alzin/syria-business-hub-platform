@@ -23,6 +23,21 @@ export const useUserProfile = () => {
       }
 
       if (profile) {
+        // Update the verified status based on Supabase auth email verification
+        const isEmailVerified = supabaseUser.email_confirmed_at !== null;
+        
+        // Update the profile if verification status has changed
+        if (profile.verified !== isEmailVerified) {
+          console.log('Updating verification status:', isEmailVerified);
+          await supabase
+            .from('profiles')
+            .update({ verified: isEmailVerified })
+            .eq('id', supabaseUser.id);
+          
+          // Update the local profile data
+          profile.verified = isEmailVerified;
+        }
+
         const userProfile: User = {
           id: profile.id,
           email: profile.email,
@@ -40,7 +55,7 @@ export const useUserProfile = () => {
           languages: profile.languages,
         };
         setUser(userProfile);
-        console.log('Profile loaded successfully:', userProfile.name);
+        console.log('Profile loaded successfully:', userProfile.name, 'Verified:', userProfile.verified);
       } else {
         console.warn('No profile found for user:', supabaseUser.id);
       }
