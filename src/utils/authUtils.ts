@@ -16,9 +16,9 @@ export const loginUser = async (email: string, password: string) => {
 };
 
 export const registerUser = async (
-  email: string,
-  password: string,
-  name: string,
+  email: string, 
+  password: string, 
+  name: string, 
   location: string,
   phoneNumber?: string,
   phoneCountryCode?: string,
@@ -26,28 +26,6 @@ export const registerUser = async (
   expertiseSpecialization?: string
 ) => {
   console.log('Attempting registration for:', email);
-
-  // Check if a verified profile already exists with this email
-  const {
-    data: existingProfile,
-    error: existingError,
-  } = await supabase
-    .from('profiles')
-    .select('verified')
-    .eq('email', email)
-    .maybeSingle();
-
-  if (existingError) {
-    console.error('Error checking existing profile:', existingError);
-    throw existingError;
-  }
-
-  if (existingProfile && existingProfile.verified) {
-    const error = new Error('User already registered');
-    console.error('Registration error:', error);
-    throw error;
-  }
-
   const { error } = await supabase.auth.signUp({
     email,
     password,
