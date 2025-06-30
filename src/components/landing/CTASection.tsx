@@ -1,10 +1,10 @@
-
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import LoginDialog from '@/components/auth/LoginDialog';
 import RegisterDialog from '@/components/auth/RegisterDialog';
+import PasswordResetDialog from '@/components/auth/PasswordResetDialog';
 import CreatePostDialog from '@/components/CreatePostDialog';
 import { HelpCircle, Newspaper, Sparkles, ArrowRight } from 'lucide-react';
 
@@ -17,16 +17,25 @@ const CTASection: React.FC<CTASectionProps> = ({ onNavigateToMainPage }) => {
   const { user } = useAuth();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [showPasswordReset, setShowPasswordReset] = useState(false);
   const [showCreateQuestion, setShowCreateQuestion] = useState(false);
 
   const handleSwitchToRegister = () => {
     setShowLogin(false);
+    setShowPasswordReset(false);
     setShowRegister(true);
   };
 
   const handleSwitchToLogin = () => {
     setShowRegister(false);
+    setShowPasswordReset(false);
     setShowLogin(true);
+  };
+
+  const handleSwitchToPasswordReset = () => {
+    setShowLogin(false);
+    setShowRegister(false);
+    setShowPasswordReset(true);
   };
 
   const handleAskQuestion = () => {
@@ -106,12 +115,19 @@ const CTASection: React.FC<CTASectionProps> = ({ onNavigateToMainPage }) => {
         open={showLogin}
         onOpenChange={setShowLogin}
         onSwitchToRegister={handleSwitchToRegister}
+        onSwitchToPasswordReset={handleSwitchToPasswordReset}
       />
 
       <RegisterDialog
         open={showRegister}
         onOpenChange={setShowRegister}
         onSwitchToLogin={handleSwitchToLogin}
+      />
+
+      <PasswordResetDialog
+        open={showPasswordReset}
+        onOpenChange={setShowPasswordReset}
+        onBackToLogin={handleSwitchToLogin}
       />
 
       {/* Create Question Dialog */}
