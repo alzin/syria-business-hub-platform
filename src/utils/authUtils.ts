@@ -26,7 +26,7 @@ export const registerUser = async (
   expertiseSpecialization?: string
 ) => {
   console.log('Attempting registration for:', email);
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -46,6 +46,13 @@ export const registerUser = async (
     console.error('Registration error:', error);
     throw error;
   }
+
+  // Check if this is a repeated signup (user already exists and is verified)
+  if (data.user && !data.session) {
+    console.log('User already exists and is verified');
+    throw new Error('User already registered');
+  }
+
   console.log('Registration successful');
 };
 
