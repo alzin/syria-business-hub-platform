@@ -106,17 +106,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin 
       
       let errorMessage = "Please try again.";
       
-      // Better error handling for existing users
-      if (error.message?.includes('User already registered') || 
-          error.message?.includes('already been registered') ||
-          error.message?.includes('Email address already registered')) {
+      if (error.message?.includes('User already registered')) {
         errorMessage = "An account with this email already exists. Please try logging in instead.";
       } else if (error.message?.includes('Password should be at least 6 characters')) {
         errorMessage = "Password must be at least 6 characters long.";
       } else if (error.message?.includes('Invalid email')) {
         errorMessage = "Please enter a valid email address.";
-      } else if (error.message?.includes('signup is disabled')) {
-        errorMessage = "Registration is currently disabled. Please try again later.";
       }
       
       toast({
