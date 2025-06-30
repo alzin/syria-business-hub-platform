@@ -49,6 +49,32 @@ export const registerUser = async (
   console.log('Registration successful');
 };
 
+export const resetPassword = async (email: string) => {
+  console.log('Attempting password reset for:', email);
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${window.location.origin}/reset-password`,
+  });
+
+  if (error) {
+    console.error('Password reset error:', error);
+    throw error;
+  }
+  console.log('Password reset email sent successfully');
+};
+
+export const updatePassword = async (newPassword: string) => {
+  console.log('Attempting to update password');
+  const { error } = await supabase.auth.updateUser({
+    password: newPassword
+  });
+
+  if (error) {
+    console.error('Password update error:', error);
+    throw error;
+  }
+  console.log('Password updated successfully');
+};
+
 export const logoutUser = async () => {
   console.log('Logging out...');
   

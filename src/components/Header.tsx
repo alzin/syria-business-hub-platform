@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import LanguageToggle from '@/components/LanguageToggle';
 import LoginDialog from '@/components/auth/LoginDialog';
 import RegisterDialog from '@/components/auth/RegisterDialog';
+import PasswordResetDialog from '@/components/auth/PasswordResetDialog';
 import Logo from '@/components/Logo';
 import SearchBar from '@/components/header/SearchBar';
 import UserActions from '@/components/header/UserActions';
@@ -33,16 +34,25 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '', onCreatePost
   const isMobile = useIsMobile();
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [showPasswordReset, setShowPasswordReset] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleSwitchToRegister = () => {
     setShowLogin(false);
+    setShowPasswordReset(false);
     setShowRegister(true);
   };
 
   const handleSwitchToLogin = () => {
     setShowRegister(false);
+    setShowPasswordReset(false);
     setShowLogin(true);
+  };
+
+  const handleSwitchToPasswordReset = () => {
+    setShowLogin(false);
+    setShowRegister(false);
+    setShowPasswordReset(true);
   };
 
   const MobileActions = () => (
@@ -137,12 +147,19 @@ const Header: React.FC<HeaderProps> = ({ onSearch, searchTerm = '', onCreatePost
         open={showLogin}
         onOpenChange={setShowLogin}
         onSwitchToRegister={handleSwitchToRegister}
+        onSwitchToPasswordReset={handleSwitchToPasswordReset}
       />
 
       <RegisterDialog
         open={showRegister}
         onOpenChange={setShowRegister}
         onSwitchToLogin={handleSwitchToLogin}
+      />
+
+      <PasswordResetDialog
+        open={showPasswordReset}
+        onOpenChange={setShowPasswordReset}
+        onBackToLogin={handleSwitchToLogin}
       />
     </>
   );

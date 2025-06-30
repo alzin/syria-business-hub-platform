@@ -11,9 +11,15 @@ interface LoginDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSwitchToRegister: () => void;
+  onSwitchToPasswordReset: () => void;
 }
 
-const LoginDialog: React.FC<LoginDialogProps> = ({ open, onOpenChange, onSwitchToRegister }) => {
+const LoginDialog: React.FC<LoginDialogProps> = ({ 
+  open, 
+  onOpenChange, 
+  onSwitchToRegister,
+  onSwitchToPasswordReset 
+}) => {
   const { t } = useTranslation();
   const { login } = useAuth();
   const [email, setEmail] = useState('');
@@ -111,7 +117,16 @@ const LoginDialog: React.FC<LoginDialogProps> = ({ open, onOpenChange, onSwitchT
           </Button>
         </form>
         
-        <div className="text-center">
+        <div className="text-center space-y-2">
+          <Button 
+            variant="link" 
+            onClick={onSwitchToPasswordReset}
+            disabled={isLoading}
+            className="text-sm"
+          >
+            Forgot your password?
+          </Button>
+          
           <Button 
             variant="link" 
             onClick={onSwitchToRegister}

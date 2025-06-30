@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { User, GeolocationData } from '@/types';
 import { useGeolocation } from '@/hooks/useGeolocation';
 import { useUserProfile } from '@/hooks/useUserProfile';
-import { loginUser, registerUser, logoutUser } from '@/utils/authUtils';
+import { loginUser, registerUser, logoutUser, resetPassword, updatePassword } from '@/utils/authUtils';
 
 interface AuthContextType {
   user: User | null;
@@ -25,6 +25,8 @@ interface AuthContextType {
   ) => Promise<void>;
   logout: () => void;
   signOut: () => void;
+  resetPassword: (email: string) => Promise<void>;
+  updatePassword: (newPassword: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -114,6 +116,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
   };
 
+  const handleResetPassword = async (email: string) => {
+    await resetPassword(email);
+  };
+
+  const handleUpdatePassword = async (newPassword: string) => {
+    await updatePassword(newPassword);
+  };
+
   const handleLogout = async () => {
     // Clear local state first to provide immediate feedback
     clearUser();
@@ -133,6 +143,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       register: handleRegister,
       logout: handleLogout,
       signOut: handleLogout,
+      resetPassword: handleResetPassword,
+      updatePassword: handleUpdatePassword,
     }}>
       {children}
     </AuthContext.Provider>

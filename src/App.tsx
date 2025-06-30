@@ -12,6 +12,7 @@ import Index from "./pages/Index";
 import PostDetail from "./pages/PostDetail";
 import UserProfile from "./pages/UserProfile";
 import Profile from "./pages/Profile";
+import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 import "./i18n";
 
@@ -29,6 +30,7 @@ const AppContent = () => {
       <Route path="/post/:id" element={<PostDetail />} />
       <Route path="/user/:id" element={<UserProfile />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
