@@ -1,3 +1,4 @@
+
 import { supabase } from '@/integrations/supabase/client';
 
 export const loginUser = async (email: string, password: string) => {
@@ -25,7 +26,7 @@ export const registerUser = async (
   expertiseSpecialization?: string
 ) => {
   console.log('Attempting registration for:', email);
-  const { data, error } = await supabase.auth.signUp({
+  const { error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -45,7 +46,6 @@ export const registerUser = async (
     console.error('Registration error:', error);
     throw error;
   }
-
   console.log('Registration successful');
 };
 
