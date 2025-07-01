@@ -56,7 +56,14 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
         onSave={onSave}
         onCancel={onCancel}
         isLoading={isLoading}
-      />
+      >
+        {isEditing && (
+          <ProfileForm
+            formData={formData}
+            onFormDataChange={onFormDataChange}
+          />
+        )}
+      </ProfileHeader>
 
       <div className="px-3 sm:px-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -67,12 +74,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
           </TabsList>
           
           <TabsContent value="profile" className="mt-6 pb-6">
-            {isEditing ? (
-              <ProfileForm
-                formData={formData}
-                onFormDataChange={onFormDataChange}
-              />
-            ) : (
+            {!isEditing && (
               <div className="space-y-6">
                 {/* Bio Section */}
                 {user.bio && (
@@ -149,7 +151,9 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
           </TabsContent>
           
           <TabsContent value="posts" className="mt-6 pb-6">
-            <UserPostsTabs userId={user.id} />
+            <div className="text-center py-8 text-gray-500">
+              Posts functionality coming soon...
+            </div>
           </TabsContent>
         </Tabs>
       </div>

@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { X, Plus } from 'lucide-react';
 import { ServiceFormData, UserService } from '@/types/services';
 import { EXPERTISE_OPTIONS } from '@/types';
-import { TwoStepExpertiseSelector } from '@/components/ui/two-step-expertise-selector';
+import TwoStepExpertiseSelector from '@/components/ui/two-step-expertise-selector';
 
 interface ServiceFormProps {
   service?: UserService;
@@ -110,9 +110,10 @@ const ServiceForm: React.FC<ServiceFormProps> = ({
           <div className="space-y-2">
             <Label>Expertise Category & Specialization</Label>
             <TwoStepExpertiseSelector
-              selectedCategory={formData.expertiseCategory}
-              selectedSpecialization={formData.expertiseSpecialization}
-              onSelectionChange={handleExpertiseChange}
+              category={formData.expertiseCategory}
+              specialization={formData.expertiseSpecialization}
+              onCategoryChange={(category) => handleExpertiseChange(category, formData.expertiseSpecialization)}
+              onSpecializationChange={(specialization) => handleExpertiseChange(formData.expertiseCategory, specialization)}
               disabled={isLoading}
             />
           </div>
