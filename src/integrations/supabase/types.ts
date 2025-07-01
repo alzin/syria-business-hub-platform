@@ -255,6 +255,74 @@ export type Database = {
         }
         Relationships: []
       }
+      user_services: {
+        Row: {
+          availability_status:
+            | Database["public"]["Enums"]["availability_status"]
+            | null
+          created_at: string
+          delivery_time: string | null
+          expertise_category: string | null
+          expertise_specialization: string | null
+          id: string
+          is_active: boolean
+          portfolio_links: string[] | null
+          price_range: string | null
+          pricing_type: Database["public"]["Enums"]["pricing_type"] | null
+          requirements: string | null
+          service_description: string | null
+          service_title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          availability_status?:
+            | Database["public"]["Enums"]["availability_status"]
+            | null
+          created_at?: string
+          delivery_time?: string | null
+          expertise_category?: string | null
+          expertise_specialization?: string | null
+          id?: string
+          is_active?: boolean
+          portfolio_links?: string[] | null
+          price_range?: string | null
+          pricing_type?: Database["public"]["Enums"]["pricing_type"] | null
+          requirements?: string | null
+          service_description?: string | null
+          service_title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          availability_status?:
+            | Database["public"]["Enums"]["availability_status"]
+            | null
+          created_at?: string
+          delivery_time?: string | null
+          expertise_category?: string | null
+          expertise_specialization?: string | null
+          id?: string
+          is_active?: boolean
+          portfolio_links?: string[] | null
+          price_range?: string | null
+          pricing_type?: Database["public"]["Enums"]["pricing_type"] | null
+          requirements?: string | null
+          service_description?: string | null
+          service_title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_services_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -274,7 +342,8 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      availability_status: "available" | "busy" | "unavailable"
+      pricing_type: "hourly" | "fixed" | "negotiable"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -389,6 +458,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      availability_status: ["available", "busy", "unavailable"],
+      pricing_type: ["hourly", "fixed", "negotiable"],
+    },
   },
 } as const

@@ -1,14 +1,11 @@
 
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import ProfileHeader from '@/components/profile/ProfileHeader';
-import ProfileForm from '@/components/profile/ProfileForm';
-import { Edit2, Save, X } from 'lucide-react';
+import React, { useState } from 'react';
 import { User } from '@/types';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import ProfileHeader from './ProfileHeader';
+import ProfileForm from './ProfileForm';
+import UserPostsTabs from './UserPostsTabs';
+import ServicesManager from '@/components/services/ServicesManager';
 
 interface ProfileFormData {
   name: string;
@@ -44,74 +41,119 @@ const ProfileContent: React.FC<ProfileContentProps> = ({
   onEdit,
   onSave,
   onCancel,
-  onFormDataChange
+  onFormDataChange,
 }) => {
-  const { t } = useTranslation();
-  const { isRTL } = useLanguage();
-  const isMobile = useIsMobile();
+  const [activeTab, setActiveTab] = useState('profile');
 
   return (
-    <Card className="mb-6 sm:mb-8">
-      <CardHeader className="p-3 sm:p-4 lg:p-6">
-        <ProfileHeader
-          user={user}
-          currentAvatar={currentAvatar}
-          isEditing={isEditing}
-          isLoading={isLoading}
-          onAvatarUpdate={onAvatarUpdate}
-          onEdit={onEdit}
-          onSave={onSave}
-          onCancel={onCancel}
-        >
-          {/* Form content when editing - responsive */}
-          <div className={`${isMobile ? 'w-full' : 'max-w-md'}`}>
-            <ProfileForm
-              formData={formData}
-              onFormDataChange={onFormDataChange}
-            />
-          </div>
-        </ProfileHeader>
+    <div className="bg-white rounded-lg shadow-sm">
+      <ProfileHeader
+        user={user}
+        currentAvatar={currentAvatar}
+        isEditing={isEditing}
+        onAvatarUpdate={onAvatarUpdate}
+        onEdit={onEdit}
+        onSave={onSave}
+        onCancel={onCancel}
+        isLoading={isLoading}
+      />
 
-        {/* Mobile action buttons */}
-        {isMobile && (
-          <div className={`flex justify-center space-x-2 mt-4 ${isRTL ? 'space-x-reverse' : ''}`}>
+      <div className="px-3 sm:px-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="profile">Profile</TabsTrigger>
+            <TabsTrigger value="services">Services</TabsTrigger>
+            <TabsTrigger value="posts">Posts</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="profile" className="mt-6 pb-6">
             {isEditing ? (
-              <>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={onCancel}
-                  disabled={isLoading}
-                  className="text-xs"
-                >
-                  <X className={`w-3 h-3 ${isRTL ? 'ml-1' : 'mr-1'}`} />
-                  {t('cancel')}
-                </Button>
-                <Button
-                  size="sm"
-                  onClick={onSave}
-                  disabled={isLoading}
-                  className="text-xs"
-                >
-                  <Save className={`w-3 h-3 ${isRTL ? 'ml-1' : 'mr-1'}`} />
-                  {isLoading ? t('saving') : t('save')}
-                </Button>
-              </>
+              <ProfileForm
+                formData={formData}
+                onFormDataChange={onFormDataChange}
+              />
             ) : (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={onEdit}
-                className="text-xs"
-              >
-                <Edit2 className={`w-3 h-3 ${isRTL ? 'ml-1' : 'mr-1'}`} />
-                {t('edit profile')}
-              </Button>
+              <div className="space-y-6">
+                {/* Bio Section */}
+                {user.bio && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">About</h3>
+                    <p className="text-gray-700 leading-relaxed">{user.bio}</p>
+                  </div>
+                )}
+
+                {/* Basic Info */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Basic Information</h3>
+                    <dl className="space-y-2">
+                      <div>
+                        <dt className="text-sm font-medium text-gray-500">Location</dt>
+                        <dd className="text-sm text-gray-900">{user.location}</dd>
+                      </div>
+                      {user.phoneNumber && (
+                        <div>
+                          <dt className="text-sm font-medium text-gray-500">Phone</dt>
+                          <dd className="text-sm text-gray-900">
+                            {user.phoneCountryCode} {user.phoneNumber}
+                          </dd>
+                        </div>
+                      )}
+                    </dl>
+                  </div>
+
+                  {/* Expertise */}
+                  {(user.expertiseCategory || user.expertiseSpecialization) && (
+                    <div>
+                      <h3 className="text-lg font-semibold mb-3">Expertise</h3>
+                      <dl className="space-y-2">
+                        {user.expertiseCategory && (
+                          <div>
+                            <dt className="text-sm font-medium text-gray-500">Category</dt>
+                            <dd className="text-sm text-gray-900">{user.expertiseCategory}</dd>
+                          </div>
+                        )}
+                        {user.expertiseSpecialization && (
+                          <div>
+                            <dt className="text-sm font-medium text-gray-500">Specialization</dt>
+                            <dd className="text-sm text-gray-900">{user.expertiseSpecialization}</dd>
+                          </div>
+                        )}
+                      </dl>
+                    </div>
+                  )}
+                </div>
+
+                {/* Languages */}
+                {user.languages && user.languages.length > 0 && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-3">Languages</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {user.languages.map((language, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                        >
+                          {language}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
-          </div>
-        )}
-      </CardHeader>
-    </Card>
+          </TabsContent>
+          
+          <TabsContent value="services" className="mt-6 pb-6">
+            <ServicesManager userId={user.id} isOwner={true} />
+          </TabsContent>
+          
+          <TabsContent value="posts" className="mt-6 pb-6">
+            <UserPostsTabs userId={user.id} />
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
   );
 };
 
