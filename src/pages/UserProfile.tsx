@@ -8,10 +8,12 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
 import UserProfileHeader from '@/components/profile/UserProfileHeader';
 import UserPostsTabs from '@/components/profile/UserPostsTabs';
+import UserPublicServices from '@/components/services/UserPublicServices';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { User as UserType, Post, CategoryType } from '@/types';
+import { UserService } from '@/types/services';
 
 const UserProfile = () => {
   const { id } = useParams<{ id: string }>();
@@ -106,7 +108,45 @@ const UserProfile = () => {
     },
   });
 
-  const isLoading = isLoadingProfile || isLoadingPosts;
+  // Fetch user's public services (only active and available ones)
+  const { data: userServices, isLoading: isLoadingServices } = useQuery({
+    queryKey: ['user-public-services', id],
+    queryFn: async () => {
+      if (!id) throw new Error('User ID is required');
+
+      const { data, error } = await supabase
+        .from('user_services')
+        .select('*')
+        .eq('user_id', id)
+        .eq('is_active', true)
+        .eq('availability_status', 'available')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      const services: UserService[] = data?.map(service => ({
+        id: service.id,
+        userId: service.user_id,
+        expertiseCategory: service.expertise_category,
+        expertiseSpecialization: service.expertise_specialization,
+        serviceTitle: service.service_title,
+        serviceDescription: service.service_description,
+        pricingType: service.pricing_type,
+        priceRange: service.price_range,
+        availabilityStatus: service.availability_status,
+        deliveryTime: service.delivery_time,
+        requirements: service.requirements,
+        portfolioLinks: service.portfolio_links || [],
+        isActive: service.is_active,
+        createdAt: new Date(service.created_at),
+        updatedAt: new Date(service.updated_at),
+      })) || [];
+
+      return services;
+    },
+  });
+
+  const isLoading = isLoadingProfile || isLoadingPosts || isLoadingServices;
 
   if (isLoading) {
     return (
@@ -175,6 +215,14 @@ const UserProfile = () => {
           articlesLength={articles.length}
           businessIdeasLength={businessIdeas.length}
         />
+
+        {/* User's available services */}
+        {userServices && userServices.length > 0 && (
+          <UserPublicServices 
+            services={userServices} 
+            userName={userProfile.name}
+          />
+        )}
 
         {/* User's posts */}
         <UserPostsTabs
