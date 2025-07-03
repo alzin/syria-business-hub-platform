@@ -96,7 +96,7 @@ export const landingTranslations = {
     },
     contactSupport: {
       title: 'Contact & Support',
-      phone: '+1 (555) 123-4567',
+      phone: '+971 (58) 299-7573',
       location: 'Serving the global Syrian community'
     },
     support: {

@@ -31,7 +31,7 @@ const Footer = () => {
   const socialLinks = [
     { icon: Facebook, href: '#', label: 'Facebook' },
     { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Instagram, href: '#', label: 'Instagram' },
+    { icon: Instagram, href: 'https://www.instagram.com/syrvest_com/?igsh=Y3I3bXJhbWc0Zm5t&utm_source=qr#', label: 'Instagram' },
     { icon: Linkedin, href: '#', label: 'LinkedIn' }
   ];
 
@@ -136,8 +136,8 @@ const Footer = () => {
               <ul className="space-y-3 mb-6">
                 <li className={`flex items-center text-background/90 group hover:text-warning transition-colors duration-300 ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
                   <Mail className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'} text-warning group-hover:animate-bounce`} />
-                  <a href="mailto:hello@syrianknowledge.com" className="hover:underline">
-                    hello@syrianknowledge.com
+                  <a href="mailto:info@syrvest.com" className="hover:underline">
+                    info@syrvest.com
                   </a>
                 </li>
                 <li className={`flex items-center text-background/90 group ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
