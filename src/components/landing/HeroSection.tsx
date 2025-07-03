@@ -64,7 +64,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/lovable-uploads/6bd4b9b9-fd78-4f06-96bd-a723bbdd001b.png')`
+            backgroundImage: `url('/lovable-uploads/background.png')`
           }}
         />
         
