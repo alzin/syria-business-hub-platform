@@ -60,12 +60,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onNavigateToMainPage }) => {
   return (
     <>
       <section className="relative bg-gradient-inspire text-background overflow-hidden min-h-screen flex items-center">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('/lovable-uploads/6bd4b9b9-fd78-4f06-96bd-a723bbdd001b.png')`
+          }}
+        />
+        
+        {/* Overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/70 via-primary/50 to-accent/70"></div>
+        
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
           <div className="absolute top-10 left-10 w-32 h-32 bg-warning/20 rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute top-1/3 right-10 w-24 h-24 bg-background/20 rounded-full blur-2xl animate-bounce"></div>
           <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-secondary/20 rounded-full blur-3xl animate-pulse delay-500"></div>
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 w-full">
