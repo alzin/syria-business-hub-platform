@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePosts } from '@/hooks/usePosts';
 import { Post } from '@/types';
 import PostCard from './carousel/PostCard';
@@ -46,6 +47,7 @@ const convertToPostPreview = (post: Post, index: number) => {
 };
 
 const ScrollTriggeredPosts = () => {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -185,10 +187,10 @@ const ScrollTriggeredPosts = () => {
             }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-              Latest Community Posts
+              {t('Latest Community Posts')}
             </h2>
             <p className="text-foreground/70 text-lg">
-              Discover what our experts are discussing
+              {t('Discover what our experts are discussing')}
             </p>
           </div>
 

@@ -68,6 +68,13 @@ export const landingTranslations = {
   'Syrian Knowledge': 'فرص الأعمال السورية',
   'Ask a Question': 'اطرح سؤالاً',
   'Join as Expert': 'انضم كخبير',
+  
+  // Landing Page - ScrollTriggeredPosts
+  'Latest Community Posts': 'أحدث منشورات المجتمع',
+  'Discover what our experts are discussing': 'اكتشف ما يناقشه خبراؤنا',
+  
+  // Landing Page - Benefits Section
+  'Why Choose SyrVest?': 'لماذا تختار سيرفيست؟',
 
   // Footer
   footer: {

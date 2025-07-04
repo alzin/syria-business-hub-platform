@@ -67,6 +67,13 @@ export const landingTranslations = {
   'Syrian Knowledge': 'Syrian Business Opportunities',
   'Ask a Question': 'Ask a Question',
   'Join as Expert': 'Join as Expert',
+  
+  // Landing Page - ScrollTriggeredPosts
+  'Latest Community Posts': 'Latest Community Posts',
+  'Discover what our experts are discussing': 'Discover what our experts are discussing',
+  
+  // Landing Page - Benefits Section
+  'Why Choose SyrVest?': 'Why Choose SyrVest?',
 
   // Footer
   footer: {
