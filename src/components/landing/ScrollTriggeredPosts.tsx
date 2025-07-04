@@ -42,7 +42,8 @@ const convertToPostPreview = (post: Post, index: number) => {
     icon: getPostIcon(post.type),
     bgColor: colors.bgColor,
     textColor: colors.textColor,
-    avatarSeed: post.author.name.replace(/\s+/g, '-').toLowerCase()
+    avatarSeed: post.author.name.replace(/\s+/g, '-').toLowerCase(),
+    avatarUrl: post.author.avatar
   };
 };
 

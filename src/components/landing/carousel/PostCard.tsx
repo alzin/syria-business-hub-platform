@@ -18,6 +18,7 @@ interface PostPreview {
   bgColor: string;
   textColor: string;
   avatarSeed: string;
+  avatarUrl?: string;
 }
 
 interface PostCardProps {
@@ -58,7 +59,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   };
 
   const IconComponent = post.icon;
-  const avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${post.avatarSeed}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf&radius=50`;
+  const avatarUrl = post.avatarUrl || `https://api.dicebear.com/7.x/avataaars/svg?seed=${post.avatarSeed}&backgroundColor=b6e3f4,c0aede,d1d4f9,ffd5dc,ffdfbf&radius=50`;
 
   return (
     <Card className={`${post.bgColor} border-0 shadow-none h-full animate-fade-in`}>
