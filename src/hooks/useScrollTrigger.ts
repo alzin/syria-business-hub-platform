@@ -5,24 +5,14 @@ interface UseScrollTriggerOptions {
   threshold?: number;
 }
 
-interface ScrollTriggerState {
-  isActive: boolean;
-  currentIndex: number;
-  progress: number;
-  isPinned: boolean;
-}
-
-export const useScrollTrigger = ({ totalPosts, threshold = 0.5 }: UseScrollTriggerOptions) => {
-  const [state, setState] = useState<ScrollTriggerState>({
-    isActive: false,
-    currentIndex: 0,
-    progress: 0,
-    isPinned: false,
-  });
-
+export const useScrollTrigger = ({ totalPosts, threshold = 0.3 }: UseScrollTriggerOptions) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [progress, setProgress] = useState(0);
+  
   const sectionRef = useRef<HTMLDivElement>(null);
   const startScrollY = useRef<number>(0);
-  const isScrollingThroughPosts = useRef<boolean>(false);
+  const hasStarted = useRef(false);
 
   const handleScroll = useCallback(() => {
     if (!sectionRef.current || totalPosts === 0) return;
@@ -31,85 +21,79 @@ export const useScrollTrigger = ({ totalPosts, threshold = 0.5 }: UseScrollTrigg
     const rect = section.getBoundingClientRect();
     const viewportHeight = window.innerHeight;
     
-    // Check if section is in viewport
+    // Check if section is in viewport and user is scrolling down
     const isInViewport = rect.top <= viewportHeight * threshold && rect.bottom >= 0;
     
-    if (isInViewport && !state.isActive) {
-      // Start scroll interaction
+    console.log('Scroll Debug:', { 
+      isInViewport, 
+      rectTop: rect.top, 
+      threshold: viewportHeight * threshold,
+      hasStarted: hasStarted.current,
+      isActive 
+    });
+    
+    if (isInViewport && !hasStarted.current) {
+      // Start the scroll sequence
       startScrollY.current = window.scrollY;
-      isScrollingThroughPosts.current = true;
-      setState(prev => ({ ...prev, isActive: true, isPinned: true }));
-    } else if (isInViewport && state.isActive) {
+      hasStarted.current = true;
+      setIsActive(true);
+      console.log('Starting scroll sequence at:', startScrollY.current);
+    }
+    
+    if (isInViewport && hasStarted.current) {
       // Calculate progress through posts
       const scrollDistance = window.scrollY - startScrollY.current;
-      const maxScrollDistance = viewportHeight * 1.5; // Adjust sensitivity
-      const progress = Math.max(0, Math.min(1, scrollDistance / maxScrollDistance));
+      const maxScrollDistance = viewportHeight * 0.8; // Reduced sensitivity
+      const newProgress = Math.max(0, Math.min(1, scrollDistance / maxScrollDistance));
       
       // Calculate current post index
-      const postIndex = Math.floor(progress * totalPosts);
+      const postIndex = Math.floor(newProgress * totalPosts);
       const clampedIndex = Math.max(0, Math.min(totalPosts - 1, postIndex));
       
-      setState(prev => ({
-        ...prev,
-        progress,
-        currentIndex: clampedIndex,
-      }));
+      console.log('Progress calculation:', { 
+        scrollDistance, 
+        maxScrollDistance, 
+        newProgress, 
+        postIndex, 
+        clampedIndex 
+      });
+      
+      setProgress(newProgress);
+      setCurrentIndex(clampedIndex);
 
-      // Check if we've scrolled through all posts
-      if (progress >= 1) {
-        // Allow normal scrolling to resume
-        setState(prev => ({ ...prev, isActive: false, isPinned: false }));
-        isScrollingThroughPosts.current = false;
+      // Complete the sequence when all posts shown
+      if (newProgress >= 0.99) {
+        console.log('Sequence complete, resetting');
+        hasStarted.current = false;
+        setIsActive(false);
+        setProgress(0);
+        setCurrentIndex(0);
       }
-    } else if (!isInViewport && state.isActive) {
-      // Reset when scrolling away
-      setState(prev => ({ ...prev, isActive: false, isPinned: false }));
-      isScrollingThroughPosts.current = false;
     }
-  }, [state.isActive, totalPosts, threshold]);
-
-  // Throttled scroll handler for performance
-  const throttledScroll = useCallback(() => {
-    requestAnimationFrame(handleScroll);
-  }, [handleScroll]);
+    
+    // Reset if scrolled away from section
+    if (!isInViewport && hasStarted.current) {
+      console.log('Scrolled away, resetting');
+      hasStarted.current = false;
+      setIsActive(false);
+      setProgress(0);
+      setCurrentIndex(0);
+    }
+  }, [totalPosts, threshold, isActive]);
 
   useEffect(() => {
+    const throttledScroll = () => {
+      requestAnimationFrame(handleScroll);
+    };
+
     window.addEventListener('scroll', throttledScroll, { passive: true });
     return () => window.removeEventListener('scroll', throttledScroll);
-  }, [throttledScroll]);
-
-  // Prevent default scroll when pinned
-  useEffect(() => {
-    if (state.isPinned && isScrollingThroughPosts.current) {
-      const preventScroll = (e: Event) => {
-        if (state.progress < 1) {
-          e.preventDefault();
-        }
-      };
-
-      document.addEventListener('wheel', preventScroll, { passive: false });
-      document.addEventListener('touchmove', preventScroll, { passive: false });
-
-      return () => {
-        document.removeEventListener('wheel', preventScroll);
-        document.removeEventListener('touchmove', preventScroll);
-      };
-    }
-  }, [state.isPinned, state.progress]);
-
-  const reset = useCallback(() => {
-    setState({
-      isActive: false,
-      currentIndex: 0,
-      progress: 0,
-      isPinned: false,
-    });
-    isScrollingThroughPosts.current = false;
-  }, []);
+  }, [handleScroll]);
 
   return {
-    ...state,
+    currentIndex,
+    progress,
+    isActive,
     sectionRef,
-    reset,
   };
 };

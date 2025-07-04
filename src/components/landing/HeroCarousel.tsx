@@ -57,7 +57,7 @@ const HeroCarousel = () => {
   const currentPosts = latestPosts.map(convertToPostPreview);
 
   // Use scroll trigger hook for scroll-based post switching
-  const { currentIndex, progress, isActive, isPinned, sectionRef } = useScrollTrigger({
+  const { currentIndex, progress, isActive, sectionRef } = useScrollTrigger({
     totalPosts: currentPosts.length,
     threshold: 0.3,
   });
@@ -89,9 +89,7 @@ const HeroCarousel = () => {
   return (
     <div 
       ref={sectionRef}
-      className={`relative w-full max-w-lg h-auto transition-all duration-300 ${
-        isPinned ? 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50' : ''
-      }`}
+      className="relative w-full max-w-lg h-auto transition-all duration-300"
     >
       <div className="relative rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20 h-[320px] overflow-hidden">
         <div className="relative h-full">
