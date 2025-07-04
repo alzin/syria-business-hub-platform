@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PostCard from './carousel/PostCard';
 import CarouselIndicators from './carousel/CarouselIndicators';
 import { usePosts } from '@/hooks/usePosts';
+import { useScrollTrigger } from '@/hooks/useScrollTrigger';
 import { Post } from '@/types';
 import { MessageSquare, Lightbulb, Building2, Newspaper } from 'lucide-react';
 
@@ -48,8 +49,6 @@ const convertToPostPreview = (post: Post, index: number) => {
 };
 
 const HeroCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  
   // Fetch latest 3 posts regardless of language
   const { data: posts, isLoading, error } = usePosts();
   const latestPosts = posts?.slice(0, 3) || [];
@@ -57,20 +56,11 @@ const HeroCarousel = () => {
   // Convert real posts to PostPreview format
   const currentPosts = latestPosts.map(convertToPostPreview);
 
-  useEffect(() => {
-    if (currentPosts.length > 0) {
-      const interval = setInterval(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % currentPosts.length);
-      }, 4000);
-
-      return () => clearInterval(interval);
-    }
-  }, [currentPosts.length]);
-
-  // Reset index when posts change
-  useEffect(() => {
-    setCurrentIndex(0);
-  }, [posts]);
+  // Use scroll trigger hook for scroll-based post switching
+  const { currentIndex, progress, isActive, isPinned, sectionRef } = useScrollTrigger({
+    totalPosts: currentPosts.length,
+    threshold: 0.3,
+  });
 
   if (isLoading) {
     return (
@@ -97,17 +87,42 @@ const HeroCarousel = () => {
   const currentPost = currentPosts[currentIndex];
 
   return (
-    <div className="relative w-full max-w-lg h-auto">
-      <div className="relative rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20 h-[320px]">
-        <div className="h-full">
-          <PostCard post={currentPost} key={`post-${currentPost.id}`} />
+    <div 
+      ref={sectionRef}
+      className={`relative w-full max-w-lg h-auto transition-all duration-300 ${
+        isPinned ? 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50' : ''
+      }`}
+    >
+      <div className="relative rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20 h-[320px] overflow-hidden">
+        <div className="relative h-full">
+          {currentPosts.map((post, index) => (
+            <div
+              key={`post-${post.id}`}
+              className={`absolute inset-0 transition-transform duration-500 ease-out ${
+                index === currentIndex 
+                  ? 'translate-y-0 opacity-100' 
+                  : index < currentIndex 
+                    ? '-translate-y-full opacity-0' 
+                    : 'translate-y-full opacity-0'
+              }`}
+            >
+              <PostCard post={post} />
+            </div>
+          ))}
         </div>
+        
+        {/* Progress indicator when scrolling */}
+        {isActive && (
+          <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-background/20 backdrop-blur-sm rounded-full px-3 py-1 text-xs text-background/80">
+            Scroll to explore posts ({currentIndex + 1}/{currentPosts.length})
+          </div>
+        )}
       </div>
 
       <CarouselIndicators
         totalPosts={currentPosts.length}
         currentIndex={currentIndex}
-        onIndicatorClick={setCurrentIndex}
+        onIndicatorClick={() => {}} // Disabled during scroll mode
       />
     </div>
   );
