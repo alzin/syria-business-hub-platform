@@ -2,14 +2,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePosts } from '@/hooks/usePosts';
-import { Post } from '@/types';
 import { useScrollTrigger } from '@/hooks/useScrollTrigger';
 import PostCard from '@/components/PostCard';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 const HeroCarousel = () => {
   const { t } = useTranslation();
-  const { isRTL } = useLanguage();
   
   // Fetch latest 3 posts regardless of language
   const { data: posts, isLoading, error } = usePosts();
@@ -17,11 +14,20 @@ const HeroCarousel = () => {
   
   const { isActive, progress, currentStep, containerRef } = useScrollTrigger({
     totalSteps: latestPosts.length,
-    threshold: 0.3
+    threshold: 0.5
   });
 
   // Calculate which posts should be visible based on current step
   const getPostTransform = (index: number) => {
+    if (!isActive) {
+      // When not active, only show first post
+      return {
+        transform: index === 0 ? 'translateY(0%)' : 'translateY(100%)',
+        opacity: index === 0 ? 1 : 0
+      };
+    }
+    
+    // When active, reveal posts based on scroll progress
     const postProgress = Math.max(0, Math.min(1, (progress * latestPosts.length) - index));
     const translateY = (1 - postProgress) * 100;
     const opacity = Math.max(0, Math.min(1, postProgress * 2));
@@ -57,21 +63,38 @@ const HeroCarousel = () => {
   return (
     <div
       ref={containerRef}
-      className={`relative w-full max-w-lg h-auto ${isActive ? 'fixed inset-0 z-50 max-w-4xl' : ''}`}
+      className={`relative w-full transition-all duration-500 ${
+        isActive 
+          ? 'fixed inset-0 z-50 bg-gradient-inspire' 
+          : 'max-w-lg h-auto'
+      }`}
     >
       {isActive ? (
-        // Scroll-triggered mode
+        // Full-screen scroll-triggered mode
         <div className="h-full flex flex-col justify-center items-center px-4">
+          {/* Section title when active */}
+          <div className="text-center mb-8 animate-fade-in">
+            <h2 className="text-3xl md:text-4xl font-bold text-background mb-4">
+              {t('Latest Posts')}
+            </h2>
+            <p className="text-lg text-background/90">
+              {t('Discover insights from our community of Syrian experts')}
+            </p>
+          </div>
+
           {/* Posts container */}
-          <div className="w-full max-w-4xl mx-auto">
+          <div className="w-full max-w-4xl mx-auto relative">
             <div className="space-y-8">
               {latestPosts.map((post, index) => (
                 <div
                   key={post.id}
-                  className="transition-all duration-700 ease-out"
-                  style={getPostTransform(index)}
+                  className="absolute inset-x-0 transition-all duration-700 ease-out"
+                  style={{
+                    ...getPostTransform(index),
+                    zIndex: latestPosts.length - index
+                  }}
                 >
-                  <div className="transform hover:scale-105 transition-transform duration-300 rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20">
+                  <div className="bg-background/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-background/20 p-6">
                     <PostCard post={post} />
                   </div>
                 </div>
@@ -93,34 +116,49 @@ const HeroCarousel = () => {
             ))}
           </div>
 
-          {/* Exit instructions */}
-          {progress > 0.8 && (
-            <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-center animate-fade-in">
-              <div className="text-background/70 text-sm">
-                {t('Continue scrolling to proceed')}
-              </div>
+          {/* Scroll instructions */}
+          <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-center animate-fade-in">
+            <div className="text-background/70 text-sm">
+              {progress < 1 
+                ? t('Scroll to explore posts') 
+                : t('Continue scrolling to proceed')
+              }
             </div>
-          )}
+          </div>
         </div>
       ) : (
-        // Normal carousel mode (when not active)
-        <div className="relative rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20 h-[320px]">
-          <div className="h-full p-6 flex flex-col justify-between">
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-background mb-2">
-                {t('Latest Posts')}
-              </h3>
-              <p className="text-background/80 text-sm">
-                {t('Scroll to explore posts')}
-              </p>
+        // Normal mode - show first post by default
+        <div className="relative">
+          <div className="relative rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20 overflow-hidden">
+            {/* First post display */}
+            <div className="relative h-[320px]">
+              {latestPosts.map((post, index) => (
+                <div
+                  key={post.id}
+                  className="absolute inset-0 transition-all duration-700 ease-out"
+                  style={getPostTransform(index)}
+                >
+                  <div className="h-full p-4">
+                    <PostCard post={post} />
+                  </div>
+                </div>
+              ))}
             </div>
-            
-            <div className="text-center">
-              <div className="text-background/60 text-sm mb-2">
-                {latestPosts.length} {t('posts available')}
+
+            {/* Scroll hint overlay */}
+            <div className="absolute bottom-4 right-4 bg-background/20 backdrop-blur-sm rounded-lg px-3 py-2">
+              <div className="text-background/80 text-xs text-center">
+                <div className="mb-1">{t('Scroll to explore')}</div>
+                <div className="w-4 h-6 border border-background/50 rounded-full mx-auto flex justify-center">
+                  <div className="w-0.5 h-2 bg-background/70 rounded-full mt-1 animate-bounce" />
+                </div>
               </div>
-              <div className="w-6 h-10 border-2 border-background/50 rounded-full flex justify-center mx-auto">
-                <div className="w-1 h-3 bg-background/70 rounded-full mt-2 animate-bounce" />
+            </div>
+
+            {/* Posts counter */}
+            <div className="absolute top-4 right-4 bg-background/20 backdrop-blur-sm rounded-lg px-2 py-1">
+              <div className="text-background/80 text-xs">
+                1 / {latestPosts.length}
               </div>
             </div>
           </div>

@@ -78,6 +78,8 @@ export const landingTranslations = {
   'No Posts Available': 'لا توجد منشورات متاحة',
   'Failed to load posts': 'فشل في تحميل المنشورات',
   'No posts have been created yet': 'لم يتم إنشاء أي منشورات بعد',
+  'Scroll to explore': 'مرر للاستكشاف',
+  'posts available': 'منشورات متاحة',
 
   // Footer
   footer: {

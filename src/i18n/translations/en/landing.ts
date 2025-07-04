@@ -77,6 +77,8 @@ export const landingTranslations = {
   'No Posts Available': 'No Posts Available',
   'Failed to load posts': 'Failed to load posts',
   'No posts have been created yet': 'No posts have been created yet',
+  'Scroll to explore': 'Scroll to explore',
+  'posts available': 'posts available',
 
   // Footer
   footer: {
