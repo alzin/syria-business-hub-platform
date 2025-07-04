@@ -3,8 +3,22 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MessageSquare, Star } from 'lucide-react';
-import { PostPreview } from './types';
+import { MessageSquare, Star, LucideIcon } from 'lucide-react';
+
+interface PostPreview {
+  id: number;
+  type: 'question' | 'article' | 'business_idea' | 'news';
+  title: string;
+  content: string;
+  author: string;
+  expertise: string;
+  votes: number;
+  answers: number;
+  icon: LucideIcon;
+  bgColor: string;
+  textColor: string;
+  avatarSeed: string;
+}
 
 interface PostCardProps {
   post: PostPreview;
