@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeroSection from '@/components/landing/HeroSection';
@@ -20,10 +19,12 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted">
-      {/* Hero Section with Stats */}
-      <div className="relative bg-gradient-inspire text-background overflow-hidden">
-        <HeroSection onNavigateToMainPage={handleNavigateToMainPage} />
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 relative z-10">
+      {/* Hero Section now handles its own background and scroll-triggered posts */}
+      <HeroSection onNavigateToMainPage={handleNavigateToMainPage} />
+      
+      {/* Stats Section - With improved contrast */}
+      <div className="relative bg-background -mt-20 pt-20">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <StatsSection />
         </div>
       </div>

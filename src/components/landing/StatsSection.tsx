@@ -1,68 +1,81 @@
-
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Card, CardContent } from '@/components/ui/card';
 import { MessageSquare, Users, Globe, BookOpen } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 const StatsSection = () => {
   const { t } = useTranslation();
-  const isMobile = useIsMobile();
 
   const stats = [
-    { 
-      icon: MessageSquare, 
-      label: t('Active Discussions'), 
-      value: '1,200+', 
-      color: 'text-blue-400',
-      bgColor: 'bg-blue-500/20',
-      delay: 'delay-100'
+    {
+      icon: MessageSquare,
+      value: '1,200+',
+      label: t('Active Discussions'),
+      gradient: 'from-blue-500 to-blue-600',
     },
-    { 
-      icon: Users, 
-      label: t('Syrian Experts'), 
-      value: '250+', 
-      color: 'text-purple-400',
-      bgColor: 'bg-purple-500/20',
-      delay: 'delay-200'
+    {
+      icon: Users,
+      value: '250+',
+      label: t('Syrian Experts'),
+      gradient: 'from-purple-500 to-purple-600',
     },
-    { 
-      icon: Globe, 
-      label: t('Countries Connected'), 
-      value: '35+', 
-      color: 'text-green-400',
-      bgColor: 'bg-green-500/20',
-      delay: 'delay-300'
+    {
+      icon: Globe,
+      value: '35+',
+      label: t('Countries Connected'),
+      gradient: 'from-green-500 to-green-600',
     },
-    { 
-      icon: BookOpen, 
-      label: t('Knowledge Articles'), 
-      value: '500+', 
-      color: 'text-orange-400',
-      bgColor: 'bg-orange-500/20',
-      delay: 'delay-500'
+    {
+      icon: BookOpen,
+      value: '500+',
+      label: t('Knowledge Articles'),
+      gradient: 'from-orange-500 to-orange-600',
     },
   ];
 
   return (
-    <div className={`grid ${isMobile ? 'grid-cols-2 gap-3' : 'grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6'} mt-12 sm:mt-16`}>
-      {stats.map((stat, index) => (
-        <Card 
-          key={index} 
-          className={`bg-background/15 border-background/30 backdrop-blur-sm hover:bg-background/25 hover:scale-105 transition-all duration-300 group cursor-pointer animate-fade-in ${stat.delay}`}
-        >
-          <CardContent className={`${isMobile ? 'p-3' : 'p-4 sm:p-6'} text-center relative overflow-hidden`}>
-            <div className={`absolute inset-0 ${stat.bgColor} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
-            <div className="relative z-10">
-              <stat.icon className={`${isMobile ? 'w-5 h-5' : 'w-6 h-6 sm:w-8 sm:h-8'} mx-auto ${isMobile ? 'mb-2' : 'mb-3'} ${stat.color} group-hover:animate-bounce transition-colors duration-300`} />
-              <div className={`${isMobile ? 'text-lg' : 'text-xl sm:text-2xl'} font-bold text-background ${isMobile ? 'mb-0.5' : 'mb-1'} group-hover:scale-110 transition-transform duration-300`}>
-                {stat.value}
+    <div className="relative py-16 md:py-20">
+      {/* Clean white/dark background for maximum contrast */}
+      <div className="bg-card rounded-3xl shadow-2xl p-8 md:p-12">
+        {/* Section title */}
+        <div className="text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
+            Our Growing Community
+          </h2>
+          <p className="text-foreground/60 text-lg">
+            Join thousands of Syrians sharing knowledge worldwide
+          </p>
+        </div>
+        
+        {/* Stats grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+          {stats.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <div
+                key={index}
+                className="text-center space-y-4 group hover:transform hover:scale-105 transition-all duration-300"
+              >
+                {/* Gradient icon background */}
+                <div className={`inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br ${stat.gradient} shadow-lg group-hover:shadow-xl transition-shadow duration-300`}>
+                  <Icon className="w-10 h-10 text-white" />
+                </div>
+                
+                {/* Large, bold value */}
+                <div className="space-y-1">
+                  <div className="text-4xl md:text-5xl font-bold text-foreground">
+                    {stat.value}
+                  </div>
+                  
+                  {/* Clear label */}
+                  <div className="text-base md:text-lg text-foreground/80 font-medium">
+                    {stat.label}
+                  </div>
+                </div>
               </div>
-              <div className={`text-background/80 ${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>{stat.label}</div>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };
