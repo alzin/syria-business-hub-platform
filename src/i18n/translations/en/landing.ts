@@ -68,6 +68,16 @@ export const landingTranslations = {
   'Ask a Question': 'Ask a Question',
   'Join as Expert': 'Join as Expert',
 
+  // Landing Page - Posts Section
+  'Latest Posts': 'Latest Posts',
+  'Discover insights from our community of Syrian experts': 'Discover insights from our community of Syrian experts',
+  'Scroll to explore posts': 'Scroll to explore posts',
+  'Continue scrolling to proceed': 'Continue scrolling to proceed',
+  'Loading posts...': 'Loading posts...',
+  'No Posts Available': 'No Posts Available',
+  'Failed to load posts': 'Failed to load posts',
+  'No posts have been created yet': 'No posts have been created yet',
+
   // Footer
   footer: {
     brandName: 'SyrVest',

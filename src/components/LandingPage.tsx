@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import HeroSection from '@/components/landing/HeroSection';
 import StatsSection from '@/components/landing/StatsSection';
+import PostsSection from '@/components/landing/PostsSection';
 import ExpertiseAreasSection from '@/components/landing/ExpertiseAreasSection';
 import FeaturesSection from '@/components/landing/FeaturesSection';
 import BenefitsSection from '@/components/landing/BenefitsSection';
@@ -27,6 +28,9 @@ const LandingPage = () => {
           <StatsSection />
         </div>
       </div>
+
+      {/* Scroll-Triggered Posts Section */}
+      <PostsSection />
 
       {/* Expertise Areas Section */}
       <ExpertiseAreasSection onNavigateToMainPage={handleNavigateToMainPage} />
