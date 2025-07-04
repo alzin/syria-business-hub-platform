@@ -26,6 +26,7 @@ import { Badge } from '@/components/ui/badge';
 import { toast } from '@/components/ui/use-toast';
 import { X } from 'lucide-react';
 import { Post, CategoryType } from '@/types';
+import { CATEGORY_OPTIONS } from '@/constants/categories';
 
 interface EditPostDialogProps {
   open: boolean;
@@ -173,11 +174,11 @@ const EditPostDialog: React.FC<EditPostDialogProps> = ({
                 <SelectValue placeholder={t('selectCategory')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="legal">{t('legal')}</SelectItem>
-                <SelectItem value="technology">{t('technology')}</SelectItem>
-                <SelectItem value="investment">{t('investment')}</SelectItem>
-                <SelectItem value="marketing">{t('marketing')}</SelectItem>
-                <SelectItem value="operations">{t('operations')}</SelectItem>
+                {CATEGORY_OPTIONS.map((cat) => (
+                  <SelectItem key={cat.value} value={cat.value}>
+                    {t(cat.labelKey)}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
