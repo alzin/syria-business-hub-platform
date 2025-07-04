@@ -69,18 +69,6 @@ export const landingTranslations = {
   'Ask a Question': 'اطرح سؤالاً',
   'Join as Expert': 'انضم كخبير',
 
-  // Landing Page - Posts Section
-  'Latest Posts': 'آخر المنشورات',
-  'Discover insights from our community of Syrian experts': 'اكتشف رؤى من مجتمع الخبراء السوريين',
-  'Scroll to explore posts': 'مرر لاستكشاف المنشورات',
-  'Continue scrolling to proceed': 'تابع التمرير للمتابعة',
-  'Loading posts...': 'جاري تحميل المنشورات...',
-  'No Posts Available': 'لا توجد منشورات متاحة',
-  'Failed to load posts': 'فشل في تحميل المنشورات',
-  'No posts have been created yet': 'لم يتم إنشاء أي منشورات بعد',
-  'Scroll to explore': 'مرر للاستكشاف',
-  'posts available': 'منشورات متاحة',
-
   // Footer
   footer: {
     brandName: 'سيرفيست',

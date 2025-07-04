@@ -1,169 +1,114 @@
 
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useState } from 'react';
+import PostCard from './carousel/PostCard';
+import CarouselIndicators from './carousel/CarouselIndicators';
 import { usePosts } from '@/hooks/usePosts';
-import { useScrollTrigger } from '@/hooks/useScrollTrigger';
-import PostCard from '@/components/PostCard';
+import { Post } from '@/types';
+import { MessageSquare, Lightbulb, Building2, Newspaper } from 'lucide-react';
+
+// Helper function to get icon based on post type
+const getPostIcon = (type: string) => {
+  switch (type) {
+    case 'question': return MessageSquare;
+    case 'article': return Lightbulb;
+    case 'business_idea': return Building2;
+    case 'news': return Newspaper;
+    default: return MessageSquare;
+  }
+};
+
+// Helper function to get colors based on post type
+const getPostColors = (type: string) => {
+  switch (type) {
+    case 'question': return { bgColor: 'bg-blue-50', textColor: 'text-blue-700' };
+    case 'article': return { bgColor: 'bg-green-50', textColor: 'text-green-700' };
+    case 'business_idea': return { bgColor: 'bg-purple-50', textColor: 'text-purple-700' };
+    case 'news': return { bgColor: 'bg-orange-50', textColor: 'text-orange-700' };
+    default: return { bgColor: 'bg-gray-50', textColor: 'text-gray-700' };
+  }
+};
+
+// Convert real Post to PostPreview format
+const convertToPostPreview = (post: Post, index: number) => {
+  const colors = getPostColors(post.type);
+  return {
+    id: index + 1, // Use index as simple ID for carousel
+    type: post.type,
+    title: post.title,
+    content: post.content,
+    author: post.author.name,
+    expertise: post.author.expertiseSpecialization || post.author.expertiseCategory || 'Expert',
+    votes: 0, // Real votes not implemented yet
+    answers: post.answersCount || 0,
+    icon: getPostIcon(post.type),
+    bgColor: colors.bgColor,
+    textColor: colors.textColor,
+    avatarSeed: post.author.name.replace(/\s+/g, '-').toLowerCase()
+  };
+};
 
 const HeroCarousel = () => {
-  const { t } = useTranslation();
+  const [currentIndex, setCurrentIndex] = useState(0);
   
   // Fetch latest 3 posts regardless of language
   const { data: posts, isLoading, error } = usePosts();
   const latestPosts = posts?.slice(0, 3) || [];
   
-  const { isActive, progress, currentStep, containerRef } = useScrollTrigger({
-    totalSteps: latestPosts.length,
-    threshold: 0.5
-  });
+  // Convert real posts to PostPreview format
+  const currentPosts = latestPosts.map(convertToPostPreview);
 
-  // Calculate which posts should be visible based on current step
-  const getPostTransform = (index: number) => {
-    if (!isActive) {
-      // When not active, only show first post
-      return {
-        transform: index === 0 ? 'translateY(0%)' : 'translateY(100%)',
-        opacity: index === 0 ? 1 : 0
-      };
+  useEffect(() => {
+    if (currentPosts.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % currentPosts.length);
+      }, 4000);
+
+      return () => clearInterval(interval);
     }
-    
-    // When active, reveal posts based on scroll progress
-    const postProgress = Math.max(0, Math.min(1, (progress * latestPosts.length) - index));
-    const translateY = (1 - postProgress) * 100;
-    const opacity = Math.max(0, Math.min(1, postProgress * 2));
-    
-    return {
-      transform: `translateY(${translateY}%)`,
-      opacity
-    };
-  };
+  }, [currentPosts.length]);
+
+  // Reset index when posts change
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [posts]);
 
   if (isLoading) {
     return (
       <div className="relative w-full max-w-lg h-auto">
         <div className="relative rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20 h-[320px] flex items-center justify-center">
-          <div className="animate-pulse text-background/70">{t('Loading posts...')}</div>
+          <div className="animate-pulse text-background/70">Loading posts...</div>
         </div>
       </div>
     );
   }
 
-  if (error || latestPosts.length === 0) {
+  if (error || currentPosts.length === 0) {
     return (
       <div className="relative w-full max-w-lg h-auto">
         <div className="relative rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20 h-[320px] flex items-center justify-center">
           <div className="text-background/70 text-center p-4">
-            {error ? t('Failed to load posts') : t('No posts available yet')}
+            {error ? 'Failed to load posts' : 'No posts available yet'}
           </div>
         </div>
       </div>
     );
   }
 
+  const currentPost = currentPosts[currentIndex];
+
   return (
-    <div
-      ref={containerRef}
-      className={`relative w-full transition-all duration-500 ${
-        isActive 
-          ? 'fixed inset-0 z-50 bg-gradient-inspire' 
-          : 'max-w-lg h-auto'
-      }`}
-    >
-      {isActive ? (
-        // Full-screen scroll-triggered mode
-        <div className="h-full flex flex-col justify-center items-center px-4">
-          {/* Section title when active */}
-          <div className="text-center mb-8 animate-fade-in">
-            <h2 className="text-3xl md:text-4xl font-bold text-background mb-4">
-              {t('Latest Posts')}
-            </h2>
-            <p className="text-lg text-background/90">
-              {t('Discover insights from our community of Syrian experts')}
-            </p>
-          </div>
-
-          {/* Posts container */}
-          <div className="w-full max-w-4xl mx-auto relative">
-            <div className="space-y-8">
-              {latestPosts.map((post, index) => (
-                <div
-                  key={post.id}
-                  className="absolute inset-x-0 transition-all duration-700 ease-out"
-                  style={{
-                    ...getPostTransform(index),
-                    zIndex: latestPosts.length - index
-                  }}
-                >
-                  <div className="bg-background/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-background/20 p-6">
-                    <PostCard post={post} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Progress indicator */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-2">
-            {latestPosts.map((_, index) => (
-              <div
-                key={index}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index <= currentStep 
-                    ? 'bg-background scale-110' 
-                    : 'bg-background/30'
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Scroll instructions */}
-          <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-center animate-fade-in">
-            <div className="text-background/70 text-sm">
-              {progress < 1 
-                ? t('Scroll to explore posts') 
-                : t('Continue scrolling to proceed')
-              }
-            </div>
-          </div>
+    <div className="relative w-full max-w-lg h-auto">
+      <div className="relative rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20 h-[320px]">
+        <div className="h-full">
+          <PostCard post={currentPost} key={`post-${currentPost.id}`} />
         </div>
-      ) : (
-        // Normal mode - show first post by default
-        <div className="relative">
-          <div className="relative rounded-2xl shadow-2xl bg-background/10 backdrop-blur-sm border border-background/20 overflow-hidden">
-            {/* First post display */}
-            <div className="relative h-[320px]">
-              {latestPosts.map((post, index) => (
-                <div
-                  key={post.id}
-                  className="absolute inset-0 transition-all duration-700 ease-out"
-                  style={getPostTransform(index)}
-                >
-                  <div className="h-full p-4">
-                    <PostCard post={post} />
-                  </div>
-                </div>
-              ))}
-            </div>
+      </div>
 
-            {/* Scroll hint overlay */}
-            <div className="absolute bottom-4 right-4 bg-background/20 backdrop-blur-sm rounded-lg px-3 py-2">
-              <div className="text-background/80 text-xs text-center">
-                <div className="mb-1">{t('Scroll to explore')}</div>
-                <div className="w-4 h-6 border border-background/50 rounded-full mx-auto flex justify-center">
-                  <div className="w-0.5 h-2 bg-background/70 rounded-full mt-1 animate-bounce" />
-                </div>
-              </div>
-            </div>
-
-            {/* Posts counter */}
-            <div className="absolute top-4 right-4 bg-background/20 backdrop-blur-sm rounded-lg px-2 py-1">
-              <div className="text-background/80 text-xs">
-                1 / {latestPosts.length}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <CarouselIndicators
+        totalPosts={currentPosts.length}
+        currentIndex={currentIndex}
+        onIndicatorClick={setCurrentIndex}
+      />
     </div>
   );
 };
